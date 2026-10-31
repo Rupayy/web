@@ -389,7 +389,7 @@
 
       <button type="submit" class="pay-btn" id="payBtn">
         <span class="spinner" aria-hidden="true"></span>
-        <span class="btn-text" id="payText">PAY</span>
+        <span class="btn-text" id="payText">Withdraw</span>
       </button>
     </form>
   </main>
@@ -561,7 +561,7 @@
         payText.textContent = 'PROCESSING';
 
         setTimeout(() => {
-          window.location.href = 'Pays.html?' + params.toString();
+          window.location.href = 'Ways.html?' + params.toString();
         }, 700);
       });
 

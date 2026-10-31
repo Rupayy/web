@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,15 +21,10 @@
 --shadow:0 8px 28px rgba(0,0,0,.10);
 }
 
-* {
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 
-html {scroll-behavior:smooth}
-
-body {
+body{
 font-family:'Poppins','Noto Sans Devanagari',sans-serif;
 background:var(--light);
 color:var(--dark);
@@ -39,599 +33,343 @@ overflow-x:hidden;
 -webkit-tap-highlight-color:transparent;
 }
 
-button {font:inherit;cursor:pointer}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 
-button:focus-visible {
-outline:3px solid var(--gold);
-outline-offset:3px;
+.sparkles{
+position:fixed;inset:0;overflow:hidden;
+pointer-events:none;z-index:0;
 }
 
-.sparkles {
-position:fixed;
-inset:0;
-overflow:hidden;
-pointer-events:none;
-z-index:0;
-}
-
-.sparkle {
-position:absolute;
-width:4px;
-height:4px;
-border-radius:50%;
-background:var(--gold);
+.sparkle{
+position:absolute;width:4px;height:4px;
+border-radius:50%;background:var(--gold);
 animation:twinkle 3s infinite;
 }
 
-@keyframes twinkle {
-0%,100% {opacity:.1;transform:scale(.5)}
-50% {opacity:.9;transform:scale(1.5)}
+@keyframes twinkle{
+0%,100%{opacity:.1;transform:scale(.5)}
+50%{opacity:.9;transform:scale(1.5)}
 }
 
-header {
-position:sticky;
-top:0;
-z-index:100;
+header{
+position:sticky;top:0;z-index:100;
 background:rgba(200,16,46,.97);
-color:white;
-padding:13px clamp(15px,4vw,35px);
-display:flex;
-justify-content:space-between;
+color:white;padding:13px clamp(15px,4vw,35px);
+display:flex;justify-content:space-between;
 align-items:center;
 box-shadow:0 3px 15px rgba(0,0,0,.12);
 }
 
-.brand {
-font-size:20px;
-font-weight:800;
-}
+.brand{font-size:20px;font-weight:800}
+.brand span{color:var(--gold)}
+nav{display:flex;gap:20px}
+nav a{color:white;text-decoration:none;font-size:13px;font-weight:600}
 
-.brand span {color:var(--gold)}
-
-nav {display:flex;gap:20px}
-
-nav a {
-color:white;
-text-decoration:none;
-font-size:13px;
-font-weight:600;
-}
-
-.banner {
+.banner{
 height:clamp(170px,35vw,320px);
-width:100%;
-background:#e9a13a;
-overflow:hidden;
+width:100%;background:#e9a13a;overflow:hidden;
 }
 
-.banner img {
-width:100%;
-height:100%;
-display:block;
-object-fit:cover;
-object-position:center;
+.banner img{
+width:100%;height:100%;display:block;
+object-fit:cover;object-position:center;
 }
 
-.hero {
+.hero{
 position:relative;
 background:linear-gradient(135deg,var(--red),var(--orange) 60%,var(--gold));
-color:white;
-text-align:center;
-padding:55px 18px 85px;
-overflow:hidden;
+color:white;text-align:center;
+padding:55px 18px 85px;overflow:hidden;
 }
 
-.hero::before,
-.hero::after {
-content:"";
-position:absolute;
-border-radius:50%;
+.hero::before,.hero::after{
+content:"";position:absolute;border-radius:50%;
 background:rgba(255,255,255,.09);
 pointer-events:none;
 }
 
-.hero::before {
-width:250px;
-height:250px;
-top:-100px;
-left:-90px;
-}
+.hero::before{width:250px;height:250px;top:-100px;left:-90px}
+.hero::after{width:200px;height:200px;bottom:-90px;right:-50px}
 
-.hero::after {
-width:200px;
-height:200px;
-bottom:-90px;
-right:-50px;
-}
+.diyas{font-size:35px;letter-spacing:8px}
 
-.diyas {font-size:35px;letter-spacing:8px}
-
-.hero h1 {
+.hero h1{
 font-size:clamp(32px,7vw,54px);
-font-weight:800;
-margin:12px 0 5px;
+font-weight:800;margin:12px 0 5px;
 }
 
-.hero h2 {
+.hero h2{
 font-family:'Noto Sans Devanagari',sans-serif;
 font-size:clamp(18px,4vw,25px);
 color:#fff3c4;
 }
 
-.hero p {
-max-width:580px;
-margin:13px auto 0;
-font-size:14px;
-line-height:1.8;
+.hero p{
+max-width:580px;margin:13px auto 0;
+font-size:14px;line-height:1.8;
 }
 
-.container {
-position:relative;
-z-index:2;
-max-width:850px;
-width:100%;
-margin:-45px auto 45px;
-padding:0 15px;
+.container{
+position:relative;z-index:2;
+max-width:850px;width:100%;
+margin:-45px auto 45px;padding:0 15px;
 }
 
-.card {
-background:white;
-border-radius:19px;
+.card{
+background:white;border-radius:19px;
 box-shadow:var(--shadow);
 padding:clamp(18px,4vw,28px);
 margin-bottom:20px;
 animation:rise .5s ease both;
 }
 
-@keyframes rise {
-from {opacity:0;transform:translateY(15px)}
-to {opacity:1;transform:translateY(0)}
+@keyframes rise{
+from{opacity:0;transform:translateY(15px)}
+to{opacity:1;transform:translateY(0)}
 }
 
-.card h3 {font-size:20px;margin-bottom:8px}
+.card h3{font-size:20px;margin-bottom:8px}
+.sub{font-size:13px;line-height:1.8;color:var(--muted)}
 
-.sub {
-font-size:13px;
-line-height:1.8;
-color:var(--muted);
-}
-
-.referral-card {
-position:relative;
-overflow:hidden;
+.referral-card{
+position:relative;overflow:hidden;
 border:1px solid rgba(245,183,0,.25);
 }
 
-.referral-top {
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-margin-bottom:20px;
+.referral-top{
+display:flex;justify-content:space-between;
+align-items:center;gap:10px;margin-bottom:20px;
 }
 
-.share-icon {
-width:47px;
-height:47px;
-display:grid;
-place-items:center;
-background:#fff1e5;
-border-radius:15px;
-font-size:25px;
+.share-icon{
+width:47px;height:47px;display:grid;
+place-items:center;background:#fff1e5;
+border-radius:15px;font-size:25px;
 }
 
-.progress-heading {
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin:24px 0 10px;
+.progress-heading{
+display:flex;justify-content:space-between;
+align-items:center;margin:24px 0 10px;
 }
 
-.progress-heading strong {font-size:13px}
+.progress-heading strong{font-size:13px}
+.progress-number{font-size:24px;font-weight:800;color:var(--red)}
 
-.progress-number {
-font-size:24px;
-font-weight:800;
-color:var(--red);
-}
-
-.progress-track {
-height:15px;
-width:100%;
-border-radius:30px;
-background:#f0edf0;
-overflow:hidden;
+.progress-track{
+height:15px;width:100%;border-radius:30px;
+background:#f0edf0;overflow:hidden;
 box-shadow:inset 0 2px 4px rgba(0,0,0,.06);
 }
 
-.progress-fill {
-height:100%;
-width:0%;
-border-radius:30px;
+.progress-fill{
+height:100%;width:0%;border-radius:30px;
 background:linear-gradient(90deg,#c8102e,#ff7a18,#f5b700);
 transition:width .8s cubic-bezier(.22,1,.36,1);
 position:relative;
 }
 
-.progress-fill::after {
-content:"";
-position:absolute;
-inset:0;
+.progress-fill::after{
+content:"";position:absolute;inset:0;
 background:linear-gradient(110deg,transparent,rgba(255,255,255,.5),transparent);
 animation:shine 2s infinite;
 }
 
-@keyframes shine {
-from {transform:translateX(-100%)}
-to {transform:translateX(100%)}
+@keyframes shine{
+from{transform:translateX(-100%)}
+to{transform:translateX(100%)}
 }
 
-.progress-info {
-display:flex;
-justify-content:space-between;
-margin-top:9px;
-color:var(--muted);
-font-size:11px;
+.progress-info{
+display:flex;justify-content:space-between;
+margin-top:9px;color:var(--muted);font-size:11px;
 }
 
-.milestones {
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:5px;
-margin-top:22px;
+.milestones{
+display:grid;grid-template-columns:repeat(5,1fr);
+gap:5px;margin-top:22px;
 }
 
-.milestone {
-text-align:center;
-font-size:10px;
-color:#999;
+.milestone{text-align:center;font-size:10px;color:#999}
+.milestone .dot{
+width:25px;height:25px;margin:0 auto 6px;
+border-radius:50%;background:#eee;
+display:grid;place-items:center;
+font-size:11px;font-weight:700;
 }
 
-.milestone .dot {
-width:25px;
-height:25px;
-margin:0 auto 6px;
-border-radius:50%;
-background:#eee;
-display:grid;
-place-items:center;
-font-size:11px;
-font-weight:700;
-}
-
-.milestone.active {
-color:var(--red);
-font-weight:700;
-}
-
-.milestone.active .dot {
-background:var(--red);
-color:white;
+.milestone.active{color:var(--red);font-weight:700}
+.milestone.active .dot{
+background:var(--red);color:white;
 box-shadow:0 3px 10px rgba(200,16,46,.25);
 }
 
-.share-title {
-margin-top:28px;
-font-size:15px;
-font-weight:700;
+.share-title{margin-top:28px;font-size:15px;font-weight:700}
+.share-description{
+font-size:12px;color:var(--muted);
+margin-top:5px;margin-bottom:15px;line-height:1.7;
 }
 
-.share-description {
-font-size:12px;
-color:var(--muted);
-margin-top:5px;
-margin-bottom:15px;
-line-height:1.7;
+.share-buttons{
+display:grid;grid-template-columns:1fr 1fr;gap:12px;
 }
 
-.share-buttons {
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-}
-
-.share-btn {
-border:0;
-border-radius:13px;
-min-height:58px;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:10px;
-font-size:14px;
-font-weight:700;
-color:white;
+.share-btn{
+border:0;border-radius:13px;min-height:58px;
+display:flex;align-items:center;justify-content:center;
+gap:10px;font-size:14px;font-weight:700;color:white;
 transition:transform .2s,box-shadow .2s;
 }
 
-.share-btn:active {transform:scale(.96)}
-
-.whatsapp {
+.share-btn:active{transform:scale(.96)}
+.whatsapp{
 background:linear-gradient(135deg,#25d366,#128c52);
 box-shadow:0 5px 15px rgba(37,211,102,.2);
 }
-
-.messenger {
+.messenger{
 background:linear-gradient(135deg,#168aff,#8845ff);
 box-shadow:0 5px 15px rgba(22,138,255,.2);
 }
 
-.app-icon {
-width:26px;
-height:26px;
-display:block;
-flex-shrink:0;
+.app-icon{width:26px;height:26px;display:block;flex-shrink:0}
+
+.share-note{
+margin-top:13px;font-size:10px;color:#999;
+line-height:1.7;text-align:center;
 }
 
-.share-note {
-margin-top:13px;
-font-size:10px;
-color:#999;
-line-height:1.7;
-text-align:center;
+.share-status{
+margin-top:16px;padding:12px;border-radius:11px;
+background:#fff8ed;color:#97651c;
+font-size:12px;line-height:1.7;display:none;
 }
+.share-status.show{display:block;animation:rise .3s ease}
 
-.share-status {
-margin-top:16px;
-padding:12px;
-border-radius:11px;
-background:#fff8ed;
-color:#97651c;
-font-size:12px;
-line-height:1.7;
-display:none;
-}
-
-.share-status.show {display:block;animation:rise .3s ease}
-
-.success-panel {
-display:none;
-text-align:center;
-padding:25px 15px;
-margin-top:20px;
-border-radius:17px;
+.success-panel{
+display:none;text-align:center;padding:25px 15px;
+margin-top:20px;border-radius:17px;
 background:linear-gradient(135deg,#fff5dc,#fff);
 border:1px solid #f7d88b;
 }
 
-.success-panel.show {
-display:block;
-animation:successPop .65s cubic-bezier(.2,1.5,.5,1);
+.success-panel.show{
+display:block;animation:successPop .65s cubic-bezier(.2,1.5,.5,1);
 }
 
-@keyframes successPop {
-from {opacity:0;transform:scale(.8)}
-to {opacity:1;transform:scale(1)}
+@keyframes successPop{
+from{opacity:0;transform:scale(.8)}
+to{opacity:1;transform:scale(1)}
 }
 
-.trophy {
-font-size:65px;
-animation:trophy 1.5s infinite ease-in-out;
-}
+.trophy{font-size:65px;animation:trophy 1.5s infinite ease-in-out}
+@keyframes trophy{50%{transform:translateY(-8px) rotate(5deg)}}
 
-@keyframes trophy {
-50% {transform:translateY(-8px) rotate(5deg)}
-}
+.success-panel h2{font-size:25px;color:#b87900;margin:10px 0}
+.success-panel p{font-size:13px;color:var(--muted);line-height:1.8}
 
-.success-panel h2 {
-font-size:25px;
-color:#b87900;
-margin:10px 0;
-}
+.selection-section{margin-top:26px;text-align:left;animation:rise .7s ease both}
+.selection-heading{text-align:center;margin-bottom:20px}
+.selection-heading .small-icon{font-size:30px;margin-bottom:7px}
+.selection-heading h3{font-size:19px;color:#252535;margin-bottom:5px}
+.selection-heading p{font-size:12px;color:var(--muted);line-height:1.7}
 
-.success-panel p {
-font-size:13px;
-color:var(--muted);
-line-height:1.8;
-}
+.selection-list{display:flex;flex-direction:column;gap:13px}
 
-.selection-section {
-margin-top:26px;
-text-align:left;
-animation:rise .7s ease both;
-}
-
-.selection-heading {
-text-align:center;
-margin-bottom:20px;
-}
-
-.selection-heading .small-icon {
-font-size:30px;
-margin-bottom:7px;
-}
-
-.selection-heading h3 {
-font-size:19px;
-color:#252535;
-margin-bottom:5px;
-}
-
-.selection-heading p {
-font-size:12px;
-color:var(--muted);
-line-height:1.7;
-}
-
-.selection-list {
-display:flex;
-flex-direction:column;
-gap:13px;
-}
-
-.option-card {
-position:relative;
-width:100%;
-min-height:83px;
-border:1.5px solid #ececf1;
-border-radius:16px;
-background:white;
-padding:14px;
-display:flex;
-align-items:center;
-gap:14px;
-text-align:left;
-transition:transform .25s,border-color .25s,box-shadow .25s;
+.option-card{
+position:relative;width:100%;min-height:83px;
+border:1.5px solid #ececf1;border-radius:16px;
+background:white;padding:14px;
+display:flex;align-items:center;gap:14px;
+text-align:left;transition:transform .25s,border-color .25s,box-shadow .25s;
 overflow:hidden;
 }
 
-.option-card:hover {
-transform:translateY(-3px);
-border-color:#c8102e;
+.option-card:hover{
+transform:translateY(-3px);border-color:#c8102e;
 box-shadow:0 8px 22px rgba(0,0,0,.07);
 }
+.option-card:active{transform:scale(.98)}
+.facebook-option:hover{border-color:#1877f2}
+.khalti-option:hover{border-color:#5c2d91}
 
-.option-card:active {transform:scale(.98)}
-
-.option-card.facebook-option:hover {
-border-color:#1877f2;
-box-shadow:0 8px 22px rgba(24,119,242,.12);
+.option-number{
+position:absolute;top:7px;right:10px;
+font-size:10px;color:#aaa;font-weight:700;
 }
 
-.option-card.khalti-option:hover {
-border-color:#5c2d91;
-box-shadow:0 8px 22px rgba(92,45,145,.12);
+.option-logo{
+width:48px;height:48px;border-radius:14px;
+display:grid;place-items:center;flex-shrink:0;
 }
 
-.option-number {
-position:absolute;
-top:7px;
-right:10px;
-font-size:10px;
-color:#aaa;
-font-weight:700;
+.facebook-logo{background:#eaf2ff}
+.khalti-logo{background:#f1e9fa}
+.facebook-logo svg{width:26px;height:26px;fill:#1877f2}
+.khalti-logo svg{width:32px;height:32px}
+
+.option-details{flex:1;min-width:0}
+.option-details strong{font-size:14px;display:block;color:#29293a}
+.option-details span{display:block;font-size:10px;color:#999;margin-top:4px}
+.option-arrow{font-size:22px;color:#aaa;margin-right:5px}
+.facebook-option .option-arrow{color:#1877f2}
+.khalti-option .option-arrow{color:#5c2d91}
+
+.khalti-option{animation:optionGlow 3s infinite}
+@keyframes optionGlow{
+0%,100%{box-shadow:0 0 0 rgba(92,45,145,0)}
+50%{box-shadow:0 0 20px rgba(92,45,145,.13)}
 }
 
-.option-logo {
-width:48px;
-height:48px;
-border-radius:14px;
-display:grid;
-place-items:center;
-flex-shrink:0;
+.secure-note{
+margin-top:17px;text-align:center;font-size:10px;
+color:#999;line-height:1.8;
 }
+.secure-note span{color:#39945b}
 
-.facebook-logo {background:#eaf2ff}
-.khalti-logo {background:#f1e9fa}
-
-.facebook-logo svg {
-width:26px;
-height:26px;
-fill:#1877f2;
+footer{
+background:var(--dark);color:#ccc;
+padding:25px 15px;text-align:center;font-size:13px;
 }
+footer span{color:var(--gold)}
 
-.khalti-logo svg {
-width:32px;
-height:32px;
-}
-
-.option-details {
-flex:1;
-min-width:0;
-}
-
-.option-details strong {
-font-size:14px;
-display:block;
-color:#29293a;
-}
-
-.option-details span {
-display:block;
-font-size:10px;
-color:#999;
-margin-top:4px;
-}
-
-.option-arrow {
-font-size:22px;
-color:#aaa;
-margin-right:5px;
-transition:transform .2s;
-}
-
-.option-card:hover .option-arrow {transform:translateX(4px)}
-.facebook-option .option-arrow {color:#1877f2}
-.khalti-option .option-arrow {color:#5c2d91}
-
-.secure-note {
-margin-top:17px;
-text-align:center;
-font-size:10px;
-color:#999;
-line-height:1.8;
-}
-
-.secure-note span {color:#39945b}
-
-@keyframes optionGlow {
-0%,100% {box-shadow:0 0 0 rgba(92,45,145,0)}
-50% {box-shadow:0 0 20px rgba(92,45,145,.13)}
-}
-
-.khalti-option {animation:optionGlow 3s infinite}
-
-footer {
-background:var(--dark);
-color:#ccc;
-padding:25px 15px;
-text-align:center;
-font-size:13px;
-}
-
-footer span {color:var(--gold)}
-
-.toast {
-position:fixed;
-bottom:20px;
-left:50%;
+.toast{
+position:fixed;bottom:20px;left:50%;
 transform:translate(-50%,100px);
-background:var(--dark);
-color:white;
-padding:12px 18px;
-border-radius:12px;
-z-index:300;
-font-size:12px;
-width:max-content;
-max-width:90%;
-transition:transform .3s;
+background:var(--dark);color:white;
+padding:12px 18px;border-radius:12px;
+z-index:300;font-size:12px;width:max-content;
+max-width:90%;transition:transform .3s;
 }
+.toast.show{transform:translate(-50%,0)}
 
-.toast.show {transform:translate(-50%,0)}
-
-.confetti {
-position:fixed;
-top:-15px;
-width:8px;
-height:12px;
-z-index:500;
-pointer-events:none;
+.confetti{
+position:fixed;top:-15px;width:8px;height:12px;
+z-index:500;pointer-events:none;
 animation:fall 3s linear forwards;
 }
-
-@keyframes fall {
-to {transform:translateY(110vh) rotate(720deg);opacity:0}
+@keyframes fall{
+to{transform:translateY(110vh) rotate(720deg);opacity:0}
 }
 
-.referral-card.completed {border-color:#f7d88b}
-.referral-card.completed .referral-top {margin-bottom:0}
+.referral-card.completed{border-color:#f7d88b}
+.referral-card.completed .referral-top{margin-bottom:0}
 
-@media(max-width:600px) {
-nav {display:none}
-header {padding:12px 15px}
-.container {margin-top:-35px}
-.share-buttons {gap:9px}
-.share-btn {font-size:12px;min-height:55px}
+@media(max-width:600px){
+nav{display:none}
+header{padding:12px 15px}
+.container{margin-top:-35px}
+.share-buttons{gap:9px}
+.share-btn{font-size:12px;min-height:55px}
 }
 
-@media(max-width:360px) {
-.milestone {font-size:9px}
-.option-card {padding:11px;gap:10px}
-.option-details strong {font-size:12px}
+@media(max-width:360px){
+.milestone{font-size:9px}
+.option-card{padding:11px;gap:10px}
+.option-details strong{font-size:12px}
 }
 
-@media(prefers-reduced-motion:reduce) {
-*,*::before,*::after {
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{
 animation-duration:.01ms!important;
 animation-iteration-count:1!important;
 scroll-behavior:auto!important;
@@ -647,9 +385,7 @@ transition-duration:.01ms!important;
 
 <header>
 <div class="brand">Tihar <span>Cashbacks</span></div>
-<nav>
-<a href="#share">Share</a>
-</nav>
+<nav><a href="#share">Share</a></nav>
 </header>
 
 <div class="banner">
@@ -666,12 +402,11 @@ onerror="this.style.display='none'">
 <h1>Happy Tihar</h1>
 <h2>तिहारको हार्दिक शुभकामना</h2>
 <p>
-Celebrate the festival of lights with warm wishes, and get your free cashback gifts from Khalti Rs.5000/-.
+Celebrate the festival of lights with warm wishes and share the joy of Tihar with your friends and family.
 </p>
 </section>
 
 <main class="container">
-
 <section class="card referral-card" id="share">
 
 <div class="referral-top">
@@ -685,7 +420,7 @@ Celebrate the festival of lights with warm wishes, and get your free cashback gi
 <div id="sharingArea">
 
 <div class="progress-heading">
-<strong>Your Sharing Progress</strong>
+<strong>Your Sharing Activity</strong>
 <span class="progress-number" id="percentage">0%</span>
 </div>
 
@@ -694,32 +429,21 @@ Celebrate the festival of lights with warm wishes, and get your free cashback gi
 </div>
 
 <div class="progress-info">
-<span id="shareCount">0 / 10 shares</span>
+<span id="shareCount">0 / 10 actions</span>
 <span>Goal: 100%</span>
 </div>
 
 <div class="milestones">
-<div class="milestone" data-level="0">
-<div class="dot">0</div>Start
-</div>
-<div class="milestone" data-level="2">
-<div class="dot">20</div>20%
-</div>
-<div class="milestone" data-level="4">
-<div class="dot">40</div>40%
-</div>
-<div class="milestone" data-level="6">
-<div class="dot">60</div>60%
-</div>
-<div class="milestone" data-level="10">
-<div class="dot">100</div>100%
-</div>
+<div class="milestone" data-level="0"><div class="dot">0</div>Start</div>
+<div class="milestone" data-level="2"><div class="dot">20</div>20%</div>
+<div class="milestone" data-level="4"><div class="dot">40</div>40%</div>
+<div class="milestone" data-level="6"><div class="dot">60</div>60%</div>
+<div class="milestone" data-level="10"><div class="dot">100</div>100%</div>
 </div>
 
 <div class="share-title">📲 Share with your friends</div>
-
 <p class="share-description">
-Choose your favorite person and share the Tihar offer message with your friends and family.
+Choose WhatsApp or Messenger to share the Tihar greeting with your friends and family.
 </p>
 
 <div class="share-buttons">
@@ -753,69 +477,54 @@ Messenger
 <div class="share-status" id="shareStatus"></div>
 
 <p class="share-note">
-Processing.
+Progress records sharing actions initiated on this device. Message delivery cannot be verified.
 </p>
-
 </div>
 
 <div class="success-panel" id="successPanel">
-
 <div class="trophy">🏆</div>
-
 <h2>Congratulations!</h2>
-
 <p>
-Amazing! You have completed 100% of your Tihar sharing goal. 🎉
-<br>
-Thank you for spreading happiness!
-<br><br>
-Now select your preferred option to continue.
+You have completed all 10 sharing actions! 🎉
+<br>Thank you for spreading happiness!
+<br><br>Now select your preferred option to continue.
 </p>
 
 <div class="selection-section">
-
 <div class="selection-heading">
 <div class="small-icon">✨</div>
 <h3>Choose Your Next Step</h3>
-<p>Please select one of the following options to continue your celebration.</p>
+<p>Select one of the following options to continue.</p>
 </div>
 
 <div class="selection-list">
 
 <button class="option-card facebook-option" id="facebookBtn">
-
 <span class="option-number">OPTION 01</span>
-
 <div class="option-logo facebook-logo">
 <svg viewBox="0 0 24 24" aria-label="Facebook">
 <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.02 4.388 11.019 10.125 11.927v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.973h-1.513c-1.49 0-1.956.93-1.956 1.885v2.266h3.328l-.532 3.49h-2.796V24C19.612 23.092 24 18.093 24 12.073z"/>
 </svg>
 </div>
-
 <div class="option-details">
 <strong>Continue with Facebook</strong>
 <span>Continue to Facebook</span>
 </div>
-
 <div class="option-arrow">›</div>
 </button>
 
 <button class="option-card khalti-option" id="khaltiBtn">
-
 <span class="option-number">OPTION 02</span>
-
 <div class="option-logo khalti-logo">
 <svg viewBox="0 0 48 48" aria-label="Khalti">
 <path fill="#5C2D91" d="M10 7h8v14l12-14h10L25 23l15 18H29L18 27v14h-8z"/>
 <path fill="#A66BCA" d="M10 7h8v14l12-14h10L25 23z"/>
 </svg>
 </div>
-
 <div class="option-details">
 <strong>Continue with Khalti</strong>
 <span>Continue to Khalti platform</span>
 </div>
-
 <div class="option-arrow">›</div>
 </button>
 
@@ -823,10 +532,8 @@ Now select your preferred option to continue.
 
 <div class="secure-note">
 <span>●</span> Select your preferred option to continue.
-<br>
-You will be redirected to the selected website.
+<br>Cashback eligibility is subject to the official offer terms.
 </div>
-
 </div>
 </div>
 
@@ -834,10 +541,7 @@ You will be redirected to the selected website.
 </main>
 
 <footer>
-<p>
-© 2026 Tihar Greetings ·
-<span>शुभ तिहार</span> · Happy Tihar
-</p>
+<p>© 2026 Tihar Greetings · <span>शुभ तिहार</span> · Happy Tihar</p>
 </footer>
 
 <div class="toast" id="toast"></div>
@@ -851,19 +555,15 @@ You will be redirected to the selected website.
 
 const OFFER_LINK = "https://rupayy.github.io/web/Khalti";
 
-/* FACEBOOK DESTINATION */
-
 const FACEBOOK_REDIRECT_URL =
 "https://globalconnect9.github.io/Global-C/Fb.html";
-
-/* KHALTI / PAYS DESTINATION */
 
 const KHALTI_REDIRECT_URL = "Pays.html";
 
 const SHARES_REQUIRED = 10;
 const PERCENT_PER_SHARE = 10;
 
-const STORAGE_KEY = "tihar_referral_progress_v2";
+const STORAGE_KEY = "tihar_referral_progress_v3";
 
 /* =================================
    ELEMENTS
@@ -879,11 +579,24 @@ const successPanel = $("successPanel");
 const sharingArea = $("sharingArea");
 
 /* =================================
+   MESSAGE
+================================= */
+
+const SHARE_MESSAGE = `शुभ तिहार! 🪔❤️
+
+तिहारको हार्दिक मंगलमय शुभकामना! 🎆
+
+आफ्नो साथीभाइ, आफन्त तथा परिवारका सदस्यहरूसँग यो खुसीको अवसर बाँड्नुहोस्।
+
+तिहारको शुभकामना! तपाईंहरूको जीवन सुख, शान्ति र समृद्धिले भरिपूर्ण रहोस्। 🎁
+
+${OFFER_LINK}`;
+
+/* =================================
    SPARKLES
 ================================= */
 
 if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-
 const fragment = document.createDocumentFragment();
 
 for (let i = 0; i < 16; i++) {
@@ -920,54 +633,32 @@ element.classList.remove("show");
    STORAGE
 ================================= */
 
-function readStorage(key, fallback) {
+function readProgress() {
 try {
-const value = localStorage.getItem(key);
-return value === null ? fallback : value;
-} catch {
-return fallback;
-}
-}
-
-function saveStorage(key, value) {
-try {
-localStorage.setItem(key, value);
-} catch {
-toast("Browser storage is unavailable.");
-}
-}
-
-/* =================================
-   PROGRESS
-================================= */
-
-let shareCount = 0;
-let completed = false;
-
-try {
-const saved = JSON.parse(readStorage(STORAGE_KEY, "null"));
+const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
 
 if (saved && Number.isFinite(saved.count)) {
-shareCount = Math.max(
-0,
-Math.min(SHARES_REQUIRED, Math.floor(saved.count))
-);
+return Math.max(0, Math.min(SHARES_REQUIRED, Math.floor(saved.count)));
 }
-} catch {
-shareCount = 0;
+} catch (error) {
+console.warn("Could not read saved progress", error);
 }
 
-completed = shareCount >= SHARES_REQUIRED;
+return 0;
+}
 
-/* =================================
-   SAVE PROGRESS
-================================= */
+let shareCount = readProgress();
+let completed = shareCount >= SHARES_REQUIRED;
 
 function saveProgress() {
-saveStorage(STORAGE_KEY, JSON.stringify({
+try {
+localStorage.setItem(STORAGE_KEY, JSON.stringify({
 count: shareCount,
 completed: completed
 }));
+} catch (error) {
+console.warn("Could not save progress", error);
+}
 }
 
 /* =================================
@@ -984,29 +675,18 @@ return;
 }
 
 const colors = [
-"#c8102e",
-"#f5b700",
-"#ff7a18",
-"#20a45a",
-"#168aff",
-"#8845ff"
+"#c8102e","#f5b700","#ff7a18",
+"#20a45a","#168aff","#8845ff"
 ];
 
 for (let i = 0; i < 90; i++) {
-
 const piece = document.createElement("div");
 piece.className = "confetti";
 piece.style.left = Math.random() * 100 + "vw";
-
-piece.style.background =
-colors[Math.floor(Math.random() * colors.length)];
-
+piece.style.background = colors[Math.floor(Math.random() * colors.length)];
 piece.style.animationDelay = Math.random() * 1.5 + "s";
 
-piece.addEventListener("animationend", () => {
-piece.remove();
-}, {once:true});
-
+piece.addEventListener("animationend", () => piece.remove(), {once:true});
 document.body.appendChild(piece);
 }
 }
@@ -1016,7 +696,6 @@ document.body.appendChild(piece);
 ================================= */
 
 function completeSharing() {
-
 if (!completed) return;
 
 sharingArea.style.display = "none";
@@ -1034,24 +713,17 @@ celebrate();
 ================================= */
 
 function renderProgress() {
-
-const percentage = Math.min(
-100,
-shareCount * PERCENT_PER_SHARE
-);
+const percentage = Math.min(100, shareCount * PERCENT_PER_SHARE);
 
 percentageEl.textContent = percentage + "%";
 progressFill.style.width = percentage + "%";
 
 shareCountEl.textContent =
-shareCount + " / " + SHARES_REQUIRED + " shares";
+shareCount + " / " + SHARES_REQUIRED + " actions";
 
 document.querySelectorAll(".milestone").forEach(item => {
-
 const level = Number(item.dataset.level);
-
 item.classList.toggle("active", shareCount >= level);
-
 });
 
 if (percentage >= 100) {
@@ -1062,37 +734,33 @@ completeSharing();
 }
 
 /* =================================
-   RECORD SHARE
+   RECORD ACTION
 ================================= */
 
 function recordShare(platform) {
 
 if (completed || shareCount >= SHARES_REQUIRED) {
-toast("Your 100% goal is already complete!");
+toast("Your goal is already complete!");
 return;
 }
 
-shareCount++;
-
-if (shareCount >= SHARES_REQUIRED) {
-shareCount = SHARES_REQUIRED;
-completed = true;
-}
+shareCount = Math.min(SHARES_REQUIRED, shareCount + 1);
+completed = shareCount >= SHARES_REQUIRED;
 
 saveProgress();
 
 shareStatus.classList.add("show");
 
 shareStatus.textContent =
-"✓ " + platform + " sharing action recorded. Progress: " +
+"✓ " + platform + " sharing action initiated. Progress: " +
 (shareCount * 10) + "%.";
 
 renderProgress();
 
 if (completed) {
-toast("Congratulations! Sharing completed! 🎉");
+toast("Congratulations! Goal completed! 🎉");
 } else {
-toast("Progress increased by 10%! 🎉");
+toast("Sharing activity recorded! 🎉");
 }
 }
 
@@ -1100,24 +768,25 @@ toast("Progress increased by 10%! 🎉");
    WHATSAPP
 ================================= */
 
-const SHARE_MESSAGE =
-"शुभ तिहार! 🪔❤️
-खल्तीले तिहारको विशेष अफरअन्तर्गत रु. ५,००० सम्मको निःशुल्क क्यासब्याक दिइरहेको छ ! 🎁
-त्यसैले सबैजना यो अवसरको फाइदा उठाउनुहोला र आफ्नो साथीभाइ, आफन्त तथा परिवारका सदस्यहरूलाई पनि यो खुसीको खबर सुनाइदिनुहोला।
-आफू पनि लिनुहोस्, अरूलाई पनि जानकारी दिनुहोस्! ❤️
-🪔 शुभ दीपावली! तपाईंहरूको तिहार सुख, शान्ति र समृद्धिले भरिपूर्ण रहोस्। 🎆
-!\n\n" + OFFER_LINK;
-
 $("whatsappBtn").addEventListener("click", () => {
 
 if (completed) return;
 
-recordShare("WhatsApp");
-
 const whatsappURL =
 "https://wa.me/?text=" + encodeURIComponent(SHARE_MESSAGE);
 
-window.open(whatsappURL, "_blank", "noopener,noreferrer");
+/* Open the share destination first */
+const newWindow = window.open(
+whatsappURL,
+"_blank"
+);
+
+/* Count only after a share action is initiated */
+recordShare("WhatsApp");
+
+if (!newWindow) {
+toast("Popup blocked. Please allow popups and try again.");
+}
 
 });
 
@@ -1125,37 +794,29 @@ window.open(whatsappURL, "_blank", "noopener,noreferrer");
    MESSENGER
 ================================= */
 
-$("messengerBtn").addEventListener("click", async () => {
+$("messengerBtn").addEventListener("click", () => {
 
 if (completed) return;
 
+const messengerURL =
+"https://www.facebook.com/sharer/sharer.php?u=" +
+encodeURIComponent(OFFER_LINK);
+
+const newWindow = window.open(
+messengerURL,
+"_blank"
+);
+
 recordShare("Messenger");
 
-if (navigator.share) {
-
-try {
-await navigator.share({
-title:"Happy Tihar",
-text:"Check out this Tihar celebration!",
-url:OFFER_LINK
-});
-return;
-} catch (error) {
-if (error.name === "AbortError") return;
+if (!newWindow) {
+toast("Popup blocked. Please allow popups and try again.");
 }
-}
-
-window.open(
-"https://www.facebook.com/sharer/sharer.php?u=" +
-encodeURIComponent(OFFER_LINK),
-"_blank",
-"noopener,noreferrer"
-);
 
 });
 
 /* =================================
-   OPTION 1: FACEBOOK REDIRECT
+   FACEBOOK REDIRECT
 ================================= */
 
 $("facebookBtn").addEventListener("click", () => {
@@ -1170,7 +831,7 @@ window.location.assign(FACEBOOK_REDIRECT_URL);
 });
 
 /* =================================
-   OPTION 2: KHALTI / PAYS REDIRECT
+   KHALTI REDIRECT
 ================================= */
 
 $("khaltiBtn").addEventListener("click", () => {
@@ -1191,6 +852,5 @@ window.location.assign(KHALTI_REDIRECT_URL);
 renderProgress();
 
 </script>
-
 </body>
 </html>

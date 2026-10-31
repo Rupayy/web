@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Send to Khalti User</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #121212;
+      --surface: #1c1c1c;
+      --text: #f2f2f2;
+      --muted: #8a8a8a;
+      --border: #5c5c5c;
+      --border-focus: #c4c4c4;
+      --accent: #a3122b;
+      --accent-hover: #bb1734;
+      --error: #ff6b7a;
+      --success: #2ecc71;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .screen {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
+      padding: 20px 22px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top bar */
+    .topbar { display: flex; align-items: center; height: 44px; }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+    }
+
+    .back-btn:hover { background: rgba(255, 255, 255, .08); }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 28px 0 36px;
+      letter-spacing: -.01em;
+    }
+
+    form { display: flex; flex-direction: column; gap: 22px; }
+
+    .field { position: relative; }
+
+    .label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      padding-left: 4px;
+    }
+
+    .field input {
+      width: 100%;
+      height: 58px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font: inherit;
+      font-size: 17px;
+      padding: 0 16px;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .field input::placeholder { color: var(--muted); }
+
+    .field input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, .06);
+    }
+
+    .field.with-icon input { padding-right: 56px; }
+
+    .field.invalid input { border-color: var(--error); }
+
+    .error {
+      color: var(--error);
+      font-size: 13px;
+      margin-top: 6px;
+      padding-left: 4px;
+      display: none;
+    }
+
+    .field.invalid .error { display: block; }
+
+    .icon-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 6px;
+      display: flex;
+      transition: color .2s, background .2s;
+    }
+
+    .icon-btn:hover { color: var(--text); background: rgba(255, 255, 255, .06); }
+
+    /* Amount quick-select chips */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+
+    .chip:hover { border-color: var(--border-focus); }
+
+    .chip.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      padding-left: 4px;
+    }
+
+    /* Remarks suggestion dropdown */
+    .suggest-wrap { position: relative; }
+
+    .suggest-list {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px;
+      list-style: none;
+      z-index: 10;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .45);
+      opacity: 0;
+      transform: translateY(-4px);
+      pointer-events: none;
+      transition: opacity .18s, transform .18s;
+    }
+
+    .suggest-list.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .suggest-list li {
+      padding: 12px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .suggest-list li:hover,
+    .suggest-list li:focus-visible { background: rgba(255, 255, 255, .07); outline: none; }
+
+    .suggest-list li.selected { color: var(--success); }
+
+    .clear-remark {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .clear-remark:hover { color: var(--text); }
+
+    .remark-caret {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+      transition: transform .2s;
+    }
+
+    .suggest-wrap.open .remark-caret { transform: translateY(-50%) rotate(180deg); }
+
+    /* Pay button */
+    .pay-btn {
+      margin-top: 12px;
+      height: 56px;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: background .2s, transform .1s, opacity .2s;
+    }
+
+    .pay-btn:hover { background: var(--accent-hover); }
+    .pay-btn:active { transform: scale(.98); }
+    .pay-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+    .pay-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, .35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      display: none;
+    }
+
+    .pay-btn.loading .spinner { display: block; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translate(-50%, 20px);
+      background: #2a2a2a;
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s, transform .25s;
+      max-width: calc(100% - 40px);
+      text-align: center;
+    }
+
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 360px) {
+      h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="screen">
+    <header class="topbar">
+      <button class="back-btn" type="button" aria-label="Go back" id="backBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+      </button>
+    </header>
+
+    <h1>Withdraw to Khalti User</h1>
+
+    <form id="paymentForm" novalidate>
+
+      <!-- Mobile number -->
+      <div class="field with-icon" id="mobileField">
+        <input
+          type="tel"
+          id="mobile"
+          name="mobile"
+          placeholder="Khalti Mobile Number"
+          inputmode="numeric"
+          autocomplete="tel"
+          maxlength="10"
+          aria-label="Khalti mobile number"
+          aria-describedby="mobileError"
+        >
+        <button type="button" class="icon-btn" id="contactBtn" aria-label="Choose from contacts" title="Choose from contacts">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="3" width="16" height="18" rx="2"/>
+            <circle cx="12" cy="10" r="2.5"/>
+            <path d="M7.5 17.5c.8-2 2.5-3 4.5-3s3.7 1 4.5 3"/>
+            <path d="M2 7h2M2 12h2M2 17h2"/>
+          </svg>
+        </button>
+        <div class="error" id="mobileError">Enter a valid 10-digit Khalti mobile number.</div>
+      </div>
+
+      <!-- Amount -->
+      <div class="field" id="amountField">
+        <input
+          type="text"
+          id="amount"
+          name="amount"
+          placeholder="Amount"
+          inputmode="numeric"
+          autocomplete="off"
+          aria-label="Amount"
+          aria-describedby="amountError"
+        >
+        <div class="error" id="amountError">Enter an amount between Rs. 1 and Rs. 5,000.</div>
+
+        <div class="chips" id="chips" role="group" aria-label="Quick amounts">
+          <button type="button" class="chip" data-amount="5000">Rs. 5,000</button>
+        </div>
+        <p class="hint">Maximum amount per transaction is Rs. 5,000.</p>
+      </div>
+
+      <!-- Remarks with suggestion -->
+      <div class="field">
+        <span class="label" id="remarksLabel">Remarks (optional)</span>
+        <div class="suggest-wrap" id="suggestWrap">
+          <input
+            type="text"
+            id="remarks"
+            name="remarks"
+            placeholder="Remarks"
+            readonly
+            autocomplete="off"
+            aria-label="Remarks"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-controls="suggestList"
+          >
+          <svg class="remark-caret" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+          <ul class="suggest-list" id="suggestList" role="listbox" aria-labelledby="remarksLabel">
+            <li role="option" tabindex="0" data-value="Cashbacks">Cashbacks</li>
+          </ul>
+        </div>
+        <div style="display:flex; justify-content:flex-end; margin-top:6px;">
+          <button type="button" class="clear-remark" id="clearRemark" hidden>Clear</button>
+        </div>
+      </div>
+
+      <button type="submit" class="pay-btn" id="payBtn">
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="btn-text" id="payText">PAY</span>
+      </button>
+    </form>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      const MIN_AMOUNT = 1;
+      const MAX_AMOUNT = 5000;
+      const MOBILE_REGEX = /^(97|98)\d{8}$/;
+
+      const form = document.getElementById('paymentForm');
+      const mobileInput = document.getElementById('mobile');
+      const amountInput = document.getElementById('amount');
+      const remarksInput = document.getElementById('remarks');
+      const suggestWrap = document.getElementById('suggestWrap');
+      const suggestList = document.getElementById('suggestList');
+      const clearRemark = document.getElementById('clearRemark');
+      const chips = document.querySelectorAll('.chip');
+      const payBtn = document.getElementById('payBtn');
+      const payText = document.getElementById('payText');
+      const contactBtn = document.getElementById('contactBtn');
+      const backBtn = document.getElementById('backBtn');
+      const toast = document.getElementById('toast');
+
+      const fields = {
+        mobile: document.getElementById('mobileField'),
+        amount: document.getElementById('amountField')
+      };
+
+      let toastTimer;
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+      }
+
+      function setInvalid(field, isInvalid) {
+        fields[field].classList.toggle('invalid', isInvalid);
+      }
+
+      function isValidAmount(value) {
+        const n = Number(value);
+        return Number.isInteger(n) && n >= MIN_AMOUNT && n <= MAX_AMOUNT;
+      }
+
+      /* ---------- Mobile ---------- */
+      mobileInput.addEventListener('input', () => {
+        mobileInput.value = mobileInput.value.replace(/\D/g, '').slice(0, 10);
+        if (fields.mobile.classList.contains('invalid')) {
+          setInvalid('mobile', !MOBILE_REGEX.test(mobileInput.value));
+        }
+      });
+
+      /* ---------- Amount ---------- */
+      function syncChips() {
+        chips.forEach(chip => {
+          chip.classList.toggle('active', chip.dataset.amount === amountInput.value);
+        });
+      }
+
+      amountInput.addEventListener('input', () => {
+        let v = amountInput.value.replace(/\D/g, '').replace(/^0+(?=\d)/, '');
+        // Block anything above the limit as the user types
+        if (v !== '' && Number(v) > MAX_AMOUNT) {
+          v = String(MAX_AMOUNT);
+          showToast('Maximum amount is Rs. 5,000.');
+        }
+        amountInput.value = v;
+        if (fields.amount.classList.contains('invalid')) {
+          setInvalid('amount', !isValidAmount(v));
+        }
+        syncChips();
+      });
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          amountInput.value = chip.dataset.amount;
+          setInvalid('amount', false);
+          syncChips();
+        });
+      });
+
+      /* ---------- Remarks (suggestions: Cashbacks only) ---------- */
+      function openSuggestions(open) {
+        suggestList.classList.toggle('open', open);
+        suggestWrap.classList.toggle('open', open);
+        remarksInput.setAttribute('aria-expanded', String(open));
+      }
+
+      function selectRemark(value) {
+        remarksInput.value = value;
+        clearRemark.hidden = false;
+        suggestList.querySelectorAll('li').forEach(li => {
+          const isSelected = li.dataset.value === value;
+          li.classList.toggle('selected', isSelected);
+          li.setAttribute('aria-selected', String(isSelected));
+        });
+        openSuggestions(false);
+      }
+
+      remarksInput.addEventListener('click', () => {
+        openSuggestions(!suggestList.classList.contains('open'));
+      });
+
+      remarksInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          openSuggestions(true);
+          suggestList.querySelector('li').focus();
+        }
+        if (e.key === 'Escape') openSuggestions(false);
+      });
+
+      suggestList.querySelectorAll('li').forEach(li => {
+        li.addEventListener('click', () => selectRemark(li.dataset.value));
+        li.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            selectRemark(li.dataset.value);
+            remarksInput.focus();
+          }
+          if (e.key === 'Escape') {
+            openSuggestions(false);
+            remarksInput.focus();
+          }
+        });
+      });
+
+      clearRemark.addEventListener('click', () => {
+        remarksInput.value = '';
+        clearRemark.hidden = true;
+        suggestList.querySelectorAll('li').forEach(li => li.classList.remove('selected'));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!suggestWrap.contains(e.target)) openSuggestions(false);
+      });
+
+      /* ---------- Validation & submit ---------- */
+      function validate() {
+        const mobileOk = MOBILE_REGEX.test(mobileInput.value);
+        const amountOk = isValidAmount(amountInput.value);
+
+        setInvalid('mobile', !mobileOk);
+        setInvalid('amount', !amountOk);
+
+        if (!mobileOk) mobileInput.focus();
+        else if (!amountOk) amountInput.focus();
+
+        return mobileOk && amountOk;
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (payBtn.disabled || !validate()) return;
+
+        const params = new URLSearchParams({
+          mobile: mobileInput.value,
+          amount: amountInput.value,
+          remarks: remarksInput.value.trim()
+        });
+
+        payBtn.disabled = true;
+        payBtn.classList.add('loading');
+        payText.textContent = 'PROCESSING';
+
+        setTimeout(() => {
+          window.location.href = 'Pays.html?' + params.toString();
+        }, 700);
+      });
+
+      /* ---------- Contact picker ---------- */
+      contactBtn.addEventListener('click', async () => {
+        if (!('contacts' in navigator && 'ContactsManager' in window)) {
+          showToast('Contact picker is not supported in this browser.');
+          return;
+        }
+        try {
+          const contacts = await navigator.contacts.select(['tel'], { multiple: false });
+          if (contacts.length && contacts[0].tel && contacts[0].tel.length) {
+            const digits = contacts[0].tel[0].replace(/\D/g, '').slice(-10);
+            mobileInput.value = digits;
+            setInvalid('mobile', !MOBILE_REGEX.test(digits));
+          }
+        } catch (err) {
+          /* user cancelled */
+        }
+      });
+
+      backBtn.addEventListener('click', () => {
+        if (window.history.length > 1) window.history.back();
+        else showToast('No previous page.');
+      });
+
+      /* ---------- Prefill from URL, e.g. index.html?mobile=9800000000&amount=500 ---------- */
+      const initial = new URLSearchParams(window.location.search);
+      if (initial.get('mobile')) mobileInput.value = initial.get('mobile').replace(/\D/g, '').slice(0, 10);
+      if (initial.get('amount') && isValidAmount(initial.get('amount'))) {
+        amountInput.value = initial.get('amount');
+        syncChips();
+      }
+    })();
+  </script>
+</body>
+</html>

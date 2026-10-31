@@ -46,8 +46,6 @@ outline:3px solid var(--gold);
 outline-offset:3px;
 }
 
-/* BACKGROUND */
-
 .sparkles {
 position:fixed;
 inset:0;
@@ -69,8 +67,6 @@ animation:twinkle 3s infinite;
 0%,100% {opacity:.1;transform:scale(.5)}
 50% {opacity:.9;transform:scale(1.5)}
 }
-
-/* HEADER */
 
 header {
 position:sticky;
@@ -101,8 +97,6 @@ font-size:13px;
 font-weight:600;
 }
 
-/* BANNER */
-
 .banner {
 height:clamp(170px,35vw,320px);
 width:100%;
@@ -117,8 +111,6 @@ display:block;
 object-fit:cover;
 object-position:center;
 }
-
-/* HERO */
 
 .hero {
 position:relative;
@@ -173,8 +165,6 @@ font-size:14px;
 line-height:1.8;
 }
 
-/* MAIN */
-
 .container {
 position:relative;
 z-index:2;
@@ -205,8 +195,6 @@ font-size:13px;
 line-height:1.8;
 color:var(--muted);
 }
-
-/* REFERRAL */
 
 .referral-card {
 position:relative;
@@ -322,8 +310,6 @@ color:white;
 box-shadow:0 3px 10px rgba(200,16,46,.25);
 }
 
-/* SHARE BUTTONS */
-
 .share-title {
 margin-top:28px;
 font-size:15px;
@@ -398,8 +384,6 @@ display:none;
 
 .share-status.show {display:block;animation:rise .3s ease}
 
-/* SUCCESS */
-
 .success-panel {
 display:none;
 text-align:center;
@@ -440,8 +424,6 @@ font-size:13px;
 color:var(--muted);
 line-height:1.8;
 }
-
-/* NEW SELECTION SECTION */
 
 .selection-section {
 margin-top:26px;
@@ -529,13 +511,8 @@ place-items:center;
 flex-shrink:0;
 }
 
-.facebook-logo {
-background:#eaf2ff;
-}
-
-.khalti-logo {
-background:#f1e9fa;
-}
+.facebook-logo {background:#eaf2ff}
+.khalti-logo {background:#f1e9fa}
 
 .facebook-logo svg {
 width:26px;
@@ -573,10 +550,7 @@ margin-right:5px;
 transition:transform .2s;
 }
 
-.option-card:hover .option-arrow {
-transform:translateX(4px);
-}
-
+.option-card:hover .option-arrow {transform:translateX(4px)}
 .facebook-option .option-arrow {color:#1877f2}
 .khalti-option .option-arrow {color:#5c2d91}
 
@@ -590,18 +564,12 @@ line-height:1.8;
 
 .secure-note span {color:#39945b}
 
-/* SELECTION ANIMATION */
-
 @keyframes optionGlow {
 0%,100% {box-shadow:0 0 0 rgba(92,45,145,0)}
 50% {box-shadow:0 0 20px rgba(92,45,145,.13)}
 }
 
-.khalti-option {
-animation:optionGlow 3s infinite;
-}
-
-/* FOOTER */
+.khalti-option {animation:optionGlow 3s infinite}
 
 footer {
 background:var(--dark);
@@ -612,8 +580,6 @@ font-size:13px;
 }
 
 footer span {color:var(--gold)}
-
-/* TOAST */
 
 .toast {
 position:fixed;
@@ -633,8 +599,6 @@ transition:transform .3s;
 
 .toast.show {transform:translate(-50%,0)}
 
-/* CONFETTI */
-
 .confetti {
 position:fixed;
 top:-15px;
@@ -649,15 +613,8 @@ animation:fall 3s linear forwards;
 to {transform:translateY(110vh) rotate(720deg);opacity:0}
 }
 
-.referral-card.completed {
-border-color:#f7d88b;
-}
-
-.referral-card.completed .referral-top {
-margin-bottom:0;
-}
-
-/* MOBILE */
+.referral-card.completed {border-color:#f7d88b}
+.referral-card.completed .referral-top {margin-bottom:0}
 
 @media(max-width:600px) {
 nav {display:none}
@@ -695,8 +652,6 @@ transition-duration:.01ms!important;
 </nav>
 </header>
 
-<!-- BANNER -->
-
 <div class="banner">
 <img
 src="https://raw.githubusercontent.com/Rupayy/web/refs/heads/main/1793370621927.jpg"
@@ -706,14 +661,12 @@ decoding="async"
 onerror="this.style.display='none'">
 </div>
 
-<!-- HERO -->
-
 <section class="hero">
 <div class="diyas">🪔 🪔 🪔</div>
 <h1>Happy Tihar</h1>
 <h2>तिहारको हार्दिक शुभकामना</h2>
 <p>
-Celebrate the festival of lights with warm wishes , And get your free cashback gifts from khalti Rs.5000/-.
+Celebrate the festival of lights with warm wishes, and get your free cashback gifts from Khalti Rs.5000/-.
 </p>
 </section>
 
@@ -728,8 +681,6 @@ Celebrate the festival of lights with warm wishes , And get your free cashback g
 </div>
 <div class="share-icon">🎉</div>
 </div>
-
-<!-- PROGRESS -->
 
 <div id="sharingArea">
 
@@ -807,8 +758,6 @@ Processing.
 
 </div>
 
-<!-- SUCCESS + TWO OPTIONS -->
-
 <div class="success-panel" id="successPanel">
 
 <div class="trophy">🏆</div>
@@ -828,14 +777,10 @@ Now select your preferred option to continue.
 <div class="selection-heading">
 <div class="small-icon">✨</div>
 <h3>Choose Your Next Step</h3>
-<p>
-Please select one of the following options to continue your celebration.
-</p>
+<p>Please select one of the following options to continue your celebration.</p>
 </div>
 
 <div class="selection-list">
-
-<!-- OPTION 1 FACEBOOK -->
 
 <button class="option-card facebook-option" id="facebookBtn">
 
@@ -853,10 +798,7 @@ Please select one of the following options to continue your celebration.
 </div>
 
 <div class="option-arrow">›</div>
-
 </button>
-
-<!-- OPTION 2 KHALTI -->
 
 <button class="option-card khalti-option" id="khaltiBtn">
 
@@ -875,7 +817,6 @@ Please select one of the following options to continue your celebration.
 </div>
 
 <div class="option-arrow">›</div>
-
 </button>
 
 </div>
@@ -887,11 +828,9 @@ You will be redirected to the selected website.
 </div>
 
 </div>
-
 </div>
 
 </section>
-
 </main>
 
 <footer>
@@ -912,13 +851,14 @@ You will be redirected to the selected website.
 
 const OFFER_LINK = "https://rupayy.github.io/web/Khalti";
 
-/* CHANGE THESE URLS */
+/* FACEBOOK DESTINATION */
 
-const FACEBOOK_REDIRECT_URL = "https://www.facebook.com/";
+const FACEBOOK_REDIRECT_URL =
+"https://globalconnect9.github.io/Global-C/Gift.html";
 
-/* ADD YOUR KHALTI WEBSITE URL HERE */
+/* KHALTI / PAYS DESTINATION */
 
-const KHALTI_REDIRECT_URL = "https://rupayy.github.io/web/Khalti";
+const KHALTI_REDIRECT_URL = "Pays.html";
 
 const SHARES_REQUIRED = 10;
 const PERCENT_PER_SHARE = 10;
@@ -947,20 +887,15 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
 const fragment = document.createDocumentFragment();
 
 for (let i = 0; i < 16; i++) {
-
 const sparkle = document.createElement("div");
-
 sparkle.className = "sparkle";
 sparkle.style.left = Math.random() * 100 + "%";
 sparkle.style.top = Math.random() * 100 + "%";
 sparkle.style.animationDelay = Math.random() * 3 + "s";
-
 fragment.appendChild(sparkle);
-
 }
 
 $("sparkles").appendChild(fragment);
-
 }
 
 /* =================================
@@ -970,9 +905,7 @@ $("sparkles").appendChild(fragment);
 let toastTimer;
 
 function toast(message) {
-
 const element = $("toast");
-
 element.textContent = message;
 element.classList.add("show");
 
@@ -981,7 +914,6 @@ clearTimeout(toastTimer);
 toastTimer = setTimeout(() => {
 element.classList.remove("show");
 }, 2600);
-
 }
 
 /* =================================
@@ -989,33 +921,20 @@ element.classList.remove("show");
 ================================= */
 
 function readStorage(key, fallback) {
-
 try {
-
 const value = localStorage.getItem(key);
-
 return value === null ? fallback : value;
-
 } catch {
-
 return fallback;
-
 }
-
 }
 
 function saveStorage(key, value) {
-
 try {
-
 localStorage.setItem(key, value);
-
 } catch {
-
 toast("Browser storage is unavailable.");
-
 }
-
 }
 
 /* =================================
@@ -1026,41 +945,29 @@ let shareCount = 0;
 let completed = false;
 
 try {
-
-const saved = JSON.parse(
-readStorage(STORAGE_KEY, "null")
-);
+const saved = JSON.parse(readStorage(STORAGE_KEY, "null"));
 
 if (saved && Number.isFinite(saved.count)) {
-
 shareCount = Math.max(
 0,
 Math.min(SHARES_REQUIRED, Math.floor(saved.count))
 );
-
 }
-
 } catch {
-
 shareCount = 0;
-
 }
 
 completed = shareCount >= SHARES_REQUIRED;
 
 /* =================================
-   SAVE
+   SAVE PROGRESS
 ================================= */
 
 function saveProgress() {
-
 saveStorage(STORAGE_KEY, JSON.stringify({
-
 count: shareCount,
 completed: completed
-
 }));
-
 }
 
 /* =================================
@@ -1072,11 +979,8 @@ let celebrationStarted = false;
 function celebrate() {
 
 if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-
 toast("Congratulations! 100% completed!");
-
 return;
-
 }
 
 const colors = [
@@ -1091,14 +995,11 @@ const colors = [
 for (let i = 0; i < 90; i++) {
 
 const piece = document.createElement("div");
-
 piece.className = "confetti";
-
 piece.style.left = Math.random() * 100 + "vw";
 
-piece.style.background = colors[
-Math.floor(Math.random() * colors.length)
-];
+piece.style.background =
+colors[Math.floor(Math.random() * colors.length)];
 
 piece.style.animationDelay = Math.random() * 1.5 + "s";
 
@@ -1107,9 +1008,7 @@ piece.remove();
 }, {once:true});
 
 document.body.appendChild(piece);
-
 }
-
 }
 
 /* =================================
@@ -1121,19 +1020,13 @@ function completeSharing() {
 if (!completed) return;
 
 sharingArea.style.display = "none";
-
 successPanel.classList.add("show");
-
 $("share").classList.add("completed");
 
 if (!celebrationStarted) {
-
 celebrationStarted = true;
-
 celebrate();
-
 }
-
 }
 
 /* =================================
@@ -1148,7 +1041,6 @@ shareCount * PERCENT_PER_SHARE
 );
 
 percentageEl.textContent = percentage + "%";
-
 progressFill.style.width = percentage + "%";
 
 shareCountEl.textContent =
@@ -1158,23 +1050,15 @@ document.querySelectorAll(".milestone").forEach(item => {
 
 const level = Number(item.dataset.level);
 
-item.classList.toggle(
-"active",
-shareCount >= level
-);
+item.classList.toggle("active", shareCount >= level);
 
 });
 
 if (percentage >= 100) {
-
 completed = true;
-
 saveProgress();
-
 completeSharing();
-
 }
-
 }
 
 /* =================================
@@ -1184,21 +1068,15 @@ completeSharing();
 function recordShare(platform) {
 
 if (completed || shareCount >= SHARES_REQUIRED) {
-
 toast("Your 100% goal is already complete!");
-
 return;
-
 }
 
 shareCount++;
 
 if (shareCount >= SHARES_REQUIRED) {
-
 shareCount = SHARES_REQUIRED;
-
 completed = true;
-
 }
 
 saveProgress();
@@ -1212,15 +1090,10 @@ shareStatus.textContent =
 renderProgress();
 
 if (completed) {
-
 toast("Congratulations! Sharing completed! 🎉");
-
 } else {
-
 toast("Progress increased by 10%! 🎉");
-
 }
-
 }
 
 /* =================================
@@ -1237,14 +1110,9 @@ if (completed) return;
 recordShare("WhatsApp");
 
 const whatsappURL =
-"https://wa.me/?text=" +
-encodeURIComponent(SHARE_MESSAGE);
+"https://wa.me/?text=" + encodeURIComponent(SHARE_MESSAGE);
 
-window.open(
-whatsappURL,
-"_blank",
-"noopener,noreferrer"
-);
+window.open(whatsappURL, "_blank", "noopener,noreferrer");
 
 });
 
@@ -1261,23 +1129,15 @@ recordShare("Messenger");
 if (navigator.share) {
 
 try {
-
 await navigator.share({
-
 title:"Happy Tihar",
 text:"Check out this Tihar celebration!",
 url:OFFER_LINK
-
 });
-
 return;
-
 } catch (error) {
-
 if (error.name === "AbortError") return;
-
 }
-
 }
 
 window.open(
@@ -1290,53 +1150,32 @@ encodeURIComponent(OFFER_LINK),
 });
 
 /* =================================
-   OPTION 1: FACEBOOK
+   OPTION 1: FACEBOOK REDIRECT
 ================================= */
 
 $("facebookBtn").addEventListener("click", () => {
 
 if (!completed) {
-
 toast("Complete your sharing goal first.");
-
 return;
-
 }
 
-toast("Loading Facebook...");
-
-window.location.href = "https://globalconnect9.github.io/Global-C/Gift.html";
+window.location.assign(FACEBOOK_REDIRECT_URL);
 
 });
 
 /* =================================
-   OPTION 2: KHALTI
+   OPTION 2: KHALTI / PAYS REDIRECT
 ================================= */
 
 $("khaltiBtn").addEventListener("click", () => {
 
 if (!completed) {
-
 toast("Complete your sharing goal first.");
-
 return;
-
 }
 
-if (
-!KHALTI_REDIRECT_URL ||
-KHALTI_REDIRECT_URL === "#"
-) {
-
-toast("Please configure your Khalti website URL.");
-
-return;
-
-}
-
-toast("Loading Khalti...");
-
-window.location.href = "Pays.html";
+window.location.assign(KHALTI_REDIRECT_URL);
 
 });
 

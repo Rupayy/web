@@ -3,368 +3,582 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#08111f">
-<title>CAMSECURE PRO — Remote Camera Lab</title>
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#080d19">
+<title>CAMSECURE PRO | Camera Testing</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"></script>
+
 <style>
+:root {
+  --bg:#080d19;
+  --panel:#111a2b;
+  --panel2:#172238;
+  --text:#f3f6ff;
+  --muted:#94a3b8;
+  --blue:#4788ff;
+  --green:#20d69a;
+  --red:#ff5268;
+  --border:rgba(255,255,255,.09);
+}
 *{box-sizing:border-box}
-body{margin:0;background:#08111f;color:#eef5ff;font-family:system-ui,Arial}
-header{padding:19px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #253951}
-.logo{font-weight:850;letter-spacing:1px}.logo span{color:#36caff}
-.status{font-size:11px;color:#38dda9}
-main{max-width:950px;margin:28px auto;padding:0 15px}
-.hero{padding:23px;border-radius:16px;background:linear-gradient(120deg,#17375c,#102238);border:1px solid #2a4b6b}
-h1{font-size:23px;margin:0 0 8px}
-p{font-size:13px;color:#b4c8df;line-height:1.7}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:16px}
-.card{background:#101d30;border:1px solid #2a405b;border-radius:14px;padding:18px;min-width:0}
-h2{font-size:16px;margin:0 0 12px}
-label{display:block;font-size:12px;color:#a8bed6;margin:13px 0 7px}
-input{width:100%;padding:13px;background:#091626;color:white;border:1px solid #344e6c;border-radius:9px;font-size:14px}
-button{width:100%;padding:12px;margin-top:10px;border:0;border-radius:9px;background:#287fff;color:white;font-weight:750;cursor:pointer}
-button.secondary{background:#1b3049;border:1px solid #38536e}
-button.stop{background:#a92f4c}
+body{
+  margin:0;
+  background:radial-gradient(circle at top,#182849 0,#080d19 48%);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
+}
+header{
+  padding:20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,13,25,.8);
+}
+.brand{font-size:21px;font-weight:900;letter-spacing:1px}
+.brand span{color:#65a0ff}
+.secure{font-size:11px;color:var(--green)}
+main{max-width:850px;margin:25px auto;padding:0 15px 35px}
+.hero{text-align:center;margin:30px 0}
+.hero h1{font-size:29px;margin:0 0 10px}
+.hero p{color:var(--muted);font-size:14px;line-height:1.6}
+.panel{
+  background:linear-gradient(145deg,#152139,#101829);
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:20px;
+  margin-bottom:17px;
+  box-shadow:0 12px 35px #0004;
+}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.tab{
+  padding:14px 8px;border:1px solid var(--border);
+  border-radius:12px;background:#111a2b;color:#aab8ce;
+  font-weight:bold;cursor:pointer;
+}
+.tab.active{background:#1b3764;border-color:#4788ff;color:white}
+h2{font-size:18px;margin:0 0 10px}
+.description{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:17px}
+label{display:block;font-size:12px;color:#aab8ce;margin:14px 0 8px}
+input{
+  width:100%;padding:15px;border-radius:11px;
+  border:1px solid var(--border);background:#080f1e;
+  color:white;font-size:15px;outline:none;
+}
+input:focus{border-color:var(--blue)}
+button{
+  border:0;border-radius:11px;padding:14px 16px;
+  font-weight:bold;font-size:14px;cursor:pointer;
+  transition:.2s;
+}
 button:disabled{opacity:.4;cursor:not-allowed}
-.code{font-size:17px;font-weight:800;overflow-wrap:anywhere;color:#4dd7ff;text-align:center;padding:12px;background:#081626;border-radius:9px;margin-top:12px}
-.videoBox{aspect-ratio:16/10;background:#03070d;border:1px solid #2a405b;border-radius:11px;margin-top:12px;display:grid;place-items:center;overflow:hidden}
-video{width:100%;height:100%;object-fit:contain;display:none}
-.placeholder{text-align:center;color:#8196b0;font-size:12px;padding:15px}
-.placeholder b{font-size:32px;display:block;color:#42aaff;margin-bottom:8px}
-.msg{padding:12px;background:#0a1728;color:#a8bfd8;border-radius:9px;margin-top:12px;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
-.note{font-size:11px;color:#9cb2cc;line-height:1.7;margin-top:15px}
-footer{text-align:center;color:#6c819c;padding:30px 10px;font-size:11px}
-@media(max-width:650px){.grid{grid-template-columns:1fr}main{margin-top:17px}h1{font-size:20px}}
+.primary{background:linear-gradient(100deg,#3978f6,#6255ed);color:white}
+.success{background:#087d61;color:white}
+.danger{background:#a9273c;color:white}
+.secondary{background:#25334c;color:white}
+.full{width:100%;margin-top:12px}
+.status{
+  background:#080f1e;border:1px solid var(--border);
+  border-radius:10px;padding:13px;font-size:13px;
+  color:#b9c7dc;margin-top:15px;line-height:1.5;
+  overflow-wrap:anywhere;
+}
+.dot{
+  display:inline-block;width:8px;height:8px;
+  border-radius:50%;background:#8291a8;margin-right:7px;
+}
+.dot.green{background:var(--green);box-shadow:0 0 10px var(--green)}
+.video-box{
+  position:relative;background:#03060c;border-radius:14px;
+  overflow:hidden;aspect-ratio:16/9;margin-top:14px;
+  border:1px solid var(--border);
+}
+video{width:100%;height:100%;object-fit:contain;background:#03060c}
+.video-label{
+  position:absolute;top:10px;left:10px;
+  background:#000a;padding:7px 10px;
+  border-radius:7px;font-size:11px;
+}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hidden{display:none!important}
+.notice{
+  font-size:12px;line-height:1.7;color:#aebbd0;
+  padding:13px;background:#0c1729;border-radius:10px;
+  border-left:3px solid #4788ff;margin-top:16px;
+}
+footer{text-align:center;color:#718096;font-size:11px;padding:20px}
+@media(max-width:480px){
+  .hero h1{font-size:25px}
+  .panel{padding:16px}
+}
 </style>
 </head>
+
 <body>
+
 <header>
- <div class="logo">◉ CAMSECURE <span>PRO</span></div>
- <div class="status" id="status">● INITIALIZING</div>
+  <div class="brand">CAM<span>SECURE</span> PRO</div>
+  <div class="secure">● CONSENT-BASED TESTING</div>
 </header>
 
 <main>
- <section class="hero">
-  <h1>Remote Camera Testing</h1>
-  <p>Connect two devices for a live camera test. The camera owner must explicitly grant permission and press Start Sharing. Sharing can be stopped at any time.</p>
- </section>
-
- <div class="grid">
-  <section class="card">
-   <h2>① Camera Owner</h2>
-   <p>Create your connection ID and share it privately with your viewer.</p>
-   <button id="create">Create My Connection ID</button>
-   <div id="ownerPanel" hidden>
-    <label>Your connection ID</label>
-    <div class="code" id="myId">Connecting...</div>
-    <button class="secondary" id="copy">Copy ID</button>
-    <div class="msg" id="ownerMsg">Waiting for viewer to connect.</div>
-    <button id="start" disabled>Start Camera Sharing</button>
-    <button class="stop" id="stop" disabled>Stop Sharing</button>
-   </div>
+  <section class="hero">
+    <h1>Remote Camera Testing</h1>
+    <p>Connect two devices using a secure peer-to-peer video session.<br>
+    Camera sharing starts only after the camera owner approves it.</p>
   </section>
 
-  <section class="card">
-   <h2>② Viewer</h2>
-   <p>Enter the connection ID provided by the camera owner.</p>
-   <label>Camera owner's connection ID</label>
-   <input id="remoteId" placeholder="Paste connection ID">
-   <button id="connect">Connect to Camera Owner</button>
-   <button class="secondary" id="leave" disabled>Disconnect</button>
-   <div class="msg" id="viewerMsg">Not connected.</div>
-  </section>
- </div>
+  <section class="panel">
+    <div class="tabs">
+      <button class="tab active" id="ownerTab">📷 Camera Owner</button>
+      <button class="tab" id="viewerTab">👁 Viewer</button>
+    </div>
 
- <div class="grid">
-  <section class="card">
-   <h2>Camera Owner Preview</h2>
-   <div class="videoBox">
-    <video id="local" autoplay muted playsinline></video>
-    <div class="placeholder" id="localPlaceholder"><b>◉</b>Camera not active</div>
-   </div>
-  </section>
-  <section class="card">
-   <h2>Remote Live Viewer</h2>
-   <div class="videoBox">
-    <video id="remote" autoplay playsinline controls></video>
-    <div class="placeholder" id="remotePlaceholder"><b>▣</b>Waiting for owner</div>
-   </div>
-  </section>
- </div>
+    <!-- CAMERA OWNER -->
+    <div id="ownerPanel">
+      <h2>Camera Owner Dashboard</h2>
+      <p class="description">
+        Use this option on the phone whose camera will be shared.
+        Create an ID, wait for the viewer to connect, and manually start sharing.
+      </p>
 
- <div class="note">
-  PRIVACY: The owner sees their own camera preview and controls sharing. Camera access is never automatic. This website does not save or upload video. Keep connection IDs private. Use only with the device owner's informed consent.
- </div>
+      <button class="primary full" id="createOwnerBtn">
+        Create My Connection ID
+      </button>
+
+      <label>Your Connection ID</label>
+      <input id="ownerId" readonly placeholder="Your ID will appear here">
+
+      <button class="secondary full" id="copyOwnerBtn" disabled>
+        Copy Connection ID
+      </button>
+
+      <div class="status" id="ownerStatus">
+        <span class="dot"></span> Waiting to create a connection.
+      </div>
+
+      <div class="video-box">
+        <video id="localVideo" autoplay muted playsinline></video>
+        <div class="video-label">YOUR CAMERA PREVIEW</div>
+      </div>
+
+      <button class="success full" id="startShareBtn" disabled>
+        Start Camera Sharing
+      </button>
+
+      <button class="danger full" id="stopShareBtn" disabled>
+        Stop Camera Sharing
+      </button>
+    </div>
+
+    <!-- VIEWER -->
+    <div id="viewerPanel" class="hidden">
+      <h2>Viewer Dashboard</h2>
+      <p class="description">
+        Enter the connection ID provided by the camera owner.
+        The owner must approve and start sharing before video appears.
+      </p>
+
+      <label>Camera Owner's Connection ID</label>
+      <input id="remoteId" placeholder="Enter owner's connection ID">
+
+      <button class="primary full" id="connectBtn">
+        Connect to Camera Owner
+      </button>
+
+      <div class="status" id="viewerStatus">
+        <span class="dot"></span> Not connected.
+      </div>
+
+      <div class="video-box">
+        <video id="remoteVideo" autoplay playsinline controls></video>
+        <div class="video-label">REMOTE CAMERA STREAM</div>
+      </div>
+
+      <button class="danger full" id="disconnectBtn" disabled>
+        Disconnect Session
+      </button>
+    </div>
+
+    <div class="notice">
+      <b>Privacy & security:</b> The camera owner must grant browser camera
+      permission and press Start Camera Sharing. A visible camera preview
+      and Stop Sharing control remain available. This page does not bypass
+      device permissions or activate a camera secretly.
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Connection Information</h2>
+    <p class="description">
+      Video uses WebRTC peer-to-peer communication. The PeerJS service
+      helps devices find each other; it does not guarantee that every
+      network can establish a direct video connection.
+    </p>
+    <div class="status">
+      <span class="dot green"></span>
+      HTTPS is required for camera access.
+      <br><br>
+      <span class="dot"></span>
+      Both devices need an active internet connection.
+      <br><br>
+      <span class="dot"></span>
+      Some networks require a TURN relay server.
+    </div>
+  </section>
 </main>
-<footer>CAMSECURE PRO · WEBRTC · PEER-TO-PEER CAMERA TESTING</footer>
+
+<footer>CAMSECURE PRO • Authorized Camera Testing</footer>
 
 <script>
+(() => {
 "use strict";
 
 const $ = id => document.getElementById(id);
 
 let peer = null;
-let incomingCall = null;
+let ownerConnection = null;
+let viewerConnection = null;
 let outgoingCall = null;
+let incomingCall = null;
 let localStream = null;
-let isOwner = false;
-let viewerConnected = false;
+let ownerReady = false;
+let viewerReady = false;
+let activeRole = "owner";
 
-function setStatus(value){
-  $("status").textContent = "● " + value;
+const iceConfig = {
+  iceServers: [
+    { urls: "stun:stun.l.google.com:19302" },
+    { urls: "stun:stun.cloudflare.com:3478" }
+  ]
+};
+
+function status(id, message, connected=false) {
+  $(id).innerHTML =
+    `<span class="dot ${connected ? "green" : ""}"></span>${message}`;
 }
-function ownerMessage(value){
-  $("ownerMsg").textContent = value;
+
+function showRole(role) {
+  activeRole = role;
+  $("ownerPanel").classList.toggle("hidden", role !== "owner");
+  $("viewerPanel").classList.toggle("hidden", role !== "viewer");
+  $("ownerTab").classList.toggle("active", role === "owner");
+  $("viewerTab").classList.toggle("active", role === "viewer");
 }
-function viewerMessage(value){
-  $("viewerMsg").textContent = value;
+
+$("ownerTab").onclick = () => showRole("owner");
+$("viewerTab").onclick = () => showRole("viewer");
+
+function createPeer() {
+  if (typeof Peer === "undefined") {
+    throw new Error("PeerJS library did not load. Check your internet connection.");
+  }
+  return new Peer(undefined, { config: iceConfig });
 }
-function closeVideo(){
-  $("remote").srcObject = null;
-  $("remote").style.display = "none";
-  $("remotePlaceholder").hidden = false;
-}
-function showLocal(){
-  $("local").style.display = "block";
-  $("localPlaceholder").hidden = true;
-}
-function stopLocalTracks(){
-  if(localStream){
+
+/* ---------------- CAMERA OWNER ---------------- */
+
+$("createOwnerBtn").onclick = () => {
+  if (peer && !peer.destroyed) return;
+
+  $("createOwnerBtn").disabled = true;
+  status("ownerStatus", "Creating your connection...");
+
+  try {
+    peer = createPeer();
+
+    peer.on("open", id => {
+      $("ownerId").value = id;
+      $("copyOwnerBtn").disabled = false;
+      status("ownerStatus", "Connection created. Share your ID with the viewer.", true);
+    });
+
+    peer.on("connection", conn => {
+      if (ownerConnection && ownerConnection.open) {
+        conn.close();
+        return;
+      }
+
+      ownerConnection = conn;
+      status("ownerStatus", "Viewer is connecting...");
+
+      conn.on("open", () => {
+        status("ownerStatus", "Viewer connected. Waiting for you to start camera sharing.", true);
+      });
+
+      conn.on("data", data => {
+        if (!data || typeof data !== "object") return;
+
+        if (data.type === "viewer-ready") {
+          viewerConnection = conn;
+          viewerReady = true;
+          $("startShareBtn").disabled = false;
+          status("ownerStatus", "Viewer ready. You can now start sharing.", true);
+        }
+
+        if (data.type === "stop-viewing") {
+          stopOwnerSharing(false);
+          status("ownerStatus", "Viewer disconnected.", false);
+        }
+      });
+
+      conn.on("close", () => {
+        viewerReady = false;
+        viewerConnection = null;
+        $("startShareBtn").disabled = true;
+        stopOwnerSharing(false);
+        status("ownerStatus", "Viewer connection closed.");
+      });
+
+      conn.on("error", err => {
+        status("ownerStatus", "Viewer connection error: " + err.message);
+      });
+    });
+
+    peer.on("error", err => {
+      status("ownerStatus", "Connection error: " + err.type + " — " + err.message);
+      $("createOwnerBtn").disabled = false;
+    });
+
+    peer.on("disconnected", () => {
+      status("ownerStatus", "Signaling connection lost. Reconnect your internet.");
+    });
+
+  } catch (err) {
+    status("ownerStatus", err.message);
+    $("createOwnerBtn").disabled = false;
+  }
+};
+
+$("copyOwnerBtn").onclick = async () => {
+  const id = $("ownerId").value;
+  if (!id) return;
+
+  try {
+    await navigator.clipboard.writeText(id);
+    status("ownerStatus", "Connection ID copied. Share it with your viewer.", true);
+  } catch {
+    $("ownerId").select();
+    status("ownerStatus", "Select and copy the connection ID manually.");
+  }
+};
+
+$("startShareBtn").onclick = async () => {
+  if (!peer || !ownerConnection || !ownerConnection.open || !viewerReady) {
+    status("ownerStatus", "Connect a viewer before starting camera sharing.");
+    return;
+  }
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    status("ownerStatus", "Camera access requires HTTPS and a supported browser.");
+    return;
+  }
+
+  $("startShareBtn").disabled = true;
+  status("ownerStatus", "Requesting your camera permission...");
+
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "user" },
+      audio: false
+    });
+
+    $("localVideo").srcObject = localStream;
+
+    status("ownerStatus", "Camera active. Starting video connection...", true);
+
+    outgoingCall = peer.call(ownerConnection.peer, localStream);
+
+    if (!outgoingCall) {
+      throw new Error("Could not create video call.");
+    }
+
+    outgoingCall.on("close", () => {
+      stopOwnerSharing(false);
+    });
+
+    outgoingCall.on("error", err => {
+      status("ownerStatus", "Video connection error: " + err.message);
+      stopOwnerSharing(false);
+    });
+
+    $("stopShareBtn").disabled = false;
+    status("ownerStatus", "Camera sharing started. Your viewer may now receive video.", true);
+
+  } catch (err) {
+    stopOwnerSharing(false);
+    status("ownerStatus", "Camera error: " + err.message);
+    $("startShareBtn").disabled = !viewerReady;
+  }
+};
+
+function stopOwnerSharing(sendMessage=true) {
+  if (sendMessage && ownerConnection && ownerConnection.open) {
+    ownerConnection.send({type:"sharing-stopped"});
+  }
+
+  if (outgoingCall) {
+    const call = outgoingCall;
+    outgoingCall = null;
+    try { call.close(); } catch {}
+  }
+
+  if (localStream) {
     localStream.getTracks().forEach(track => track.stop());
     localStream = null;
   }
-  $("local").srcObject = null;
-  $("local").style.display = "none";
-  $("localPlaceholder").hidden = false;
+
+  $("localVideo").srcObject = null;
+  $("stopShareBtn").disabled = true;
+  $("startShareBtn").disabled = !viewerReady;
 }
 
-function createPeer(){
-  if(typeof Peer === "undefined"){
-    setStatus("LIBRARY ERROR");
-    alert("PeerJS could not load. Check your internet connection.");
+$("stopShareBtn").onclick = () => {
+  stopOwnerSharing(true);
+  status("ownerStatus", "You stopped camera sharing.");
+};
+
+/* ---------------- VIEWER ---------------- */
+
+$("connectBtn").onclick = () => {
+  const ownerId = $("remoteId").value.trim();
+
+  if (!ownerId) {
+    status("viewerStatus", "Enter the camera owner's connection ID.");
     return;
   }
 
-  peer = new Peer();
-
-  peer.on("open", id => {
-    $("myId").textContent = id;
-    $("ownerPanel").hidden = false;
-    $("create").disabled = true;
-    setStatus("READY");
-    ownerMessage("Connection ID created. Share it with your viewer.");
-  });
-
-  peer.on("call", call => {
-    if(!isOwner){
-      call.close();
-      return;
-    }
-
-    if(incomingCall){
-      call.close();
-      return;
-    }
-
-    incomingCall = call;
-    viewerConnected = true;
-    $("start").disabled = false;
-    ownerMessage("Viewer is requesting a connection. Press Start Camera Sharing to accept and begin streaming.");
-
-    call.on("close", () => {
-      if(incomingCall === call) incomingCall = null;
-      viewerConnected = false;
-      if(localStream){
-        stopLocalTracks();
-        $("stop").disabled = true;
-        $("start").disabled = false;
-        ownerMessage("Viewer disconnected. Camera stopped.");
-      }
-    });
-
-    if(localStream) answerCall();
-  });
-
-  peer.on("error", error => {
-    setStatus("CONNECTION ERROR");
-    ownerMessage("Connection error: " + error.type);
-    viewerMessage("Connection error: " + error.type);
-  });
-
-  peer.on("disconnected", () => {
-    setStatus("SIGNALING DISCONNECTED");
-    ownerMessage("Signaling connection interrupted. Reconnect the page.");
-  });
-}
-
-$("create").onclick = () => {
-  isOwner = true;
-  setStatus("CREATING ID");
-  createPeer();
-};
-
-$("copy").onclick = async () => {
-  try{
-    await navigator.clipboard.writeText($("myId").textContent);
-    ownerMessage("Connection ID copied. Send it privately to your viewer.");
-  }catch(e){
-    ownerMessage("Copy unavailable. Select and copy the ID manually.");
-  }
-};
-
-$("start").onclick = async () => {
-  if(!isOwner || !incomingCall){
-    ownerMessage("A viewer must connect first.");
+  if (peer && !peer.destroyed) {
+    status("viewerStatus", "A connection is already active.");
     return;
   }
 
-  $("start").disabled = true;
-  ownerMessage("Requesting camera permission. Please approve the browser prompt.");
+  $("connectBtn").disabled = true;
+  status("viewerStatus", "Connecting to camera owner...");
 
-  try{
-    localStream = await navigator.mediaDevices.getUserMedia({
-      audio:false,
-      video:{
-        facingMode:"user",
-        width:{ideal:1280},
-        height:{ideal:720}
-      }
+  try {
+    peer = createPeer();
+
+    peer.on("open", () => {
+      const conn = peer.connect(ownerId, { reliable:true });
+      ownerConnection = conn;
+
+      conn.on("open", () => {
+        viewerConnection = conn;
+        viewerReady = true;
+        conn.send({type:"viewer-ready"});
+
+        $("disconnectBtn").disabled = false;
+        status("viewerStatus", "Connected. Waiting for camera owner to start sharing.", true);
+      });
+
+      conn.on("data", data => {
+        if (!data || typeof data !== "object") return;
+
+        if (data.type === "sharing-stopped") {
+          closeViewerCall();
+          status("viewerStatus", "The camera owner stopped sharing.");
+        }
+      });
+
+      conn.on("close", () => {
+        viewerReady = false;
+        closeViewerCall();
+        status("viewerStatus", "Connection to camera owner closed.");
+        $("connectBtn").disabled = false;
+      });
+
+      conn.on("error", err => {
+        status("viewerStatus", "Connection error: " + err.message);
+        $("connectBtn").disabled = false;
+      });
     });
 
-    $("local").srcObject = localStream;
-    showLocal();
+    peer.on("call", call => {
+      closeViewerCall();
+      incomingCall = call;
 
-    $("stop").disabled = false;
-    ownerMessage("Camera is active. Establishing the viewer connection.");
+      status("viewerStatus", "Incoming video connection. Connecting...", true);
 
-    answerCall();
-  }catch(error){
-    $("start").disabled = false;
-    ownerMessage("Camera error: " + error.message);
+      call.answer();
+
+      call.on("stream", stream => {
+        $("remoteVideo").srcObject = stream;
+        $("remoteVideo").play().catch(() => {});
+        status("viewerStatus", "Live camera stream connected.", true);
+      });
+
+      call.on("close", () => {
+        if (incomingCall === call) {
+          incomingCall = null;
+          $("remoteVideo").srcObject = null;
+          status("viewerStatus", "Video stream ended.");
+        }
+      });
+
+      call.on("error", err => {
+        status("viewerStatus", "Video error: " + err.message);
+      });
+    });
+
+    peer.on("error", err => {
+      status("viewerStatus", "Peer error: " + err.type + " — " + err.message);
+      $("connectBtn").disabled = false;
+    });
+
+  } catch (err) {
+    status("viewerStatus", err.message);
+    $("connectBtn").disabled = false;
   }
 };
 
-function answerCall(){
-  if(!incomingCall || !localStream) return;
-
-  try{
-    incomingCall.answer(localStream);
-
-    incomingCall.on("stream", () => {
-      ownerMessage("Camera sharing connection established.");
-    });
-
-    incomingCall.on("error", error => {
-      ownerMessage("Stream error: " + error.message);
-    });
-
-    $("start").disabled = true;
-    $("stop").disabled = false;
-  }catch(error){
-    ownerMessage("Could not answer: " + error.message);
-  }
-}
-
-$("stop").onclick = () => {
-  if(incomingCall){
-    incomingCall.close();
+function closeViewerCall() {
+  if (incomingCall) {
+    const call = incomingCall;
     incomingCall = null;
+    try { call.close(); } catch {}
   }
 
-  stopLocalTracks();
-  $("start").disabled = !viewerConnected;
-  $("stop").disabled = true;
-  ownerMessage("Sharing stopped. Camera is off.");
+  $("remoteVideo").srcObject = null;
+}
+
+$("disconnectBtn").onclick = () => {
+  if (viewerConnection && viewerConnection.open) {
+    viewerConnection.send({type:"stop-viewing"});
+    viewerConnection.close();
+  }
+
+  closeViewerCall();
+
+  if (peer) {
+    peer.destroy();
+    peer = null;
+  }
+
+  viewerConnection = null;
+  ownerConnection = null;
+  viewerReady = false;
+
+  $("connectBtn").disabled = false;
+  $("disconnectBtn").disabled = true;
+
+  status("viewerStatus", "You disconnected from the session.");
 };
 
-$("connect").onclick = () => {
-  if(peer){
-    viewerMessage("This device has already created a connection ID. Reload to switch roles.");
-    return;
+/* Cleanup when the page is closed */
+window.addEventListener("beforeunload", () => {
+  stopOwnerSharing(false);
+
+  if (localStream) {
+    localStream.getTracks().forEach(track => track.stop());
   }
 
-  const id = $("remoteId").value.trim();
-  if(!id){
-    viewerMessage("Enter the camera owner's connection ID.");
-    return;
-  }
-
-  if(!navigator.mediaDevices){
-    viewerMessage("Your browser does not support WebRTC.");
-    return;
-  }
-
-  if(typeof Peer === "undefined"){
-    viewerMessage("PeerJS did not load. Check your internet connection.");
-    return;
-  }
-
-  setStatus("CONNECTING");
-  $("connect").disabled = true;
-  viewerMessage("Connecting to PeerJS signaling service...");
-
-  peer = new Peer();
-
-  peer.on("open", () => {
-    viewerMessage("Calling camera owner. Waiting for them to approve sharing...");
-    outgoingCall = peer.call(id, new MediaStream());
-
-    if(!outgoingCall){
-      viewerMessage("Unable to create call.");
-      $("connect").disabled = false;
-      return;
-    }
-
-    outgoingCall.on("stream", stream => {
-      $("remote").srcObject = stream;
-      $("remote").style.display = "block";
-      $("remotePlaceholder").hidden = true;
-      $("leave").disabled = false;
-      setStatus("LIVE CONNECTION");
-      viewerMessage("Live video connected. The camera owner can stop sharing at any time.");
-      $("remote").play().catch(()=>{});
-    });
-
-    outgoingCall.on("close", () => {
-      closeVideo();
-      viewerMessage("Camera owner ended the connection.");
-      $("connect").disabled = false;
-      $("leave").disabled = true;
-      setStatus("DISCONNECTED");
-    });
-
-    outgoingCall.on("error", error => {
-      viewerMessage("Call error: " + error.message);
-      $("connect").disabled = false;
-    });
-  });
-
-  peer.on("error", error => {
-    viewerMessage("Connection error: " + error.type);
-    $("connect").disabled = false;
-    setStatus("ERROR");
-  });
-};
-
-$("leave").onclick = () => {
-  if(outgoingCall){
-    outgoingCall.close();
-    outgoingCall = null;
-  }
-
-  closeVideo();
-  $("connect").disabled = false;
-  $("leave").disabled = true;
-  viewerMessage("Disconnected from camera owner.");
-  setStatus("DISCONNECTED");
-};
-
-window.addEventListener("pagehide", () => {
-  stopLocalTracks();
-  if(incomingCall) incomingCall.close();
-  if(outgoingCall) outgoingCall.close();
-  if(peer) peer.destroy();
+  if (peer) peer.destroy();
 });
+
+})();
 </script>
 </body>
 </html>

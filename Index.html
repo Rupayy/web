@@ -1,0 +1,912 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d1c">
+<title>CareerGate | Job Application Portal</title>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#080d1c;
+  --panel:#101a30;
+  --panel2:#131f39;
+  --blue:#6388ff;
+  --cyan:#50d9e9;
+  --text:#f4f7ff;
+  --muted:#9baac5;
+  --border:rgba(255,255,255,.10);
+  --green:#35d6a0;
+}
+
+* {box-sizing:border-box;margin:0;padding:0}
+
+body {
+  font-family:Inter,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body:before {
+  content:"";
+  position:fixed;
+  width:500px;height:500px;
+  background:#365cff;
+  filter:blur(180px);
+  opacity:.16;
+  top:-230px;left:-150px;
+  pointer-events:none;
+}
+
+body:after {
+  content:"";
+  position:fixed;
+  width:400px;height:400px;
+  background:#00c8d8;
+  filter:blur(180px);
+  opacity:.10;
+  right:-200px;bottom:-150px;
+  pointer-events:none;
+}
+
+button,input,textarea,select {font:inherit}
+button {cursor:pointer}
+
+.navbar {
+  height:76px;
+  padding:0 7%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  position:relative;
+  z-index:2;
+  backdrop-filter:blur(15px);
+}
+
+.logo {
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+
+.logo span {color:var(--cyan)}
+
+.nav-status {
+  font-size:12px;
+  color:var(--green);
+  background:rgba(53,214,160,.09);
+  border:1px solid rgba(53,214,160,.2);
+  padding:9px 14px;
+  border-radius:30px;
+}
+
+.container {
+  width:min(900px,92%);
+  margin:55px auto 80px;
+  position:relative;
+  z-index:1;
+}
+
+.hero {
+  text-align:center;
+  margin-bottom:38px;
+  animation:appear .8s ease;
+}
+
+.tag {
+  display:inline-block;
+  padding:8px 14px;
+  border:1px solid rgba(99,136,255,.35);
+  color:#a9bdff;
+  background:rgba(99,136,255,.10);
+  border-radius:30px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  margin-bottom:20px;
+}
+
+.hero h1 {
+  font-size:clamp(34px,6vw,57px);
+  line-height:1.12;
+  letter-spacing:-2.5px;
+  font-weight:900;
+}
+
+.hero h1 span {
+  background:linear-gradient(90deg,#7195ff,#55dce8);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p {
+  color:var(--muted);
+  line-height:1.8;
+  max-width:560px;
+  margin:17px auto 0;
+  font-size:14px;
+}
+
+.steps {
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin:30px 0;
+}
+
+.step {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:11px;
+  color:#8190aa;
+}
+
+.step span {
+  width:27px;height:27px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:#192642;
+  border:1px solid var(--border);
+}
+
+.step.active {color:white}
+.step.active span {
+  background:var(--blue);
+  border-color:var(--blue);
+}
+
+.card {
+  background:linear-gradient(145deg,rgba(19,31,57,.97),rgba(12,20,38,.97));
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:clamp(20px,5vw,38px);
+  box-shadow:0 25px 80px rgba(0,0,0,.28);
+  animation:appear .6s ease;
+}
+
+.card-head {
+  margin-bottom:27px;
+}
+
+.card-head h2 {
+  font-size:23px;
+  font-weight:800;
+}
+
+.card-head p {
+  color:var(--muted);
+  font-size:12px;
+  margin-top:9px;
+  line-height:1.7;
+}
+
+.section-label {
+  color:#83a2ff;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.3px;
+  margin:27px 0 16px;
+  text-transform:uppercase;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:19px;
+}
+
+.field {min-width:0}
+
+.field.full {grid-column:1/-1}
+
+label {
+  display:block;
+  font-size:12px;
+  color:#d8e0f2;
+  margin-bottom:9px;
+  font-weight:600;
+}
+
+input,select,textarea {
+  width:100%;
+  padding:15px;
+  background:#0b1428;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:11px;
+  color:white;
+  outline:none;
+  font-size:13px;
+  transition:.25s;
+}
+
+input:focus,select:focus,textarea:focus {
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(99,136,255,.12);
+}
+
+input::placeholder,textarea::placeholder {color:#62718c}
+
+select option {background:#101a30}
+textarea {resize:vertical;min-height:115px;line-height:1.7}
+
+.hint {
+  font-size:10px;
+  color:#8292ad;
+  margin-top:7px;
+  line-height:1.6;
+}
+
+.primary-btn {
+  width:100%;
+  border:0;
+  padding:17px;
+  border-radius:12px;
+  color:white;
+  font-size:14px;
+  font-weight:800;
+  background:linear-gradient(100deg,#5578ff,#4778dc,#28b9d1);
+  box-shadow:0 10px 30px rgba(73,113,255,.22);
+  transition:.25s;
+  margin-top:25px;
+}
+
+.primary-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 13px 35px rgba(73,113,255,.35);
+}
+
+.primary-btn:disabled {opacity:.55;cursor:wait;transform:none}
+
+.terms {
+  color:#8392ac;
+  font-size:10px;
+  line-height:1.7;
+  margin-top:14px;
+  text-align:center;
+}
+
+.hidden {display:none!important}
+
+.price-card {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px;
+  border:1px solid rgba(53,214,160,.2);
+  background:rgba(53,214,160,.06);
+  border-radius:14px;
+  margin-bottom:23px;
+}
+
+.price-card small {color:#a5b5cb;font-size:11px}
+.price-card strong {font-size:27px;color:var(--green)}
+
+.payment-info {
+  padding:20px;
+  background:#0b1428;
+  border:1px solid var(--border);
+  border-radius:15px;
+  margin-bottom:22px;
+}
+
+.qr-area {
+  background:white;
+  border-radius:12px;
+  padding:12px;
+  width:220px;
+  max-width:100%;
+  margin:18px auto;
+  text-align:center;
+}
+
+.qr-area img {
+  width:100%;
+  display:block;
+  object-fit:contain;
+}
+
+.qr-area small {
+  color:#333;
+  display:block;
+  margin-top:8px;
+  font-size:10px;
+}
+
+.payment-details {
+  text-align:center;
+  font-size:12px;
+  line-height:2;
+  color:#c1cce0;
+}
+
+.payment-details strong {color:white}
+
+.upload {
+  border:1px dashed rgba(99,136,255,.5);
+  background:rgba(99,136,255,.06);
+  padding:24px;
+  text-align:center;
+  border-radius:13px;
+  cursor:pointer;
+}
+
+.upload input {display:none}
+.upload p {font-size:12px;color:#b4c4e0;margin-top:9px}
+.upload small {color:#71829e;font-size:10px}
+
+#fileName {
+  margin-top:12px;
+  font-size:11px;
+  color:var(--green);
+  overflow-wrap:anywhere;
+}
+
+.success {
+  text-align:center;
+  padding:30px 10px;
+}
+
+.success-icon {
+  width:75px;height:75px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:rgba(53,214,160,.13);
+  border:1px solid rgba(53,214,160,.35);
+  color:var(--green);
+  font-size:35px;
+  margin:0 auto 22px;
+}
+
+.success h2 {font-size:26px;margin-bottom:12px}
+.success p {color:var(--muted);font-size:13px;line-height:1.9}
+
+.wait-box {
+  background:#0b1428;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:22px;
+  margin-top:25px;
+}
+
+.wait-box strong {color:var(--cyan)}
+.wait-box p {margin-top:8px}
+
+.footer {
+  text-align:center;
+  color:#65738c;
+  font-size:10px;
+  padding:20px;
+  line-height:2;
+}
+
+.loader {
+  display:inline-block;
+  width:15px;height:15px;
+  border:2px solid rgba(255,255,255,.3);
+  border-top-color:white;
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+  vertical-align:middle;
+  margin-right:8px;
+}
+
+.toast {
+  position:fixed;
+  top:20px;right:20px;
+  background:#182640;
+  border:1px solid var(--border);
+  padding:15px 20px;
+  border-radius:12px;
+  font-size:12px;
+  z-index:10;
+  max-width:90%;
+  animation:appear .3s ease;
+}
+
+@keyframes spin {to{transform:rotate(360deg)}}
+@keyframes appear {
+  from {opacity:0;transform:translateY(15px)}
+  to {opacity:1;transform:translateY(0)}
+}
+
+@media(max-width:600px) {
+  .navbar {height:65px;padding:0 5%}
+  .container {margin:38px auto 55px}
+  .grid {grid-template-columns:1fr;gap:17px}
+  .field.full {grid-column:auto}
+  .steps {gap:8px}
+  .step {font-size:9px;gap:5px}
+  .step span {width:24px;height:24px}
+  .hero h1 {letter-spacing:-1.5px}
+  .card {border-radius:17px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="logo">Prime<span> Jobs</span></div>
+  <div class="nav-status">● Application process</div>
+</header>
+
+<main class="container">
+
+  <section class="hero">
+    <div class="tag">YOUR NEXT OPPORTUNITY STARTS HERE</div>
+    <h1>Build Your Future.<br><span>Start Your Career.</span></h1>
+    <p>
+      Submit your application through our online .
+      Complete your details and follow the payment verification
+      instructions to proceed.
+    </p>
+  </section>
+
+  <div class="steps">
+    <div class="step active" id="step1"><span>1</span> Application</div>
+    <div class="step" id="step2"><span>2</span> Payment</div>
+    <div class="step" id="step3"><span>3</span> Confirmation</div>
+  </div>
+
+  <!-- APPLICATION FORM -->
+  <section class="card" id="applicationSection">
+
+    <div class="card-head">
+      <h2>Job Application Form</h2>
+      <p>Please provide accurate information. Fields marked * are required.</p>
+    </div>
+
+    <form id="applicationForm">
+
+      <div class="section-label">Personal Information</div>
+
+      <div class="grid">
+
+        <div class="field">
+          <label>Full Name *</label>
+          <input type="text" name="full_name" placeholder="Enter your full name" required maxlength="100">
+        </div>
+
+        <div class="field">
+          <label>Email Address *</label>
+          <input type="email" name="email" placeholder="example@gmail.com" required>
+        </div>
+
+        <div class="field">
+          <label>Phone Number *</label>
+          <input type="tel" name="phone" placeholder="98XXXXXXXX" required pattern="[0-9+ -]{7,20}">
+        </div>
+
+        <div class="field">
+          <label>Gender *</label>
+          <select name="gender" required>
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label>Your Address *</label>
+          <input type="text" name="address" placeholder="Enter your complete address" required maxlength="250">
+        </div>
+
+      </div>
+
+      <div class="section-label">Job Information</div>
+
+      <div class="grid">
+
+        <div class="field full">
+          <label>Job Position *</label>
+          <input type="text" name="job_position" placeholder="Which position are you applying for?" required maxlength="150">
+        </div>
+
+        <div class="field full">
+          <label>Describe Yourself *</label>
+          <textarea name="description" placeholder="Write Anything" required maxlength="3000"></textarea>
+        </div>
+
+      </div>
+
+      <button class="primary-btn" id="applicationButton" type="submit">
+        Submit Application →
+      </button>
+
+      <p class="terms">
+        By submitting, you confirm that the information provided is accurate.
+        Your details will be sent for application processing.
+      </p>
+
+    </form>
+  </section>
+
+
+  <!-- PAYMENT SECTION - HIDDEN UNTIL APPLICATION SUCCESS -->
+  <section class="card hidden" id="paymentSection">
+
+    <div class="card-head">
+      <h2>Application Fee Payment</h2>
+      <p>Your application details have been submitted successfully.
+         Complete the disclosed payment step to submit your payment proof.</p>
+    </div>
+
+    <div class="price-card">
+      <div>
+        <small>Application Processing Fee</small>
+        <h3 style="margin-top:6px">One-time payment</h3>
+      </div>
+      <strong>Rs. 280</strong>
+    </div>
+
+    <div class="payment-info">
+
+      <div class="payment-details">
+        <strong>Bank QR Payment</strong><br>
+        Scan the QR code using your supported banking app.
+      </div>
+
+      <div class="qr-area">
+        <!-- REPLACE THIS IMAGE SOURCE WITH YOUR BANK QR IMAGE -->
+        <img src="bank-qr.png"
+             alt="Bank Payment QR Code"
+             onerror="this.style.display='none';document.getElementById('qrPlaceholder').style.display='block'">
+
+        <div id="qrPlaceholder" style="color:#333;padding:35px 5px;font-size:12px">
+          <strong>YOUR BANK QR CODE</strong>
+          <p style="margin-top:8px">Replace bank-qr.png with your actual QR image.</p>
+        </div>
+
+        <small>Scan to make payment</small>
+      </div>
+    <form id="paymentForm">
+
+      <div class="section-label">Payment Verification</div>
+
+      <div class="field">
+        <label>Transaction ID / Reference Number *</label>
+        <input type="text" name="transaction_id"
+               placeholder="Enter your transaction reference"
+               required maxlength="100">
+      </div>
+
+      <div class="field" style="margin-top:20px">
+        <label>Upload Payment Screenshot *</label>
+
+        <label class="upload" for="paymentScreenshot">
+          <span style="font-size:28px">↑</span>
+          <p>Click to upload payment screenshot</p>
+          <small>JPG, PNG or WEBP · Maximum 2 MB</small>
+          <div id="fileName">No file selected</div>
+        </label>
+
+        <input type="file" id="paymentScreenshot"
+               name="payment_screenshot"
+               accept="image/jpeg,image/png,image/webp"
+               required>
+      </div>
+
+      <button class="primary-btn" id="paymentButton" type="submit">
+        Submit Payment Proof →
+      </button>
+
+      <p class="terms">
+        Upload a genuine payment receipt. Submission of a screenshot
+        does not itself confirm that payment has been received.
+      </p>
+
+    </form>
+  </section>
+
+
+  <!-- FINAL CONFIRMATION -->
+  <section class="card hidden" id="confirmationSection">
+
+    <div class="success">
+
+      <div class="success-icon">✓</div>
+
+      <h2>Submission Received!</h2>
+
+      <p>
+        Thank you for completing the application and payment
+        proof submission process.
+      </p>
+
+      <div class="wait-box">
+        <strong>◷ Waiting for Confirmation</strong>
+        <p>
+          Your payment proof is awaiting verification.
+          Please allow up to 30 minutes for the review process.
+        </p>
+        <p>
+          After verification, we will contact you through
+          your registered Email or WhatsApp.
+        </p>
+      </div>
+
+      <p style="margin-top:22px">
+        Thank you for your patience!
+      </p>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="footer">
+  © 2026 CareerGate. All Rights Reserved.<br>
+  Secure Application Portal · Applicant information is handled for recruitment processing.
+</footer>
+
+<script>
+
+// ===========================================
+// EMAILJS CONFIGURATION
+// ===========================================
+
+const EMAIL_SERVICE_ID = "service_8iot5xx";
+const EMAIL_TEMPLATE_ID = "template_2vp7oqq";
+const EMAIL_PUBLIC_KEY = "ttrKOZNMDMqFjqfPT";
+
+// Initialize EmailJS
+emailjs.init({
+  publicKey: EMAIL_PUBLIC_KEY
+});
+
+// ===========================================
+// ELEMENTS
+// ===========================================
+
+const applicationForm = document.getElementById("applicationForm");
+const paymentForm = document.getElementById("paymentForm");
+
+const applicationSection = document.getElementById("applicationSection");
+const paymentSection = document.getElementById("paymentSection");
+const confirmationSection = document.getElementById("confirmationSection");
+
+const applicationButton = document.getElementById("applicationButton");
+const paymentButton = document.getElementById("paymentButton");
+
+const screenshotInput = document.getElementById("paymentScreenshot");
+
+
+// ===========================================
+// SHOW TOAST
+// ===========================================
+
+function showToast(message) {
+
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => toast.remove(), 3500);
+
+}
+
+
+// ===========================================
+// STEP NAVIGATION
+// ===========================================
+
+function activateStep(number) {
+
+  document.querySelectorAll(".step").forEach((step,index) => {
+    step.classList.toggle("active", index < number);
+  });
+
+}
+
+
+// ===========================================
+// APPLICATION SUBMISSION
+// ===========================================
+
+applicationForm.addEventListener("submit", async function(e) {
+
+  e.preventDefault();
+
+  if (!applicationForm.reportValidity()) return;
+
+  applicationButton.disabled = true;
+  applicationButton.innerHTML = '<span class="loader"></span> Sending Application...';
+
+  try {
+
+    const formData = new FormData(applicationForm);
+
+    const templateParams = {
+      full_name: formData.get("full_name"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      gender: formData.get("gender"),
+      address: formData.get("address"),
+      job_position: formData.get("job_position"),
+      description: formData.get("description"),
+
+      subject: "New Job Application",
+      message: "A new job application has been submitted."
+    };
+
+    // SEND APPLICATION TO EMAILJS
+    await emailjs.send(
+      EMAIL_SERVICE_ID,
+      EMAIL_TEMPLATE_ID,
+      templateParams
+    );
+
+    // SHOW PAYMENT ONLY AFTER SUCCESS
+    applicationSection.classList.add("hidden");
+    paymentSection.classList.remove("hidden");
+
+    activateStep(2);
+
+    window.scrollTo({top:0,behavior:"smooth"});
+
+    showToast("Application submitted successfully!");
+
+  } catch(error) {
+
+    console.error("EmailJS Error:",error);
+
+    showToast("Application could not be sent. Please try again.");
+
+    applicationButton.disabled = false;
+    applicationButton.textContent = "Submit Application →";
+
+  }
+
+});
+
+
+// ===========================================
+// PAYMENT SCREENSHOT VALIDATION
+// ===========================================
+
+screenshotInput.addEventListener("change",function() {
+
+  const file = this.files[0];
+
+  if (!file) {
+    document.getElementById("fileName").textContent = "No file selected";
+    return;
+  }
+
+  const allowedTypes = ["image/jpeg","image/png","image/webp"];
+
+  if (!allowedTypes.includes(file.type)) {
+    showToast("Please upload JPG, PNG or WEBP.");
+    this.value = "";
+    return;
+  }
+
+  if (file.size > 2 * 1024 * 1024) {
+    showToast("File must be smaller than 2 MB.");
+    this.value = "";
+    return;
+  }
+
+  document.getElementById("fileName").textContent = "✓ " + file.name;
+
+});
+
+
+// ===========================================
+// PAYMENT PROOF SUBMISSION
+// ===========================================
+
+paymentForm.addEventListener("submit",async function(e) {
+
+  e.preventDefault();
+
+  if (!paymentForm.reportValidity()) return;
+
+  const file = screenshotInput.files[0];
+
+  if (!file) {
+    showToast("Please upload your payment screenshot.");
+    return;
+  }
+
+  if (file.size > 2 * 1024 * 1024) {
+    showToast("Screenshot exceeds the 2 MB limit.");
+    return;
+  }
+
+  paymentButton.disabled = true;
+  paymentButton.innerHTML = '<span class="loader"></span> Submitting Proof...';
+
+  try {
+
+    // EmailJS sendForm can send a file only when the
+    // corresponding attachment is configured in the template.
+    // The input name must match the attachment parameter.
+
+    const proofForm = document.createElement("form");
+
+    const applicationData = new FormData(applicationForm);
+
+    const proofFields = {
+      full_name: applicationData.get("full_name"),
+      email: applicationData.get("email"),
+      phone: applicationData.get("phone"),
+      gender: applicationData.get("gender"),
+      address: applicationData.get("address"),
+      job_position: applicationData.get("job_position"),
+      description: applicationData.get("description"),
+      transaction_id: paymentForm.querySelector('[name="transaction_id"]').value,
+      payment_amount: "NPR 280",
+      subject: "New Payment Proof Submission",
+      message: "Payment proof submitted for verification."
+    };
+
+    Object.entries(proofFields).forEach(([name,value]) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = value || "";
+      proofForm.appendChild(input);
+    });
+
+    const attachment = document.createElement("input");
+    attachment.type = "file";
+    attachment.name = "payment_screenshot";
+
+    const transfer = new DataTransfer();
+    transfer.items.add(file);
+    attachment.files = transfer.files;
+
+    proofForm.appendChild(attachment);
+
+    document.body.appendChild(proofForm);
+
+    // SEND PAYMENT PROOF TO EMAILJS
+    await emailjs.sendForm(
+      EMAIL_SERVICE_ID,
+      EMAIL_TEMPLATE_ID,
+      proofForm
+    );
+
+    proofForm.remove();
+
+    paymentSection.classList.add("hidden");
+    confirmationSection.classList.remove("hidden");
+
+    activateStep(3);
+
+    window.scrollTo({top:0,behavior:"smooth"});
+
+  } catch(error) {
+
+    console.error("Payment proof error:",error);
+
+    showToast("Proof submission failed. Please try again.");
+
+    paymentButton.disabled = false;
+    paymentButton.textContent = "Submit Payment Proof →";
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>

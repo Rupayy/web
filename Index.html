@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Garena Center | Diamond Store</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#080a12;
+--card:#111522;
+--red:#ff424b;
+--gold:#ffbd59;
+--text:#f6f7ff;
+--muted:#969caf;
+--border:rgba(255,255,255,.09);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+background:var(--bg);
+color:var(--text);
+font-family:Inter,sans-serif;
+overflow-x:hidden;
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+z-index:-1;
+background:
+radial-gradient(ellipse at 15% 10%,#55151c35,transparent 40%),
+radial-gradient(ellipse at 90% 50%,#3430a325,transparent 45%);
+}
+
+header{
+height:70px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 7%;
+border-bottom:1px solid var(--border);
+background:#090b13ed;
+position:sticky;
+top:0;
+z-index:100;
+backdrop-filter:blur(18px);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:900;
+font-size:18px;
+}
+
+.logo-icon{
+width:38px;
+height:38px;
+display:grid;
+place-items:center;
+background:linear-gradient(135deg,#ff424b,#a20c20);
+border-radius:11px;
+font-family:Orbitron;
+box-shadow:0 0 22px #ff424b55;
+}
+
+.logo span{color:var(--red)}
+
+.header-tag{
+color:var(--gold);
+font-size:10px;
+border:1px solid #ffbd5940;
+padding:7px 11px;
+border-radius:30px;
+}
+
+.container{
+width:min(1100px,90%);
+margin:auto;
+}
+
+.hero{
+padding:75px 0 50px;
+text-align:center;
+animation:fadeUp .8s ease;
+}
+
+.hero-badge{
+display:inline-block;
+color:#ff747a;
+background:#ff424b15;
+border:1px solid #ff424b45;
+padding:8px 15px;
+border-radius:30px;
+font-size:10px;
+letter-spacing:2px;
+font-weight:800;
+margin-bottom:20px;
+}
+
+.hero h1{
+font-family:Orbitron;
+font-size:clamp(35px,7vw,65px);
+letter-spacing:-3px;
+}
+
+.hero h1 span{
+color:var(--red);
+text-shadow:0 0 30px #ff424b55;
+}
+
+.hero p{
+color:var(--muted);
+max-width:570px;
+margin:19px auto;
+line-height:1.9;
+font-size:13px;
+}
+
+.hero-line{
+width:80px;
+height:3px;
+background:linear-gradient(90deg,transparent,var(--red),transparent);
+margin:25px auto;
+}
+
+.section{margin:35px auto 65px}
+
+.section-heading{margin-bottom:22px}
+
+.section-heading small{
+color:var(--red);
+font-size:10px;
+letter-spacing:3px;
+font-weight:800;
+}
+
+.section-heading h2{
+font-family:Orbitron;
+font-size:22px;
+margin-top:9px;
+}
+
+.section-heading p{
+font-size:12px;
+color:var(--muted);
+margin-top:9px;
+line-height:1.7;
+}
+
+/* REFERRAL */
+
+.referral{
+padding:27px;
+border:1px solid #ff424b45;
+border-radius:19px;
+background:linear-gradient(130deg,#241218,#131622 65%);
+position:relative;
+overflow:hidden;
+}
+
+.referral-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.referral h3{
+font-size:21px;
+margin:10px 0;
+}
+
+.reward{
+color:var(--gold);
+font-family:Orbitron;
+font-size:26px;
+font-weight:800;
+}
+
+.referral p{
+font-size:12px;
+color:var(--muted);
+line-height:1.8;
+}
+
+.link-box{
+margin-top:23px;
+padding:13px;
+background:#090d18;
+border:1px solid #ffffff16;
+border-radius:11px;
+}
+
+.link-label{
+font-size:10px;
+color:var(--muted);
+margin-bottom:10px;
+letter-spacing:1px;
+}
+
+.link-row{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.link-display{
+flex:1;
+min-width:0;
+overflow:hidden;
+white-space:nowrap;
+text-overflow:ellipsis;
+color:#ffbd59;
+font-size:12px;
+}
+
+.copy-btn{
+background:#ff424b;
+border:0;
+padding:10px 15px;
+color:white;
+border-radius:7px;
+font-size:10px;
+font-weight:800;
+cursor:pointer;
+}
+
+.share-buttons{
+display:flex;
+flex-wrap:wrap;
+gap:11px;
+margin-top:14px;
+}
+
+.share-btn{
+display:flex;
+align-items:center;
+gap:9px;
+padding:12px 17px;
+color:white;
+text-decoration:none;
+border-radius:9px;
+font-size:12px;
+font-weight:700;
+border:1px solid #ffffff18;
+transition:.3s;
+cursor:pointer;
+}
+
+.share-btn:hover{transform:translateY(-3px)}
+
+.whatsapp{background:#128b53}
+.messenger{background:#176de2}
+
+.share-btn svg{
+width:18px;
+height:18px;
+fill:white;
+}
+
+.referral-info{
+margin-top:20px;
+background:#ffffff09;
+padding:15px;
+border-radius:10px;
+font-size:11px;
+color:var(--muted);
+line-height:1.8;
+}
+
+/* PACKAGES */
+
+.package-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+.package{
+background:linear-gradient(145deg,#171c2b,#0e121d);
+border:1px solid var(--border);
+border-radius:15px;
+padding:23px 16px;
+text-align:center;
+transition:.3s;
+}
+
+.package:hover{
+transform:translateY(-6px);
+border-color:#ff424b80;
+box-shadow:0 12px 35px #ff424b13;
+}
+
+.diamond-icon{
+font-size:27px;
+margin-bottom:13px;
+filter:drop-shadow(0 0 12px #48caff);
+}
+
+.package h3{
+font-family:Orbitron;
+font-size:17px;
+margin-bottom:8px;
+}
+
+.package p{
+color:var(--muted);
+font-size:11px;
+margin-bottom:17px;
+}
+
+.price{
+color:var(--gold);
+font-size:21px;
+font-weight:900;
+margin-bottom:16px;
+}
+
+.btn{
+border:0;
+cursor:pointer;
+padding:12px 18px;
+background:linear-gradient(135deg,#ff535b,#d71e35);
+color:white;
+border-radius:8px;
+font-weight:800;
+font-size:11px;
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-3px);
+box-shadow:0 8px 25px #ff424b45;
+}
+
+.buy{width:100%}
+
+/* MEMBERSHIP */
+
+.membership{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+}
+
+.member-card{
+background:#111522;
+border:1px solid var(--border);
+border-radius:15px;
+padding:22px;
+text-align:center;
+transition:.3s;
+}
+
+.member-card:hover{border-color:#ffbd5980}
+
+.member-card h3{font-size:14px;margin:12px 0}
+.member-card .price{font-size:19px}
+.member-card small{color:var(--muted);font-size:10px}
+
+/* PAYMENT */
+
+#paymentPage{
+display:none;
+padding:45px 0 80px;
+}
+
+.payment-card{
+max-width:580px;
+margin:auto;
+padding:28px;
+border:1px solid var(--border);
+border-radius:19px;
+background:linear-gradient(145deg,#151b2a,#0e111a);
+animation:fadeUp .5s ease;
+}
+
+.back{
+border:0;
+background:transparent;
+color:#ff737a;
+cursor:pointer;
+margin-bottom:25px;
+font-size:12px;
+}
+
+.payment-card h2{
+font-family:Orbitron;
+font-size:22px;
+margin-bottom:10px;
+}
+
+.payment-card>p{
+color:var(--muted);
+font-size:12px;
+line-height:1.8;
+margin-bottom:22px;
+}
+
+.selected-package{
+background:#ff424b12;
+border:1px solid #ff424b40;
+border-radius:11px;
+padding:17px;
+margin-bottom:24px;
+}
+
+.selected-package span{
+color:var(--muted);
+font-size:11px;
+}
+
+.selected-package h3{
+color:var(--gold);
+margin-top:8px;
+}
+
+.field{margin-bottom:19px}
+
+.field label{
+display:block;
+font-size:12px;
+font-weight:700;
+margin-bottom:9px;
+}
+
+.field input{
+width:100%;
+padding:14px;
+background:#090d18;
+border:1px solid var(--border);
+color:white;
+border-radius:9px;
+outline:none;
+}
+
+.field input:focus{border-color:var(--red)}
+
+.qr-box{
+background:white;
+padding:15px;
+width:220px;
+height:220px;
+border-radius:13px;
+margin:15px auto;
+display:grid;
+place-items:center;
+}
+
+.qr-box img{
+width:100%;
+height:100%;
+object-fit:contain;
+}
+
+.qr-placeholder{
+color:#444;
+text-align:center;
+font-size:12px;
+}
+
+.qr-placeholder strong{
+display:block;
+font-size:40px;
+margin-bottom:10px;
+}
+
+.upload-box{
+border:1px dashed #ff424b80;
+padding:19px;
+border-radius:10px;
+text-align:center;
+background:#ff424b08;
+}
+
+.upload-box input{
+width:100%;
+margin-top:12px;
+font-size:11px;
+}
+
+#fileName{
+color:#ffbd59;
+font-size:11px;
+margin-top:10px;
+}
+
+.submit-btn{
+width:100%;
+margin-top:10px;
+}
+
+.notice{
+display:none;
+padding:20px;
+margin-top:20px;
+border:1px solid #27ce8a50;
+background:#27ce8a12;
+border-radius:12px;
+text-align:center;
+}
+
+.notice h3{color:#46e5a2;margin-bottom:10px}
+.notice p{font-size:12px;line-height:1.8;color:#b7c3c5}
+
+footer{
+text-align:center;
+padding:30px 15px;
+border-top:1px solid var(--border);
+color:var(--muted);
+font-size:10px;
+line-height:2;
+}
+
+.disclaimer{
+max-width:700px;
+margin:10px auto 0;
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(25px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+@media(max-width:700px){
+header{padding:0 5%;height:65px}
+.hero{padding:60px 0 35px}
+.package-grid{grid-template-columns:repeat(2,1fr)}
+.membership{grid-template-columns:1fr}
+.referral{padding:20px}
+.payment-card{padding:22px}
+}
+
+@media(max-width:360px){
+.package-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">
+<div class="logo-icon">G</div>
+GARENA <span>CENTER</span>
+</div>
+<div class="header-tag">DIAMOND STORE</div>
+</header>
+
+<main id="homePage">
+
+<div class="container">
+
+<section class="hero">
+<div class="hero-badge">GAMING • DIAMONDS • MEMBERSHIP</div>
+<h1>GARENA <span>CENTER</span></h1>
+<div class="hero-line"></div>
+<p>
+Welcome to Garena Center. Explore diamond packages,
+membership offers and gaming rewards in one place.
+</p>
+</section>
+
+<!-- REFERRAL -->
+
+<section class="section">
+
+<div class="section-heading">
+<small>Free REWARD</small>
+<h2>Referral Rewards</h2>
+<p>Invite your friends and get rewarded.</p>
+</div>
+
+<div class="referral">
+
+<div class="referral-top">
+<div>
+<div class="hero-badge">SPECIAL OFFER</div>
+<h3>Invite 10 Friends</h3>
+<p>Refer 10 people and become eligible for our special reward.</p>
+</div>
+<div class="reward">💎 300</div>
+</div>
+
+<div class="link-box">
+<div class="link-label">YOUR REFERRAL LINK</div>
+<div class="link-row">
+<div class="link-display" id="refLinkDisplay">
+Loading referral link...
+</div>
+<button class="copy-btn" onclick="copyReferral()">
+COPY
+</button>
+</div>
+</div>
+
+<div class="share-buttons">
+
+<button class="share-btn whatsapp" onclick="shareWhatsApp()">
+<svg viewBox="0 0 24 24">
+<path d="M12 .8A11.1 11.1 0 0 0 2.4 17.5L.9 23l5.7-1.5A11.1 11.1 0 1 0 12 .8zm0 20.1a9 9 0 0 1-4.6-1.2l-.3-.2-3.4.9.9-3.3-.2-.4A9 9 0 1 1 12 20.9zm5-6.7c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.1-.7.2-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.5-3.9-3.4-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.5-.4-.7-.4h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.3s1 2.6 1.1 2.8c.1.2 2 3.1 4.8 4.3 1.8.8 2.5.9 3.4.8.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.1-1.4-.1-.1-.3-.2-.6-.3z"/>
+</svg>
+WHATSAPP
+</button>
+
+<button class="share-btn messenger" onclick="shareMessenger()">
+<svg viewBox="0 0 24 24">
+<path d="M12 1C5.8 1 1 5.5 1 11.4c0 3.1 1.4 5.8 3.7 7.6.2.2.3.4.3.7l.1 2.3c0 .4.4.7.8.5l2.6-1.1c.2-.1.4-.1.6 0 1 .3 2 .4 3 .4 6.2 0 11-4.5 11-10.4S18.2 1 12 1zm1.1 14-2.8-3c-.2-.2-.5-.2-.7-.1l-3.6 1.9c-.3.2-.7-.2-.4-.5l3.8-4.1c.3-.3.7-.3 1 0l2.8 3c.2.2.5.2.7.1l3.6-1.9c.3-.2.7.2.4.5l-3.8 4.1c-.3.3-.7.3-1 0z"/>
+</svg>
+MESSENGER
+</button>
+
+</div>
+
+<div class="referral-info">
+🎁 <strong style="color:#ffbd59">300 FREE DIAMONDS</strong><br>
+Refer 10 people to qualify for the reward.
+Approved rewards are processed within 24 hours.
+.
+</div>
+
+</div>
+</section>
+
+<!-- DIAMOND PACKAGES -->
+
+<section class="section">
+<div class="section-heading">
+<small>TOP-UP STORE</small>
+<h2>Diamond Packages 💎</h2>
+<p>Choose your preferred diamond package.</p>
+</div>
+<div class="package-grid" id="diamondPackages"></div>
+</section>
+
+<!-- MEMBERSHIP -->
+
+<section class="section">
+<div class="section-heading">
+<small>PREMIUM ACCESS</small>
+<h2>Membership Packages</h2>
+<p>Explore available membership options.</p>
+</div>
+<div class="membership" id="membershipPackages"></div>
+</section>
+
+</div>
+</main>
+
+<!-- PAYMENT PAGE -->
+
+<section id="paymentPage">
+<div class="container">
+
+<div class="payment-card">
+
+<button class="back" onclick="goHome()">← BACK TO STORE</button>
+
+<div class="hero-badge">ORDER REQUEST</div>
+
+<h2>Payment Section</h2>
+
+<p>
+Enter your Free Fire UID, complete the payment using the QR code
+and upload your payment screenshot.
+</p>
+
+<div class="selected-package">
+<span>SELECTED PACKAGE</span>
+<h3 id="selectedName">Diamond Package</h3>
+<h3 id="selectedPrice">NPR 0</h3>
+</div>
+
+<form id="paymentForm">
+
+<div class="field">
+<label>Free Fire UID</label>
+<input type="text" id="uid"
+placeholder="Enter your Free Fire UID" required maxlength="30">
+</div>
+
+<div class="field">
+<label>Payment QR Code</label>
+
+<div class="qr-box">
+<div class="qr-placeholder">
+<strong>▦</strong>
+ADD YOUR QR IMAGE HERE
+</div>
+</div>
+
+<p style="text-align:center;color:#888;font-size:10px">
+Replace the placeholder with your actual payment QR image.
+</p>
+</div>
+
+<div class="field">
+<label>Payment Screenshot</label>
+
+<div class="upload-box">
+<strong>📤 Upload Payment Proof</strong>
+<p style="font-size:10px;color:#999;margin-top:7px">
+Select your payment screenshot.
+</p>
+
+<input type="file" id="paymentScreenshot"
+accept="image/png,image/jpeg,image/webp" required>
+
+<div id="fileName"></div>
+</div>
+</div>
+
+<button type="submit" class="btn submit-btn">
+SUBMIT ORDER REQUEST →
+</button>
+
+</form>
+
+<div class="notice" id="successNotice">
+<h3>✓ Request Submitted</h3>
+<p>
+Your order request has been processed on this page.
+Please wait up to 10 minutes for confirmation.
+Thank you for contacting us!
+</p>
+<p style="margin-top:12px">
+<strong>Order status: Pending confirmation</strong>
+</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<footer>
+<div class="logo" style="justify-content:center">
+<div class="logo-icon">G</div>
+GARENA <span>CENTER</span>
+</div>
+<p style="margin-top:12px">Gaming Diamond Store • Nepal</p>
+<p class="disclaimer">
+Independent third-party demonstration storefront.
+Not affiliated with or endorsed by Garena.
+Free Fire is a trademark of its respective owner.
+</p>
+<p style="margin-top:15px">© 2026 Garena Center. All rights reserved.</p>
+</footer>
+
+<script>
+
+/* ==================================
+   YOUR OWN REFERRAL LINK
+================================== */
+
+const MY_REFERRAL_LINK =
+"https://example.com/your-referral";
+
+/* SAVE REFERRAL LINK IN LOCAL STORAGE */
+
+const STORAGE_KEY = "garena_center_referral_link";
+
+localStorage.setItem(STORAGE_KEY, MY_REFERRAL_LINK);
+
+const savedReferralLink =
+localStorage.getItem(STORAGE_KEY);
+
+/* DISPLAY REFERRAL LINK */
+
+document.getElementById("refLinkDisplay").textContent =
+savedReferralLink;
+
+/* COPY REFERRAL LINK */
+
+function copyReferral(){
+
+navigator.clipboard.writeText(savedReferralLink)
+.then(()=>{
+alert("Your referral link copied successfully!");
+})
+.catch(()=>{
+const input=document.createElement("textarea");
+input.value=savedReferralLink;
+document.body.appendChild(input);
+input.select();
+document.execCommand("copy");
+input.remove();
+alert("Referral link copied!");
+});
+
+}
+
+/* WHATSAPP SHARE */
+
+function shareWhatsApp(){
+
+const message =
+"Join me through my referral link and check out Garena Center! 🎮💎\n\n"
++ savedReferralLink;
+
+const url =
+"https://wa.me/?text="+encodeURIComponent(message);
+
+window.open(url,"_blank");
+
+}
+
+/* MESSENGER SHARE */
+
+function shareMessenger(){
+
+const url =
+"https://www.facebook.com/dialog/send?link="
++encodeURIComponent(savedReferralLink);
+
+window.open(url,"_blank");
+
+}
+
+/* DIAMOND PACKAGES */
+
+const diamonds=[
+{name:"590 Diamonds",price:480},
+{name:"900 Diamonds",price:800},
+{name:"1125 Diamonds",price:1000},
+{name:"1380 Diamonds",price:1200},
+{name:"1808 Diamonds",price:1500},
+{name:"2050 Diamonds",price:1800},
+{name:"2700 Diamonds",price:2000}
+];
+
+const diamondContainer=
+document.getElementById("diamondPackages");
+
+diamonds.forEach(item=>{
+
+diamondContainer.innerHTML+=`
+<div class="package">
+<div class="diamond-icon">💎</div>
+<h3>${item.name}</h3>
+<p>Free Fire Diamond Top-up</p>
+<div class="price">Rs. ${item.price}</div>
+<button class="btn buy"
+onclick="buyPackage('${item.name}',${item.price})">
+BUY NOW →
+</button>
+</div>
+`;
+
+});
+
+/* MEMBERSHIP PACKAGES */
+
+const memberships=[
+{name:"Weekly Lite",price:"85–99"},
+{name:"Weekly Membership",price:"220–350"},
+{name:"Monthly Membership",price:"1,040–1,699"}
+];
+
+const memberContainer=
+document.getElementById("membershipPackages");
+
+memberships.forEach(item=>{
+
+memberContainer.innerHTML+=`
+<div class="member-card">
+<div class="diamond-icon">👑</div>
+<h3>${item.name}</h3>
+<small>MEMBERSHIP PACKAGE</small>
+<div class="price">Rs. ${item.price}</div>
+<button class="btn buy"
+onclick="buyPackage('${item.name}','${item.price}')">
+BUY NOW →
+</button>
+</div>
+`;
+
+});
+
+/* PAGE NAVIGATION */
+
+function buyPackage(name,price){
+
+document.getElementById("homePage").style.display="none";
+
+document.getElementById("paymentPage").style.display="block";
+
+document.getElementById("selectedName").textContent=name;
+
+document.getElementById("selectedPrice").textContent="NPR "+price;
+
+document.getElementById("paymentForm").style.display="block";
+
+document.getElementById("successNotice").style.display="none";
+
+document.getElementById("paymentForm").reset();
+
+document.getElementById("fileName").textContent="";
+
+window.scrollTo({top:0,behavior:"smooth"});
+
+}
+
+function goHome(){
+
+document.getElementById("paymentPage").style.display="none";
+
+document.getElementById("homePage").style.display="block";
+
+window.scrollTo({top:0,behavior:"smooth"});
+
+}
+
+/* SCREENSHOT UPLOAD */
+
+document.getElementById("paymentScreenshot")
+.addEventListener("change",function(){
+
+const file=this.files[0];
+
+if(file){
+
+if(file.size>5*1024*1024){
+
+alert("Please select an image smaller than 5 MB.");
+
+this.value="";
+
+return;
+
+}
+
+document.getElementById("fileName").textContent=
+"Selected: "+file.name;
+
+}
+
+});
+
+/* DEMO FORM SUBMISSION */
+
+document.getElementById("paymentForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const uid=document.getElementById("uid").value.trim();
+
+const file=document.getElementById("paymentScreenshot").files[0];
+
+if(!uid || !file){
+
+alert("Please enter your UID and upload screenshot.");
+
+return;
+
+}
+
+if(file.size>5*1024*1024){
+
+alert("Screenshot must be smaller than 5 MB.");
+
+return;
+
+}
+
+document.getElementById("paymentForm").style.display="none";
+
+document.getElementById("successNotice").style.display="block";
+
+window.scrollTo({top:0,behavior:"smooth"});
+
+});
+
+</script>
+
+</body>
+</html>

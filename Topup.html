@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,7 +132,6 @@ margin:25px auto;
 }
 
 .section{margin:35px auto 65px}
-
 .section-heading{margin-bottom:22px}
 
 .section-heading small{
@@ -256,7 +256,6 @@ cursor:pointer;
 }
 
 .share-btn:hover{transform:translateY(-3px)}
-
 .whatsapp{background:#128b53}
 .messenger{background:#176de2}
 
@@ -361,7 +360,6 @@ transition:.3s;
 }
 
 .member-card:hover{border-color:#ffbd5980}
-
 .member-card h3{font-size:14px;margin:12px 0}
 .member-card .price{font-size:19px}
 .member-card small{color:var(--muted);font-size:10px}
@@ -446,31 +444,20 @@ outline:none;
 
 .qr-box{
 background:white;
-padding:15px;
+padding:12px;
 width:220px;
 height:220px;
 border-radius:13px;
 margin:15px auto;
 display:grid;
 place-items:center;
+overflow:hidden;
 }
 
 .qr-box img{
 width:100%;
 height:100%;
 object-fit:contain;
-}
-
-.qr-placeholder{
-color:#444;
-text-align:center;
-font-size:12px;
-}
-
-.qr-placeholder strong{
-display:block;
-font-size:40px;
-margin-bottom:10px;
 }
 
 .upload-box{
@@ -556,7 +543,6 @@ GARENA <span>CENTER</span>
 </header>
 
 <main id="homePage">
-
 <div class="container">
 
 <section class="hero">
@@ -572,15 +558,13 @@ membership offers and gaming rewards in one place.
 <!-- REFERRAL -->
 
 <section class="section">
-
 <div class="section-heading">
-<small>Free REWARD</small>
+<small>FREE REWARD</small>
 <h2>Referral Rewards</h2>
 <p>Invite your friends and get rewarded.</p>
 </div>
 
 <div class="referral">
-
 <div class="referral-top">
 <div>
 <div class="hero-badge">SPECIAL OFFER</div>
@@ -593,12 +577,8 @@ membership offers and gaming rewards in one place.
 <div class="link-box">
 <div class="link-label">YOUR REFERRAL LINK</div>
 <div class="link-row">
-<div class="link-display" id="refLinkDisplay">
-Loading referral link...
-</div>
-<button class="copy-btn" onclick="copyReferral()">
-COPY
-</button>
+<div class="link-display" id="refLinkDisplay">Loading referral link...</div>
+<button class="copy-btn" onclick="copyReferral()">COPY</button>
 </div>
 </div>
 
@@ -624,9 +604,7 @@ MESSENGER
 🎁 <strong style="color:#ffbd59">300 FREE DIAMONDS</strong><br>
 Refer 10 people to qualify for the reward.
 Approved rewards are processed within 24 hours.
-.
 </div>
-
 </div>
 </section>
 
@@ -659,13 +637,11 @@ Approved rewards are processed within 24 hours.
 
 <section id="paymentPage">
 <div class="container">
-
 <div class="payment-card">
 
 <button class="back" onclick="goHome()">← BACK TO STORE</button>
 
 <div class="hero-badge">ORDER REQUEST</div>
-
 <h2>Payment Section</h2>
 
 <p>
@@ -684,21 +660,24 @@ and upload your payment screenshot.
 <div class="field">
 <label>Free Fire UID</label>
 <input type="text" id="uid"
-placeholder="Enter your Free Fire UID" required maxlength="30">
+placeholder="Enter your Free Fire UID"
+required maxlength="30">
 </div>
+
+<!-- YOUR QR CODE IMAGE IS ADDED HERE -->
 
 <div class="field">
 <label>Payment QR Code</label>
 
 <div class="qr-box">
-<div class="qr-placeholder">
-<strong>▦</strong>
-ADD YOUR QR IMAGE HERE
-</div>
+<img
+src="https://raw.githubusercontent.com/Rupayy/Rupay/refs/heads/main/Screenshot_20260617_181520_Laxmi%20Sunrise%20Mobile%20Banking.jpg"
+alt="Payment QR Code"
+>
 </div>
 
 <p style="text-align:center;color:#888;font-size:10px">
-Replace the placeholder with your actual payment QR image.
+Scan this QR code to complete your payment.
 </p>
 </div>
 
@@ -756,28 +735,22 @@ Free Fire is a trademark of its respective owner.
 
 <script>
 
-/* ==================================
-   YOUR OWN REFERRAL LINK
-================================== */
+/* REFERRAL LINK */
 
 const MY_REFERRAL_LINK =
 "https://example.com/your-referral";
 
-/* SAVE REFERRAL LINK IN LOCAL STORAGE */
-
 const STORAGE_KEY = "garena_center_referral_link";
 
-localStorage.setItem(STORAGE_KEY, MY_REFERRAL_LINK);
+localStorage.setItem(STORAGE_KEY,MY_REFERRAL_LINK);
 
 const savedReferralLink =
 localStorage.getItem(STORAGE_KEY);
 
-/* DISPLAY REFERRAL LINK */
-
 document.getElementById("refLinkDisplay").textContent =
 savedReferralLink;
 
-/* COPY REFERRAL LINK */
+/* COPY REFERRAL */
 
 function copyReferral(){
 
@@ -803,12 +776,12 @@ function shareWhatsApp(){
 
 const message =
 "Join me through my referral link and check out Garena Center! 🎮💎\n\n"
-+ savedReferralLink;
++savedReferralLink;
 
-const url =
-"https://wa.me/?text="+encodeURIComponent(message);
-
-window.open(url,"_blank");
+window.open(
+"https://wa.me/?text="+encodeURIComponent(message),
+"_blank"
+);
 
 }
 
@@ -836,7 +809,7 @@ const diamonds=[
 {name:"2700 Diamonds",price:2000}
 ];
 
-const diamondContainer=
+const diamondContainer =
 document.getElementById("diamondPackages");
 
 diamonds.forEach(item=>{
@@ -864,7 +837,7 @@ const memberships=[
 {name:"Monthly Membership",price:"1,040–1,699"}
 ];
 
-const memberContainer=
+const memberContainer =
 document.getElementById("membershipPackages");
 
 memberships.forEach(item=>{

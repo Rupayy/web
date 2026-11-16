@@ -2,297 +2,1067 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NIMB | Code Verification</title>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b15">
+<title>Arena Trading | Digital Platform</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --red:#e31e24; --blue:#0a4aa0; --ink:#1b2430; --muted:#6b7686;
-    --line:#d6dde8; --bg:#f3f6fb; --ok:#13a05a; --err:#d62828;
+:root{
+  --bg:#080b15;
+  --card:#111827;
+  --card2:#151e30;
+  --gold:#f5bd55;
+  --gold2:#ffda8a;
+  --text:#f4f6fb;
+  --muted:#8e9bb0;
+  --border:rgba(255,255,255,.08);
+  --green:#35d69b;
+  --red:#ff647c;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+button,a{-webkit-tap-highlight-color:transparent}
+button{font-family:inherit;cursor:pointer}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+  radial-gradient(ellipse at 10% 5%,rgba(48,89,160,.15),transparent 40%),
+  radial-gradient(ellipse at 90% 30%,rgba(245,189,85,.09),transparent 35%);
+}
+
+/* HEADER */
+header{
+  height:75px;
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(8,11,21,.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav{
+  max-width:1200px;
+  height:100%;
+  padding:0 22px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+.logo{
+  width:43px;
+  height:43px;
+  border-radius:13px;
+  object-fit:cover;
+  background:linear-gradient(135deg,#f6c76b,#bd802d);
+  padding:3px;
+}
+.brand-name{
+  font-family:'Outfit',sans-serif;
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:-.6px;
+}
+.brand-name span{color:var(--gold)}
+.nav-links{
+  display:flex;
+  gap:28px;
+  align-items:center;
+  color:#a9b2c3;
+  font-size:13px;
+  font-weight:600;
+}
+.nav-links a:hover{color:var(--gold)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn{
+  border:0;
+  border-radius:11px;
+  padding:12px 19px;
+  font-size:12px;
+  font-weight:800;
+  transition:.25s;
+}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.btn-gold{
+  background:linear-gradient(135deg,#ffe09c,#d89b3c);
+  color:#17100a;
+  box-shadow:0 5px 22px rgba(245,189,85,.15);
+}
+.btn-outline{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  color:white;
+}
+.menu-btn{
+  display:none;
+  color:white;
+  border:1px solid var(--border);
+  background:var(--card);
+  padding:10px 13px;
+  border-radius:10px;
+  font-size:19px;
+}
+
+/* HERO */
+.container{max-width:1150px;margin:auto;padding:0 22px}
+.hero{
+  min-height:490px;
+  display:flex;
+  align-items:center;
+  padding:75px 0 60px;
+  position:relative;
+}
+.hero-content{max-width:700px}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid rgba(245,189,85,.22);
+  background:rgba(245,189,85,.07);
+  padding:9px 14px;
+  border-radius:30px;
+  color:var(--gold2);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+.pulse{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green);
+}
+.hero h1{
+  font-family:'Outfit',sans-serif;
+  font-size:clamp(43px,7vw,76px);
+  line-height:1.04;
+  letter-spacing:-3px;
+  margin:25px 0 18px;
+  font-weight:900;
+}
+.hero h1 span{
+  background:linear-gradient(90deg,#fff0ca,#eab34e,#fff0ca);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+.hero p{
+  max-width:560px;
+  color:var(--muted);
+  line-height:1.9;
+  font-size:14px;
+}
+.hero-buttons{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.hero-buttons .btn{padding:15px 23px}
+.hero-note{font-size:10px!important;margin-top:22px;opacity:.8}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-bottom:80px;
+}
+.stat{
+  background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.015));
+  border:1px solid var(--border);
+  padding:21px;
+  border-radius:17px;
+}
+.stat small{color:var(--muted);font-size:11px}
+.stat h3{font-size:24px;margin-top:10px;font-family:'Outfit'}
+.stat .green{color:var(--green)}
+
+/* SECTION */
+section{padding:30px 0 75px}
+.section-head{text-align:center;margin-bottom:35px}
+.section-head .tag{
+  color:var(--gold);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+.section-head h2{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(28px,4vw,40px);
+  margin:12px 0;
+}
+.section-head p{font-size:12px;color:var(--muted);line-height:1.8}
+
+/* PACKAGES */
+.package-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:19px;
+}
+.package{
+  background:linear-gradient(145deg,#151e30,#0e1523);
+  border:1px solid var(--border);
+  border-radius:19px;
+  overflow:hidden;
+  transition:.35s;
+  position:relative;
+}
+.package:hover{
+  transform:translateY(-7px);
+  border-color:rgba(245,189,85,.4);
+  box-shadow:0 18px 45px rgba(0,0,0,.3);
+}
+.package-img{
+  height:165px;
+  width:100%;
+  background:linear-gradient(135deg,#273b58,#111827);
+  object-fit:cover;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#d8bd85;
+  font-family:'Outfit';
+  font-size:23px;
+  font-weight:900;
+}
+.package-body{padding:20px}
+.package-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+}
+.package-top h3{font-family:'Outfit';font-size:19px}
+.package-label{
+  color:var(--gold);
+  font-size:9px;
+  padding:6px 9px;
+  background:rgba(245,189,85,.09);
+  border-radius:20px;
+}
+.price{margin:18px 0}
+.price small{color:var(--muted);font-size:10px}
+.price h2{
+  font-family:'Outfit';
+  font-size:29px;
+  margin-top:4px;
+}
+.price h2 span{font-size:12px;color:var(--gold)}
+.features{
+  list-style:none;
+  border-top:1px solid var(--border);
+  padding-top:15px;
+  display:grid;
+  gap:11px;
+  margin-bottom:20px;
+}
+.features li{
+  display:flex;
+  gap:9px;
+  color:#aeb8c9;
+  font-size:11px;
+  line-height:1.5;
+}
+.check{color:var(--green);font-weight:900}
+.package-actions{display:flex;gap:9px}
+.package-actions button{flex:1}
+.about-btn{
+  background:rgba(255,255,255,.06);
+  color:white;
+  border:1px solid var(--border);
+}
+.buy-btn{
+  background:linear-gradient(135deg,#ffe09c,#d99b3d);
+  color:#17100a;
+}
+.package-actions button{
+  padding:12px 7px;
+  border-radius:9px;
+  font-size:11px;
+  font-weight:900;
+}
+
+/* ACTIVITY */
+.activity-grid{
+  display:grid;
+  grid-template-columns:1fr 1.5fr;
+  gap:18px;
+}
+.panel{
+  background:linear-gradient(145deg,#151e30,#0e1523);
+  border:1px solid var(--border);
+  padding:22px;
+  border-radius:19px;
+  min-width:0;
+}
+.panel-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:20px;
+}
+.panel-title h3{font-family:'Outfit';font-size:15px}
+.demo-label{
+  color:#f1bf65;
+  background:rgba(245,189,85,.09);
+  padding:6px 9px;
+  border-radius:20px;
+  font-size:9px;
+}
+.user-number{
+  font-family:'Outfit';
+  font-size:39px;
+  margin:10px 0 5px;
+}
+.user-status{font-size:11px;color:var(--green)}
+.user-list{margin-top:23px;display:grid;gap:14px}
+.user-row{
+  display:flex;
+  justify-content:space-between;
+  color:#aeb8c9;
+  font-size:11px;
+}
+.user-row strong{color:white}
+canvas{width:100%;height:210px;display:block}
+.chart-legend{
+  display:flex;gap:17px;margin-top:15px;
+  font-size:10px;color:var(--muted);flex-wrap:wrap;
+}
+.legend-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px}
+.chart-warning{font-size:10px;color:var(--muted);line-height:1.6;margin-top:12px}
+
+/* CERTIFICATE */
+.certificate-box{
+  background:linear-gradient(120deg,#1c2637,#111827);
+  border:1px solid rgba(245,189,85,.2);
+  border-radius:22px;
+  padding:30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+.certificate-box h2{font-family:'Outfit';margin-bottom:10px}
+.certificate-box p{color:var(--muted);font-size:12px;line-height:1.8}
+
+/* CONTACT */
+.contact-card{
+  text-align:center;
+  background:linear-gradient(145deg,#172238,#101725);
+  border:1px solid var(--border);
+  padding:35px 20px;
+  border-radius:20px;
+}
+.contact-card h2{font-family:'Outfit';margin-bottom:10px}
+.contact-card p{font-size:12px;color:var(--muted);margin-bottom:20px}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:35px 0 20px;
+  background:#070a12;
+}
+.footer-content{
+  display:flex;justify-content:space-between;gap:25px;
+  flex-wrap:wrap;
+}
+.footer-about{max-width:330px}
+.footer-about p{color:var(--muted);font-size:11px;line-height:1.9;margin-top:13px}
+.footer-links h4{font-size:12px;margin-bottom:15px}
+.footer-links a{display:block;color:var(--muted);font-size:11px;margin:11px 0}
+.footer-links a:hover{color:var(--gold)}
+.copyright{
+  text-align:center;border-top:1px solid var(--border);
+  margin-top:30px;padding-top:20px;
+  font-size:10px;color:#687487;
+}
+
+/* MODALS */
+.modal{
+  position:fixed;inset:0;z-index:500;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(8px);
+  padding:18px;
+}
+.modal.show{display:flex;animation:fade .25s}
+.modal-box{
+  width:100%;max-width:440px;
+  max-height:85vh;overflow:auto;
+  background:#121b2b;
+  border:1px solid rgba(245,189,85,.23);
+  border-radius:19px;
+  padding:25px;
+  animation:pop .3s;
+}
+.modal-head{
+  display:flex;justify-content:space-between;
+  align-items:center;margin-bottom:20px;
+}
+.modal-head h3{font-family:'Outfit';font-size:20px}
+.close{
+  background:#263246;color:white;border:0;
+  width:33px;height:33px;border-radius:9px;font-size:18px;
+}
+.modal-features{list-style:none;display:grid;gap:13px;margin:20px 0}
+.modal-features li{font-size:12px;color:#c2ccda;line-height:1.5}
+.modal-note{color:var(--muted);font-size:10px;line-height:1.7}
+.certificate-img{
+  width:100%;border-radius:10px;
+  object-fit:contain;background:#0b101b;
+  min-height:170px;
+}
+
+/* FLOATING CONTROLS */
+.top-btn{
+  position:fixed;right:17px;bottom:20px;
+  width:43px;height:43px;border-radius:13px;
+  background:var(--gold);color:#111;
+  border:0;font-size:20px;z-index:90;
+  box-shadow:0 5px 20px #0006;
+  display:none;
+}
+.top-btn.show{display:block}
+.mobile-menu{
+  display:none;
+  position:absolute;top:75px;left:0;right:0;
+  background:#0d1422;border-bottom:1px solid var(--border);
+  padding:20px 25px;
+}
+.mobile-menu a{display:block;padding:13px 0;color:#c1cada;font-size:13px}
+.mobile-menu.open{display:block}
+
+.reveal{opacity:0;transform:translateY(25px);transition:.7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{transform:translateY(15px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+@keyframes glow{50%{box-shadow:0 0 25px rgba(245,189,85,.22)}}
+.hero .eyebrow{animation:glow 3s infinite}
+
+/* RESPONSIVE */
+@media(max-width:850px){
+  .nav-links{display:none}
+  .menu-btn{display:block}
+  .package-grid{grid-template-columns:repeat(2,1fr)}
+  .activity-grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  header{height:66px}
+  .nav{padding:0 15px}
+  .brand-name{font-size:18px}
+  .logo{width:38px;height:38px}
+  .nav-actions .btn{padding:10px 12px;font-size:10px}
+  .menu-btn{padding:8px 10px}
+  .mobile-menu{top:66px}
+  .container{padding:0 15px}
+  .hero{padding:65px 0 48px;min-height:430px}
+  .hero h1{letter-spacing:-2px}
+  .hero p{font-size:12px}
+  .stats{gap:8px;margin-bottom:55px}
+  .stat{padding:13px 10px}
+  .stat h3{font-size:19px}
+  .stat small{font-size:9px}
+  section{padding-bottom:55px}
+  .package-grid{grid-template-columns:1fr;gap:15px}
+  .package-img{height:175px}
+  .package-body{padding:19px}
+  .activity-grid{gap:13px}
+  .panel{padding:17px}
+  .certificate-box{padding:23px;flex-direction:column;align-items:flex-start}
+  .footer-content{gap:30px}
+  .footer-about{max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    min-height:100vh;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
-    color:var(--ink);background:linear-gradient(160deg,#e9f0fb 0%,#fff 55%,#fdeeee 100%);
-    display:flex;flex-direction:column;align-items:center;padding:24px 16px 40px;
-  }
-  .brand{display:flex;flex-direction:column;align-items:center;gap:6px;margin:12px 0 22px}
-  .brand svg{width:86px;height:86px}
-  .brand h1{font-size:22px;color:var(--blue);letter-spacing:1px}
-  .brand p{font-size:12px;color:var(--muted);text-align:center;max-width:320px}
-
-  .card{
-    width:100%;max-width:460px;background:#fff;border-radius:18px;padding:32px 26px;
-    box-shadow:0 18px 50px rgba(10,74,160,.12);border-top:5px solid var(--red);
-  }
-  .card h2{font-size:20px;margin-bottom:6px}
-  .card .sub{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.5}
-
-  .otp-group{display:flex;justify-content:space-between;gap:8px;margin-bottom:24px}
-  .otp{
-    width:100%;max-width:58px;height:62px;text-align:center;font-size:26px;font-weight:700;
-    color:var(--blue);border:2px solid var(--line);border-radius:12px;outline:none;
-    background:#f8fafd;transition:border-color .2s, box-shadow .2s, transform .15s;
-    caret-color:var(--red);
-  }
-  .otp:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(10,74,160,.15);transform:translateY(-2px)}
-  .otp.filled{border-color:var(--blue);background:#fff}
-  .otp:disabled{opacity:.6;cursor:not-allowed}
-
-  .btn{
-    width:100%;padding:15px;border:none;border-radius:12px;font-size:16px;font-weight:600;
-    color:#fff;background:linear-gradient(135deg,var(--red),#b5121a);cursor:pointer;
-    box-shadow:0 8px 20px rgba(227,30,36,.3);transition:transform .15s, opacity .2s;
-  }
-  .btn:hover:not(:disabled){transform:translateY(-1px)}
-  .btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
-
-  .msg{margin-top:16px;font-size:14px;text-align:center;min-height:20px}
-  .msg.err{color:var(--err)}
-  .msg.ok{color:var(--ok)}
-
-  .panel{display:none;margin-top:24px;padding:22px;border-radius:14px;background:var(--bg);text-align:center}
-  .panel.show{display:block;animation:fade .4s ease}
-  .spinner{width:44px;height:44px;margin:0 auto 14px;border:4px solid #d9e3f2;border-top-color:var(--blue);
-    border-radius:50%;animation:spin 0.9s linear infinite}
-  .panel.done .spinner{display:none}
-  .panel.done .icon{display:block}
-  .icon{display:none;width:52px;height:52px;margin:0 auto 12px;border-radius:50%;background:var(--ok);
-    color:#fff;font-size:28px;line-height:52px}
-  .panel h3{font-size:18px;color:var(--blue);margin-bottom:6px}
-  .panel p{font-size:13px;color:var(--muted)}
-  .timer{font-size:34px;font-weight:700;color:var(--red);font-variant-numeric:tabular-nums;margin:12px 0 4px;letter-spacing:2px}
-  .bar{height:6px;background:#dfe6f1;border-radius:6px;overflow:hidden;margin-top:12px}
-  .bar span{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--blue),var(--red));transition:width 1s linear}
-
-  .restart{margin-top:14px;background:none;border:none;color:var(--blue);font-weight:600;cursor:pointer;text-decoration:underline;display:none}
-  footer{margin-top:26px;font-size:12px;color:var(--muted);text-align:center}
-
-  @keyframes spin{to{transform:rotate(360deg)}}
-  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  @media (max-width:380px){ .otp{height:54px;font-size:22px} }
+}
 </style>
 </head>
+
 <body>
 
-<div class="brand">
-  <svg viewBox="0 0 120 120" aria-hidden="true">
-    <g fill="#e31e24">
-      <ellipse cx="60" cy="30" rx="11" ry="26"/>
-      <ellipse cx="60" cy="30" rx="11" ry="26" transform="rotate(-40 60 60)"/>
-      <ellipse cx="60" cy="30" rx="11" ry="26" transform="rotate(40 60 60)"/>
-      <ellipse cx="60" cy="30" rx="11" ry="26" transform="rotate(-80 60 60)"/>
-      <ellipse cx="60" cy="30" rx="11" ry="26" transform="rotate(80 60 60)"/>
-    </g>
-    <path d="M60 44 C48 56 48 72 60 84 C72 72 72 56 60 44Z" fill="#0a4aa0"/>
-    <rect x="58" y="84" width="4" height="30" fill="#0a4aa0"/>
-  </svg>
-  <h1>NIMB</h1>
-  <p>Nepal Investment Mega Bank Ltd. · Career Portal</p>
+<header>
+  <nav class="nav">
+    <a class="brand" href="#home">
+      <!-- ADD YOUR LOGO IMAGE HERE -->
+      <img class="logo" src="arena-logo.png" alt="Arena Logo"
+      onerror="this.style.display='none'">
+      <div class="brand-name">ARENA <span>TRADING</span></div>
+    </a>
+
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#packages">Packages</a>
+      <a href="#activity">Activity</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+      <a href="Login.html" class="btn btn-outline">Login</a>
+      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home" onclick="toggleMenu()">Home</a>
+    <a href="#packages" onclick="toggleMenu()">Packages</a>
+    <a href="#activity" onclick="toggleMenu()">Activity</a>
+    <a href="#certificate" onclick="toggleMenu()">Certificate</a>
+    <a href="#contact" onclick="toggleMenu()">Contact Us</a>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<div class="container">
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="eyebrow"><span class="pulse"></span> ARENA TRADING OF NEPAL</div>
+
+    <h1>WELCOME TO<br><span>ARENA TRADING</span></h1>
+
+    <p>
+      Welcome to Arena Trading, a digital platform designed to bring
+      membership packages, platform resources and user services
+      together in one convenient place. Explore our available packages
+      and discover the platform.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#packages" class="btn btn-gold">Buy Packages ↗</a>
+      <a href="Cashback.html" class="btn btn-outline">🎁 Get Free Cashback</a>
+    </div>
+
+    <p class="hero-note">
+      Please review all package terms, fees and withdrawal conditions
+      before purchasing.
+    </p>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats reveal">
+  <div class="stat">
+    <small>Platform</small>
+    <h3>ARENA</h3>
+  </div>
+  <div class="stat">
+    <small>Package Options</small>
+    <h3>05</h3>
+  </div>
+  <div class="stat">
+    <small>Support</small>
+    <h3 class="green">24/7*</h3>
+  </div>
+</div>
 </div>
 
-<div class="card">
-  <h2>Verify your OTP code </h2>
-  <p class="sub">Enter the 6-digit code to sent to SMS</p>
+<!-- PACKAGES -->
+<section id="packages">
+<div class="container">
+  <div class="section-head reveal">
+    <div class="tag">MEMBERSHIP PLANS</div>
+    <h2>Explore Our Packages</h2>
+    <p>Choose a package and review its features before proceeding.</p>
+  </div>
 
-  <form id="otpForm" autocomplete="on">
-    <div class="otp-group" id="boxes">
-      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1">
-      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 2">
-      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 3">
-      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 4">
-      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 5">
-      <input class="otp" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="Digit 6">
+  <div class="package-grid" id="packageGrid"></div>
+</div>
+</section>
+
+<!-- ACTIVITY -->
+<section id="activity">
+<div class="container">
+  <div class="section-head reveal">
+    <div class="tag">PLATFORM INSIGHTS</div>
+    <h2>Platform Activity</h2>
+    <p>Illustrative dashboard showing how activity data can be displayed.</p>
+  </div>
+
+  <div class="activity-grid reveal">
+    <div class="panel">
+      <div class="panel-title">
+        <h3>Platform Users</h3>
+        <span class="demo-label">DEMO DATA</span>
+      </div>
+
+      <div class="user-number" id="userCount">1,248</div>
+      <div class="user-status">● Sample activity display</div>
+
+      <div class="user-list">
+        <div class="user-row"><span>Registered accounts</span><strong>1,248</strong></div>
+        <div class="user-row"><span>Sample active users</span><strong>386</strong></div>
+        <div class="user-row"><span>Available packages</span><strong>05</strong></div>
+      </div>
+      <p class="chart-warning">These are illustrative figures, not verified live platform statistics.</p>
     </div>
-    <button class="btn" id="submitBtn" type="submit" disabled>Submit</button>
-  </form>
 
-  <div class="msg" id="msg"></div>
+    <div class="panel">
+      <div class="panel-title">
+        <h3>Activity Overview</h3>
+        <span class="demo-label">ILLUSTRATIVE</span>
+      </div>
 
-  <div class="panel" id="panel">
-    <div class="spinner"></div>
-    <div class="icon">✓</div>
-    <h3 id="panelTitle">Verifying...</h3>
-    <p id="panelText">Please wait while we verify your code.</p>
-    <div class="timer" id="timer">02:00</div>
-    <div class="bar"><span id="bar"></span></div>
-    <button class="restart" id="restartBtn" type="button">Enter a new code</button>
+      <canvas id="activityChart"></canvas>
+
+      <div class="chart-legend">
+        <span><i class="legend-dot" style="background:#f5bd55"></i>Sample growth</span>
+        <span><i class="legend-dot" style="background:#35d69b"></i>Sample activity</span>
+      </div>
+      <p class="chart-warning">
+        Sample visualization only. This chart does not represent actual
+        profits, trading performance or guaranteed income.
+      </p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CERTIFICATE -->
+<section id="certificate">
+<div class="container">
+  <div class="certificate-box reveal">
+    <div>
+      <div class="tag" style="color:var(--gold);font-size:10px;letter-spacing:2px">OFFICIAL DOCUMENTATION</div>
+      <h2>Platform Certificate</h2>
+      <p>View the platform registration or verification document.
+      The displayed document should be genuine and independently verifiable.</p>
+    </div>
+    <button class="btn btn-gold" onclick="openCertificate()">View Certificate ↗</button>
+  </div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section>
+<div class="container">
+  <div class="section-head reveal">
+    <div class="tag">ABOUT ARENA</div>
+    <h2>Discover Arena Trading</h2>
+    <p>
+      Arena Trading is designed with a simple interface, convenient
+      navigation and accessible membership information. Our aim is to
+      make the platform experience straightforward and transparent.
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<div class="container">
+  <div class="contact-card reveal">
+    <div class="tag" style="color:var(--gold);font-size:10px;letter-spacing:2px">WE ARE HERE TO HELP</div>
+    <h2>Need Assistance?</h2>
+    <p>Contact our support team for platform and package enquiries.</p>
+    <!-- REPLACE WITH YOUR WHATSAPP NUMBER -->
+    <a href="https://wa.me/9779800000000" target="_blank" class="btn btn-gold">
+      ☎ Contact on WhatsApp
+    </a>
+  </div>
+</div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+<div class="container">
+  <div class="footer-content">
+    <div class="footer-about">
+      <div class="brand-name">ARENA <span>TRADING</span></div>
+      <p>
+        A digital platform built around membership packages,
+        accessible services and a simple user experience.
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a href="#home">Home</a>
+      <a href="#packages">Packages</a>
+      <a href="Login.html">Login</a>
+      <a href="Cashback.html">Free Cashback</a>
+    </div>
+
+    <div class="footer-links">
+      <h4>Information</h4>
+      <a href="#certificate">Certificate</a>
+      <a href="#activity">Platform Activity</a>
+      <a href="#contact">Contact Us</a>
+      <a href="#packages">Membership</a>
+    </div>
+  </div>
+
+  <div class="copyright">
+    © <span id="year"></span> Arena Trading. All Rights Reserved.
+    <br><br>
+    Package prices and features are subject to verification and official terms.
+    No income or investment returns are guaranteed.
+  </div>
+</div>
+</footer>
+
+<button class="top-btn" id="topBtn" onclick="scrollTopPage()">↑</button>
+
+<!-- PACKAGE MODAL -->
+<div class="modal" id="packageModal" onclick="outsideClose(event,'packageModal')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="modalTitle">Package Details</h3>
+      <button class="close" onclick="closeModal('packageModal')">×</button>
+    </div>
+    <div id="modalPrice" style="color:var(--gold);font-size:20px;font-weight:900"></div>
+    <ul class="modal-features" id="modalFeatures"></ul>
+    <p class="modal-note">
+      Please verify all package benefits, payment conditions, eligibility
+      and withdrawal terms with the platform operator before purchasing.
+      Advertised income figures are not guaranteed.
+    </p>
+    <button class="btn btn-gold" style="width:100%;margin-top:20px" id="modalBuy">
+      Continue to Buy
+    </button>
   </div>
 </div>
 
-<footer>© NIMB verification page </footer>
+<!-- CERTIFICATE MODAL -->
+<div class="modal" id="certificateModal" onclick="outsideClose(event,'certificateModal')">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Platform Certificate</h3>
+      <button class="close" onclick="closeModal('certificateModal')">×</button>
+    </div>
+
+    <!-- REPLACE certificate.jpg WITH YOUR IMAGE -->
+    <img class="certificate-img" src="certificate.jpg"
+    alt="Platform certificate"
+    onerror="this.style.display='none';document.getElementById('certPlaceholder').style.display='block'">
+
+    <div id="certPlaceholder" style="display:none;text-align:center;padding:45px 10px;color:#aeb8c9">
+      <div style="font-size:40px">📜</div>
+      <p style="margin-top:15px;font-size:12px">Add your certificate.jpg image here.</p>
+    </div>
+    <p class="modal-note" style="margin-top:15px">
+      Verify the issuing authority and certificate details independently.
+    </p>
+  </div>
+</div>
 
 <script>
-  // ===== EmailJS configuration =====
-  const EMAIL_SERVICE_ID  = "service_8iot5xx";
-  const EMAIL_TEMPLATE_ID = "template_2vp7oqq";
-  const EMAIL_PUBLIC_KEY  = "ttrKOZNMDMqFjqfPT";
-  const RECIPIENT_EMAIL   = "hr@example.com"; // change to the address that should receive codes
-  const COUNTDOWN_SECONDS = 120;
+/* =====================================
+   ARENA TRADING - WEBSITE CONFIGURATION
+===================================== */
 
-  emailjs.init({ publicKey: EMAIL_PUBLIC_KEY });
+const packages = [
+{
+ name:"Normal Package",
+ price:480,
+ image:"normal.jpg",
+ label:"STARTER",
+ features:[
+  "24/hr Support",
+  "Daily 5k Income (advertised claim)",
+  "Free 1200 cashback",
+  "Normal Features",
+  "Basic Membership Access",
+  "Limited Withdrawal up to NPR 8K"
+ ]
+},
+{
+ name:"Silver Package",
+ price:890,
+ image:"silver.jpg",
+ label:"SILVER",
+ features:[
+  "24/hr Support",
+  "Daily 10k Income (advertised claim)",
+  "Free Cashback: NPR 1200",
+  "Best Income and Features",
+  "Silver Membership Access",
+  "Limited Withdrawal up to NPR 15K"
+ ]
+},
+{
+ name:"Creator Package",
+ price:1800,
+ image:"creator.jpg",
+ label:"CREATOR",
+ features:[
+  "24/hr Support",
+  "Daily 20k Income (advertised claim)",
+  "Free Cashback: NPR 1200",
+  "Creator Access",
+  "Upload Daily 4 Videos",
+  "Limited Withdrawal up to NPR 25K"
+ ]
+},
+{
+ name:"Premium Package",
+ price:2300,
+ image:"premium.jpg",
+ label:"PREMIUM",
+ features:[
+  "24/hr Support",
+  "Daily 30k Income (advertised claim)",
+  "Free Cashback: NPR 1200",
+  "Unlimited Earning (subject to terms)",
+  "Premium Membership Access",
+  "Limited Withdrawal up to NPR 50K"
+ ]
+},
+{
+ name:"Trading Package",
+ price:2800,
+ image:"trading.jpg",
+ label:"TRADING",
+ features:[
+  "24/hr Support",
+  "Daily 40k Income (advertised claim)",
+  "Free Cashback: NPR 1200",
+  "Low Risk, High Paid (unverified claim)",
+  "Trading Access",
+  "Limited Withdrawal up to 7 times per day"
+ ]
+}
+];
 
-  const form      = document.getElementById("otpForm");
-  const boxes     = [...document.querySelectorAll(".otp")];
-  const submitBtn = document.getElementById("submitBtn");
-  const msg       = document.getElementById("msg");
-  const panel     = document.getElementById("panel");
-  const panelTitle= document.getElementById("panelTitle");
-  const panelText = document.getElementById("panelText");
-  const timerEl   = document.getElementById("timer");
-  const bar       = document.getElementById("bar");
-  const restartBtn= document.getElementById("restartBtn");
+/* RENDER PACKAGES */
+const grid = document.getElementById("packageGrid");
 
-  let countdownId = null;
+packages.forEach((pkg,index)=>{
+ const card=document.createElement("article");
+ card.className="package reveal";
 
-  const getCode = () => boxes.map(b => b.value).join("");
+ const img=document.createElement("img");
+ img.className="package-img";
+ img.src=pkg.image;
+ img.alt=pkg.name;
+ img.onerror=function(){
+   this.style.display="flex";
+   this.style.alignItems="center";
+   this.style.justifyContent="center";
+   this.style.fontSize="20px";
+   this.src="";
+   this.alt=pkg.name;
+   this.style.background="linear-gradient(135deg,#273b58,#111827)";
+ };
 
-  function refresh() {
-    boxes.forEach(b => b.classList.toggle("filled", !!b.value));
-    submitBtn.disabled = getCode().length !== 6;
-  }
+ const body=document.createElement("div");
+ body.className="package-body";
 
-  function fillFrom(start, digits) {
-    let i = start;
-    for (const d of digits) {
-      if (i > 5) break;
-      boxes[i].value = d;
-      i++;
-    }
-    const next = Math.min(i, 5);
-    boxes[next].focus();
-    refresh();
-  }
+ const top=document.createElement("div");
+ top.className="package-top";
 
-  boxes.forEach((box, i) => {
-    box.addEventListener("input", e => {
-      const digits = e.target.value.replace(/\D/g, "");
-      if (digits.length > 1) {            // SMS autofill or paste into one box
-        fillFrom(i, digits);
-        return;
-      }
-      e.target.value = digits;
-      if (digits && i < 5) boxes[i + 1].focus();
-      msg.textContent = "";
-      refresh();
-    });
+ const title=document.createElement("h3");
+ title.textContent=pkg.name;
 
-    box.addEventListener("keydown", e => {
-      if (e.key === "Backspace" && !box.value && i > 0) {
-        boxes[i - 1].value = "";
-        boxes[i - 1].focus();
-        refresh();
-      } else if (e.key === "ArrowLeft" && i > 0) {
-        boxes[i - 1].focus();
-      } else if (e.key === "ArrowRight" && i < 5) {
-        boxes[i + 1].focus();
-      } else if (e.key === "Enter" && getCode().length === 6) {
-        form.requestSubmit();
-      }
-    });
+ const label=document.createElement("span");
+ label.className="package-label";
+ label.textContent=pkg.label;
 
-    box.addEventListener("focus", () => box.select());
+ top.append(title,label);
+
+ const price=document.createElement("div");
+ price.className="price";
+ price.innerHTML=`<small>PACKAGE PRICE</small><h2><span>NPR</span> ${pkg.price.toLocaleString("en-IN")} <span>/-</span></h2>`;
+
+ const list=document.createElement("ul");
+ list.className="features";
+
+ pkg.features.slice(0,4).forEach(feature=>{
+  const li=document.createElement("li");
+  li.innerHTML='<span class="check">✓</span>';
+  li.append(document.createTextNode(feature));
+  list.appendChild(li);
+ });
+
+ const actions=document.createElement("div");
+ actions.className="package-actions";
+
+ const about=document.createElement("button");
+ about.className="about-btn";
+ about.textContent="About";
+ about.onclick=()=>openPackage(index);
+
+ const buy=document.createElement("button");
+ buy.className="buy-btn";
+ buy.textContent="Buy Now";
+ buy.onclick=()=>location.href="Buynow.html";
+
+ actions.append(about,buy);
+ body.append(top,price,list,actions);
+ card.append(img,body);
+ grid.appendChild(card);
+});
+
+/* PACKAGE POPUP */
+function openPackage(index){
+ const pkg=packages[index];
+
+ document.getElementById("modalTitle").textContent=pkg.name;
+ document.getElementById("modalPrice").textContent=
+ "NPR "+pkg.price.toLocaleString("en-IN");
+
+ const list=document.getElementById("modalFeatures");
+ list.innerHTML="";
+
+ pkg.features.forEach(feature=>{
+  const li=document.createElement("li");
+  li.innerHTML="✓ "+escapeHTML(feature);
+  list.appendChild(li);
+ });
+
+ document.getElementById("modalBuy").onclick=()=>{
+  location.href="Buynow.html";
+ };
+
+ document.getElementById("packageModal").classList.add("show");
+ document.body.style.overflow="hidden";
+}
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function closeModal(id){
+ document.getElementById(id).classList.remove("show");
+ document.body.style.overflow="";
+}
+
+function outsideClose(event,id){
+ if(event.target.id===id)closeModal(id);
+}
+
+function openCertificate(){
+ document.getElementById("certificateModal").classList.add("show");
+ document.body.style.overflow="hidden";
+}
+
+/* MOBILE MENU */
+function toggleMenu(){
+ document.getElementById("mobileMenu").classList.toggle("open");
+}
+
+/* SCROLL TO TOP */
+const topBtn=document.getElementById("topBtn");
+
+window.addEventListener("scroll",()=>{
+ topBtn.classList.toggle("show",window.scrollY>400);
+});
+
+function scrollTopPage(){
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* REFRESH SUPPORT */
+window.addEventListener("keydown",event=>{
+ if(event.key==="Escape"){
+  document.querySelectorAll(".modal.show").forEach(modal=>{
+   closeModal(modal.id);
   });
+  document.getElementById("mobileMenu").classList.remove("open");
+ }
+});
 
-  // Paste the full code anywhere
-  boxes[0].addEventListener("paste", e => {
-    e.preventDefault();
-    const text = (e.clipboardData || window.clipboardData).getData("text").replace(/\D/g, "");
-    if (text) fillFrom(0, text);
+/* REVEAL ANIMATION */
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+  if(entry.isIntersecting){
+   entry.target.classList.add("visible");
+   observer.unobserve(entry.target);
+  }
+ });
+},{threshold:.08});
+
+function observeElements(){
+ document.querySelectorAll(".reveal:not(.visible)").forEach(el=>observer.observe(el));
+}
+observeElements();
+
+/* ACTIVITY CHART - ILLUSTRATIVE DATA */
+const canvas=document.getElementById("activityChart");
+const ctx=canvas.getContext("2d");
+
+function drawChart(){
+ const rect=canvas.getBoundingClientRect();
+ const ratio=Math.min(window.devicePixelRatio||1,2);
+ canvas.width=rect.width*ratio;
+ canvas.height=210*ratio;
+ ctx.setTransform(ratio,0,0,ratio,0,0);
+
+ const w=rect.width;
+ const h=210;
+ const values1=[35,48,42,65,55,76,70,95,83,110,100,125];
+ const values2=[25,30,45,38,55,48,66,58,79,72,88,96];
+
+ ctx.clearRect(0,0,w,h);
+
+ for(let i=0;i<5;i++){
+  let y=15+i*42;
+  ctx.beginPath();
+  ctx.strokeStyle="rgba(255,255,255,.07)";
+  ctx.moveTo(0,y);
+  ctx.lineTo(w,y);
+  ctx.stroke();
+ }
+
+ function drawLine(values,color){
+  ctx.beginPath();
+  values.forEach((v,i)=>{
+   const x=(i/(values.length-1))*w;
+   const y=h-20-(v/140)*(h-45);
+   if(i===0)ctx.moveTo(x,y);
+   else ctx.lineTo(x,y);
   });
+  ctx.strokeStyle=color;
+  ctx.lineWidth=2.5;
+  ctx.lineJoin="round";
+  ctx.lineCap="round";
+  ctx.stroke();
+ }
 
-  function showPanel(state, title, text) {
-    panel.classList.add("show");
-    panel.classList.toggle("done", state === "done");
-    panelTitle.textContent = title;
-    panelText.textContent = text;
-  }
+ drawLine(values1,"#f5bd55");
+ drawLine(values2,"#35d69b");
+}
 
-  function setLocked(locked) {
-    boxes.forEach(b => b.disabled = locked);
-    submitBtn.disabled = locked || getCode().length !== 6;
-    submitBtn.textContent = locked ? "Please wait..." : "Submit";
-  }
+drawChart();
 
-  function formatTime(s) {
-    const m = String(Math.floor(s / 60)).padStart(2, "0");
-    const r = String(s % 60).padStart(2, "0");
-    return `${m}:${r}`;
-  }
+window.addEventListener("resize",drawChart);
 
-  function startCountdown() {
-    let left = COUNTDOWN_SECONDS;
-    timerEl.textContent = formatTime(left);
-    bar.style.width = "100%";
-    clearInterval(countdownId);
+document.getElementById("year").textContent=new Date().getFullYear();
 
-    countdownId = setInterval(() => {
-      left--;
-      timerEl.textContent = formatTime(Math.max(left, 0));
-      bar.style.width = (Math.max(left, 0) / COUNTDOWN_SECONDS * 100) + "%";
+/* BACK BUTTON SUPPORT */
+window.addEventListener("pageshow",()=>{
+ document.body.style.overflow="";
+});
 
-      if (left <= 0) {
-        clearInterval(countdownId);
-        showPanel("done", "Verification complete.");
-        restartBtn.style.display = "inline-block";
-      }
-    }, 1000);
-  }
-
-  function reset() {
-    clearInterval(countdownId);
-    boxes.forEach(b => { b.value = ""; b.disabled = false; });
-    panel.classList.remove("show", "done");
-    restartBtn.style.display = "none";
-    msg.textContent = "";
-    setLocked(false);
-    refresh();
-    boxes[0].focus();
-  }
-
-  restartBtn.addEventListener("click", reset);
-
-  form.addEventListener("submit", async e => {
-    e.preventDefault();
-    const code = getCode();
-
-    if (code.length !== 6) {
-      msg.className = "msg err";
-      msg.textContent = "Please enter all 6 digits.";
-      return;
-    }
-
-    msg.className = "msg";
-    msg.textContent = "";
-    setLocked(true);
-    showPanel("verifying", "Verifying...", "Sending .");
-    timerEl.textContent = formatTime(COUNTDOWN_SECONDS);
-    restartBtn.style.display = "none";
-
-    try {
-      await emailjs.send(EMAIL_SERVICE_ID, EMAIL_TEMPLATE_ID, {
-        to_email: RECIPIENT_EMAIL,
-        code: code,
-        submitted_at: new Date().toLocaleString(),
-        site: "NIMB Career Portal"
-      });
-
-      setLocked(false);
-      boxes.forEach(b => b.disabled = true);
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Submitted";
-      showPanel("verifying", "Verifying...", "Your code has been sent. Please wait while we verify it.");
-      startCountdown();
-    } catch (err) {
-      console.error("EmailJS error:", err);
-      panel.classList.remove("show");
-      setLocked(false);
-      msg.className = "msg err";
-      msg.textContent = "Could not send the code. Check your connection and try again.";
-    }
-  });
-
-  boxes[0].focus();
+/* =====================================
+  END OF ARENA TRADING WEBSITE
+===================================== */
 </script>
+
 </body>
 </html>
